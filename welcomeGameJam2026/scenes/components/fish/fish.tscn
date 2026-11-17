@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://ddtfre13trud7"]
+
+[ext_resource type="Texture2D" uid="uid://bp1psdopekysk" path="res://icon.svg" id="1_a8g7x"]
+[ext_resource type="Script" uid="uid://ccoolt6vjbf8o" path="res://scenes/components/fish/fish.gd" id="1_nm77g"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_myhs1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_a8g7x")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nm77g"]
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="Fish" type="Node2D" unique_id=1012391387]
+script = ExtResource("1_nm77g")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1934431804]
+sprite_frames = SubResource("SpriteFrames_myhs1")
+frame_progress = 0.5582432
+
+[node name="CardLabel" type="Label" parent="." unique_id=992515596]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "RS"
+label_settings = SubResource("LabelSettings_nm77g")
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="." unique_id=1372193860]
+unique_name_in_owner = true
+offset_left = -64.0
+offset_top = -64.0
+offset_right = -56.0
+offset_bottom = -56.0
+scale = Vector2(16.515, 16)
+flat = true

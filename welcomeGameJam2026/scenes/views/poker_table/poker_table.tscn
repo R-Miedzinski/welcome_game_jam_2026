@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://go37pnmvk1rb"]
+
+[ext_resource type="PackedScene" uid="uid://ca4hyef2ak6ld" path="res://scenes/components/player_ui/player_ui.tscn" id="1_c6r7b"]
+[ext_resource type="Script" uid="uid://d1t5rut00cju8" path="res://scripts/player_controller/player_controller.gd" id="1_pcbri"]
+[ext_resource type="Script" uid="uid://cgpif7c60joiv" path="res://scripts/deck_manager/deck_manager.gd" id="2_7jrhj"]
+[ext_resource type="Script" uid="uid://dd1elubgcium7" path="res://scripts/poker_game_manager/poker_game_state.gd" id="3_7jrhj"]
+[ext_resource type="Script" uid="uid://bpfcw3wr1ibug" path="res://scripts/cpu_controller/cpu_controller.gd" id="5_tj53p"]
+[ext_resource type="Script" uid="uid://dvlnw751kbvvs" path="res://scripts/poker_game_orchestrator/poker_game_orchestrator.gd" id="6_iodx1"]
+[ext_resource type="PackedScene" uid="uid://bwkw1y3h6kgnn" path="res://scenes/components/end_game_screen/end_game_screen.tscn" id="7_cd4ow"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_myhs1"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_l3vlx"]
+
+[node name="PokerTable" type="Node3D" unique_id=690689141]
+
+[node name="PlayerUi" parent="." unique_id=884965420 instance=ExtResource("1_c6r7b")]
+unique_name_in_owner = true
+
+[node name="PlayerController" type="Node" parent="." unique_id=254560071 node_paths=PackedStringArray("player_ui", "deck", "poker_game_manager")]
+unique_name_in_owner = true
+script = ExtResource("1_pcbri")
+player_id = "Player"
+starting_cash = 10
+max_fishes = 1
+player_ui = NodePath("../PlayerUi")
+deck = NodePath("../DeckManager")
+poker_game_manager = NodePath("../PokerGameState")
+
+[node name="DeckManager" type="Node" parent="." unique_id=1624884056]
+unique_name_in_owner = true
+script = ExtResource("2_7jrhj")
+
+[node name="PokerGameState" type="Node" parent="." unique_id=458066441 node_paths=PackedStringArray("deck")]
+unique_name_in_owner = true
+script = ExtResource("3_7jrhj")
+deck = NodePath("../DeckManager")
+
+[node name="PlayerCamera" type="Camera3D" parent="." unique_id=6409917]
+transform = Transform3D(-4.371139e-08, -0.25881907, 0.9659258, 0, 0.9659259, 0.25881907, -1, 1.13133405e-08, -4.222196e-08, 2.0150464, 1.8288324, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=322531930]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48583806, 0)
+mesh = SubResource("BoxMesh_myhs1")
+
+[node name="CPU1" type="MeshInstance3D" parent="." unique_id=765407998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0354363, 0.48583806, 1.5278757)
+mesh = SubResource("CapsuleMesh_l3vlx")
+
+[node name="CPU1Controller" type="Node" parent="CPU1" unique_id=1856201156 node_paths=PackedStringArray("cash_label")]
+unique_name_in_owner = true
+script = ExtResource("5_tj53p")
+starting_cash = 10
+max_fishes = null
+player_id = "Mors"
+cash_label = NodePath("CashBilboard")
+
+[node name="CashBilboard" type="Label3D" parent="CPU1/CPU1Controller" unique_id=784906944]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.035, 2, 1.528)
+billboard = 1
+text = "test"
+
+[node name="CPU2" type="MeshInstance3D" parent="." unique_id=1504770250]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8833574, 0.48583806, 0.19221997)
+mesh = SubResource("CapsuleMesh_l3vlx")
+
+[node name="CPU2Controller" type="Node" parent="CPU2" unique_id=499779583 node_paths=PackedStringArray("cash_label")]
+unique_name_in_owner = true
+script = ExtResource("5_tj53p")
+starting_cash = 10
+max_fishes = null
+player_id = "Yeti"
+cash_label = NodePath("CashBilboard")
+
+[node name="CashBilboard" type="Label3D" parent="CPU2/CPU2Controller" unique_id=1102310000]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.883, 2, 0.192)
+billboard = 1
+text = "test"
+
+[node name="CPU3" type="MeshInstance3D" parent="." unique_id=1431122556]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2091228, 0.48583806, -1.3796716)
+mesh = SubResource("CapsuleMesh_l3vlx")
+
+[node name="CPU3Controller" type="Node" parent="CPU3" unique_id=1078727605 node_paths=PackedStringArray("cash_label")]
+unique_name_in_owner = true
+script = ExtResource("5_tj53p")
+starting_cash = 10
+max_fishes = null
+player_id = "Eustachy"
+cash_label = NodePath("CashBilboard")
+
+[node name="CashBilboard" type="Label3D" parent="CPU3/CPU3Controller" unique_id=134553150]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.209, 2, -1.38)
+billboard = 1
+text = "test"
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1330912494]
+transform = Transform3D(0.86602545, -5.8562137e-09, 0.49999997, -0.49999997, -2.1855692e-08, 0.86602545, 5.856215e-09, -1, -2.1855694e-08, 2.2405267, 2.5583797, -2.3841858e-07)
+light_energy = 5.0
+
+[node name="EndGameScreen" parent="." unique_id=2069405153 instance=ExtResource("7_cd4ow")]
+unique_name_in_owner = true
+visible = false
+
+[node name="PokerGameOrchestrator" type="Node" parent="." unique_id=410881516 node_paths=PackedStringArray("player_controller", "cpu1_controller", "cpu2_controller", "cpu3_controller", "game_state", "deck", "end_game_screen")]
+unique_name_in_owner = true
+script = ExtResource("6_iodx1")
+player_controller = NodePath("../PlayerController")
+cpu1_controller = NodePath("../CPU1/CPU1Controller")
+cpu2_controller = NodePath("../CPU2/CPU2Controller")
+cpu3_controller = NodePath("../CPU3/CPU3Controller")
+game_state = NodePath("../PokerGameState")
+deck = NodePath("../DeckManager")
+end_game_screen = NodePath("../EndGameScreen")
