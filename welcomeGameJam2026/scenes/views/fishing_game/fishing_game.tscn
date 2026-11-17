@@ -1,10 +1,100 @@
 [gd_scene format=3 uid="uid://c5oqqpnwa3dpv"]
 
 [ext_resource type="Script" uid="uid://dyu8mkihnphyo" path="res://scenes/views/fishing_game/fishing_game.gd" id="1_vdhkj"]
+[ext_resource type="Script" uid="uid://da5tckxffau4m" path="res://scripts/fishing_orchestrator/fishing_orchestrator.gd" id="2_jnssj"]
+[ext_resource type="Script" uid="uid://dx8628pcddoix" path="res://scripts/hook_controller/hook_controller.gd" id="2_qtwaw"]
+[ext_resource type="PackedScene" uid="uid://uno6ukidotr1" path="res://scenes/components/fishing_hook/fishing_hook.tscn" id="3_jnssj"]
+[ext_resource type="Script" uid="uid://cgpif7c60joiv" path="res://scripts/deck_manager/deck_manager.gd" id="4_dkctf"]
+[ext_resource type="PackedScene" uid="uid://fm7ldayo1k4f" path="res://scenes/components/fishing_layer/fishing_layer.tscn" id="7_0u4uy"]
+
+[sub_resource type="Animation" id="Animation_qtwaw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FishingHook:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_jnssj"]
+resource_name = "move_hook_to_start"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FishingHook:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(580, -40), Vector2(580, 220)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7s4ht"]
+_data = {
+&"RESET": SubResource("Animation_qtwaw"),
+&"move_hook_to_start": SubResource("Animation_jnssj")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_myhs1"]
 
 [node name="FishingGame" type="Node2D" unique_id=257744207]
 script = ExtResource("1_vdhkj")
 
-[node name="DebugTimer" type="Timer" parent="." unique_id=1192313628]
+[node name="FishingOrchestrator" type="Node" parent="." unique_id=1768629690 node_paths=PackedStringArray("fishing_hook", "deck", "fishing_layers_parent", "fishing_layer_despawn", "fishing_layer_spawn")]
 unique_name_in_owner = true
-autostart = true
+script = ExtResource("2_jnssj")
+fishing_hook = NodePath("../FishingHook")
+deck = NodePath("../DeckManager")
+fishing_layers_parent = NodePath("../FishingLayers")
+fishing_layer_despawn = NodePath("../FishingLayerDespawn")
+fishing_layer_spawn = NodePath("../FishingLayerSpawn")
+speed_multiplier = 1.0
+
+[node name="HookController" type="Node" parent="." unique_id=846755875 node_paths=PackedStringArray("hook")]
+unique_name_in_owner = true
+script = ExtResource("2_qtwaw")
+hook_speed = 200.0
+hook = NodePath("../FishingHook")
+
+[node name="DeckManager" type="Node" parent="." unique_id=1033946764]
+unique_name_in_owner = true
+script = ExtResource("4_dkctf")
+
+[node name="FishingHook" parent="." unique_id=1544136282 instance=ExtResource("3_jnssj")]
+unique_name_in_owner = true
+scale = Vector2(0.5, 0.5)
+
+[node name="SequenceController" type="AnimationPlayer" parent="." unique_id=1957882605]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_7s4ht")
+playback_auto_capture_ease_type = 1
+
+[node name="FishingLayers" type="Node" parent="." unique_id=1133344728]
+unique_name_in_owner = true
+
+[node name="FishingLayer" parent="FishingLayers" unique_id=1212338432 instance=ExtResource("7_0u4uy")]
+
+[node name="FishingLayer2" parent="FishingLayers" unique_id=275675458 instance=ExtResource("7_0u4uy")]
+
+[node name="FishingLayer3" parent="FishingLayers" unique_id=1042151207 instance=ExtResource("7_0u4uy")]
+
+[node name="FishingLayer4" parent="FishingLayers" unique_id=396722271 instance=ExtResource("7_0u4uy")]
+
+[node name="FishingLayerDespawn" type="Area2D" parent="." unique_id=498310173]
+unique_name_in_owner = true
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FishingLayerDespawn" unique_id=704664177]
+shape = SubResource("RectangleShape2D_myhs1")
+
+[node name="FishingLayerSpawn" type="Node2D" parent="." unique_id=1905422555]
+unique_name_in_owner = true

@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dd1elubgcium7" path="res://scripts/poker_game_manager/poker_game_state.gd" id="3_7jrhj"]
 [ext_resource type="Script" uid="uid://bpfcw3wr1ibug" path="res://scripts/cpu_controller/cpu_controller.gd" id="5_tj53p"]
 [ext_resource type="Script" uid="uid://dvlnw751kbvvs" path="res://scripts/poker_game_orchestrator/poker_game_orchestrator.gd" id="6_iodx1"]
+[ext_resource type="PackedScene" uid="uid://drgp3i6dvjfaq" path="res://scenes/components/help_screen/help_screen.tscn" id="7_341c8"]
 [ext_resource type="PackedScene" uid="uid://bwkw1y3h6kgnn" path="res://scenes/components/end_game_screen/end_game_screen.tscn" id="7_cd4ow"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_myhs1"]
@@ -102,7 +103,11 @@ light_energy = 5.0
 unique_name_in_owner = true
 visible = false
 
-[node name="PokerGameOrchestrator" type="Node" parent="." unique_id=410881516 node_paths=PackedStringArray("player_controller", "cpu1_controller", "cpu2_controller", "cpu3_controller", "game_state", "deck", "end_game_screen")]
+[node name="HelpScreen" parent="." unique_id=1292824030 instance=ExtResource("7_341c8")]
+unique_name_in_owner = true
+visible = false
+
+[node name="PokerGameOrchestrator" type="Node" parent="." unique_id=410881516 node_paths=PackedStringArray("player_controller", "cpu1_controller", "cpu2_controller", "cpu3_controller", "game_state", "deck", "end_game_screen", "help_screen")]
 unique_name_in_owner = true
 script = ExtResource("6_iodx1")
 player_controller = NodePath("../PlayerController")
@@ -112,3 +117,4 @@ cpu3_controller = NodePath("../CPU3/CPU3Controller")
 game_state = NodePath("../PokerGameState")
 deck = NodePath("../DeckManager")
 end_game_screen = NodePath("../EndGameScreen")
+help_screen = NodePath("../HelpScreen")
