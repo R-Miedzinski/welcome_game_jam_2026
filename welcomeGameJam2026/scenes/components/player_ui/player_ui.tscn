@@ -11,6 +11,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_6j8jt")
 metadata/_edit_use_anchors_ = true
 
@@ -63,6 +65,7 @@ offset_bottom = -513.0
 grow_horizontal = 0
 grow_vertical = 0
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Control" type="Control" parent="TableCards" unique_id=524302486]
 layout_mode = 2
@@ -175,3 +178,16 @@ offset_right = 0.0
 offset_bottom = 136.0
 grow_horizontal = 0
 text = "Quit"
+
+[node name="MenuButtonHelp" parent="." unique_id=1755280537 instance=ExtResource("1_0jaed")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -273.0
+offset_right = -137.0
+offset_bottom = 136.0
+grow_horizontal = 0
+text = "Help
+"

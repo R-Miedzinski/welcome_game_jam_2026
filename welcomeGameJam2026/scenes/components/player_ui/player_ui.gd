@@ -9,6 +9,7 @@ signal fish_selected(fish_index: int, selected: bool)
 @onready var go_fish_button = %MenuButtonGoFish
 
 @onready var quit_button = %MenuButtonQuit
+@onready var help_button = %MenuButtonHelp
 
 @onready var fish1 = %Fish1
 @onready var fish2 = %Fish2
@@ -68,6 +69,12 @@ func enable_quit_button():
 
 func disable_quit_button():
 	quit_button.disabled = true
+
+func enable_help_button():
+	help_button.disabled = false
+
+func disable_help_button():
+	help_button.disabled = true
 
 func update_cards_display(cards: PackedStringArray) -> void:
 	if cards.size() > 0:

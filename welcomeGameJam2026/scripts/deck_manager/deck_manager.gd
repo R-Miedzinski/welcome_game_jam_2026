@@ -27,6 +27,31 @@ func draw(count: int = 1) -> String:
       break
   return ",".join(drawn_cards)
 
+func peek(count: int = 1) -> String:
+  var peeked_cards: Array = []
+  for i in range(count):
+    if deck.size() > 0:
+      peeked_cards.append(deck[deck.size() - 1 - i])
+    else:
+      break
+  return ",".join(peeked_cards)
+
+func peek_random(count: int = 1) -> String:
+  var random_cards: Array = []
+  for i in range(count):
+    if deck.size() > 0:
+      var index = randi() % deck.size()
+      random_cards.append(deck[index])
+    else:
+      break
+  return ",".join(random_cards)
+
+func take_out(card_string: String) -> void:
+  var cards_to_remove = card_string.split(",")
+  for card in cards_to_remove:
+    if card in deck:
+      deck.erase(card)
+
 func reshuffle(card_string: String) -> void:
   deck.append(card_string)
   deck.shuffle()

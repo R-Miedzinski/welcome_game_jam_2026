@@ -12,11 +12,14 @@ signal emit_player_decision(player_id: String, action: PokerGameStateManager.Pla
 @export var deck: DeckManager
 
 @export var end_game_screen: EndGameScreen
+@export var help_screen: HelpScreen
 
 var cpu_controllers: Dictionary = {}
 var loaded_from_serialized_state: bool = false
 
 func _ready() -> void:
+	_validate_exports()
+
 	emit_player_decision.connect(game_state._on_player_action)
 
 	game_state.request_card_draw.connect(_on_request_card_draw)
@@ -25,6 +28,7 @@ func _ready() -> void:
 	game_state.showdown_winners.connect(_on_showdown_winners)
 	if is_instance_valid(player_controller) and is_instance_valid(player_controller.player_ui):
 		game_state.community_cards_changed.connect(player_controller.player_ui.update_table_cards_display)
+		player_controller.player_ui.help_button.pressed.connect(_on_help_button_pressed)
 
 	game_state.register_player(player_controller.player_id)
 	game_state.register_player(cpu1_controller.player_id)
@@ -153,7 +157,19 @@ func _check_end_game() -> bool:
 	return false
 
 func _on_player_going_fishing(discarded_card: String) -> void:
-	print("Player is going fishing.")
 	deck.reshuffle(discarded_card)
 	serialize_and_save_state()
 	get_tree().change_scene_to_packed(Preloads.fishing_scene)
+
+func _on_help_button_pressed() -> void:
+	help_screen.visible = true
+
+func _validate_exports() -> void:
+	if not is_instance_valid(help_screen):
+		push_error("Help screen is not assigned or invalid.")
+	if not is_instance_valid(end_game_screen):
+		push_error("End game screen is not assigned or invalid.")
+	if not is_instance_valid(player_controller):
+		push_error("Player controller is not assigned or invalid.")
+	if not is_instance_valid(deck):
+		push_error("Deck is not assigned or invalid.")
