@@ -33,8 +33,8 @@ static var serialized_state: Dictionary = {}
 }
 
 @export var initial_cash: int = 1000
-@export var blind_bet: int = 50
-@export var minimum_raise: int = 50
+@export var blind_bet: int = 10
+@export var minimum_raise: int = 25
 @export var max_fishes: int = 1
 
 var game_seed: int = 0

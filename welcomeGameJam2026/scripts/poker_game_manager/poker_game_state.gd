@@ -44,29 +44,33 @@ const ALLOWED_PLAYER_TRANSITIONS = [
 	[PlayerState.ACTIVE, PlayerState.FOLDED],
 	[PlayerState.ACTIVE, PlayerState.CHECKED],
 	[PlayerState.ACTIVE, PlayerState.RAISED],
+	[PlayerState.ACTIVE, PlayerState.ALL_IN],
 	[PlayerState.CHECKED, PlayerState.ACTIVE],
 	[PlayerState.RAISED, PlayerState.ACTIVE],
 	[PlayerState.ACTIVE, PlayerState.OUT],
 	[PlayerState.CHECKED, PlayerState.OUT],
 	[PlayerState.RAISED, PlayerState.OUT],
 	[PlayerState.FOLDED, PlayerState.OUT],
+	[PlayerState.ALL_IN, PlayerState.OUT],
 	[PlayerState.ACTIVE, PlayerState.INIT],
 	[PlayerState.CHECKED, PlayerState.INIT],
 	[PlayerState.RAISED, PlayerState.INIT],
 	[PlayerState.FOLDED, PlayerState.INIT],
+	[PlayerState.ALL_IN, PlayerState.INIT],
 	[PlayerState.LOADED, PlayerState.INIT],
 	[PlayerState.LOADED, PlayerState.ACTIVE],
 	[PlayerState.LOADED, PlayerState.FOLDED],
 	[PlayerState.LOADED, PlayerState.CHECKED],
 	[PlayerState.LOADED, PlayerState.RAISED],
 	[PlayerState.LOADED, PlayerState.OUT],
+	[PlayerState.LOADED, PlayerState.ALL_IN],
 ]
 
 enum PlayerAction {
 	FOLD, # 0
 	CHECK, # 1
 	RAISE, # 2
-	ALL_IN, # 3 #TODO: Implement all-in logic
+	ALL_IN, # 3
 }
 
 signal game_state_changed(old_state: GameState, new_state: GameState)
@@ -87,10 +91,14 @@ signal send_winnings(winner_id: String, amount: int)
 var game_state: GameState = GameState.INIT
 var player_states: Dictionary = {}
 var player_bets: Dictionary = {}
+var player_phase_bets: Dictionary = {}
+var player_blind_posted: Dictionary = {}
 var player_order: Array = []
 
 var dealer_index: int = -1
+var blind_bet: int = 0
 var current_bet: int = 0
+var phase_bet: int = 0
 var pot: int = 0:
 	set(value):
 		var old_pot = pot
@@ -124,8 +132,11 @@ func new_play() -> void:
 
 	for key in player_bets.keys():
 		player_bets[key] = 0
+		player_phase_bets[key] = 0
+		player_blind_posted[key] = false
 	pot = 0
 	current_bet = 0
+	phase_bet = blind_bet
 	community_cards.clear()
 	community_cards_changed.emit(community_cards)
 	deck.shuffle()
@@ -140,10 +151,21 @@ func new_play() -> void:
 func register_player(player_id: String) -> void:
 	player_states[player_id] = PlayerState.ACTIVE
 	player_bets[player_id] = 0
+	player_phase_bets[player_id] = 0
+	player_blind_posted[player_id] = false
 	player_order.append(player_id)
+
+func post_blind(player_id: String, blind_amount: int) -> void:
+	player_bets[player_id] += blind_amount
+	player_blind_posted[player_id] = true
+	pot += blind_amount
+	current_bet = max(current_bet, blind_amount)
 
 func get_player_bet(player_id: String) -> int:
 	return player_bets.get(player_id, 0)
+
+func get_player_phase_bet(player_id: String) -> int:
+	return player_phase_bets.get(player_id, 0)
 
 func get_player_state(player_id: String) -> PlayerState:
 	return player_states.get(player_id, null)
@@ -151,20 +173,26 @@ func get_player_state(player_id: String) -> PlayerState:
 func serialize() -> Dictionary:
 	return {
 		"dealer_index": dealer_index,
+		"blind_bet": blind_bet,
 		"current_bet": current_bet,
+		"phase_bet": phase_bet,
 		"pot": pot,
 		"community_cards": community_cards,
 		"showdown_scores": showdown_scores,
 		"showdown_players": showdown_players,
 		"player_states": player_states,
 		"player_bets": player_bets,
+		"player_phase_bets": player_phase_bets,
+		"player_blind_posted": player_blind_posted,
 		"player_order": player_order,
 		"game_state": game_state
 	}
 
 func load_state(state: Dictionary) -> void:
 	dealer_index = state.get("dealer_index", 0)
+	blind_bet = state.get("blind_bet", 0)
 	current_bet = state.get("current_bet", 0)
+	phase_bet = state.get("phase_bet", 0)
 	pot = state.get("pot", 0)
 	community_cards = state.get("community_cards", [])
 	community_cards_changed.emit(community_cards)
@@ -173,6 +201,8 @@ func load_state(state: Dictionary) -> void:
 	showdown_players = state.get("showdown_players", [])
 
 	player_bets = state.get("player_bets", {})
+	player_phase_bets = state.get("player_phase_bets", {})
+	player_blind_posted = state.get("player_blind_posted", {})
 	player_order = state.get("player_order", [])
 
 	game_state = GameState.LOADED
@@ -208,6 +238,59 @@ func game_state_change(new_state: GameState) -> void:
 			state_change_stack.append(_transition_game_state.bind(current_state, new_state))
 			return
 	push_error("Invalid game state transition from %s to %s for game" % [current_state, new_state])
+
+func submit_hand_evaluation(player_id: String, score: int) -> void:
+	if game_state != GameState.SHOWDOWN or not showdown_players.has(player_id):
+		push_error("Unexpected hand evaluation for player %s." % [player_id])
+		return
+
+	showdown_scores[player_id] = score
+	if showdown_scores.size() < showdown_players.size():
+		return
+
+	var best_score: int = MIN_SCORE_THRESHOLD
+	var winner_ids: PackedStringArray = []
+	var winnings: Dictionary = {}
+	for evaluated_player in showdown_players:
+		var player_score: int = showdown_scores[evaluated_player]
+		if player_score > best_score:
+			best_score = player_score
+			winner_ids = [evaluated_player]
+		elif player_score == best_score:
+			winner_ids.append(evaluated_player)
+
+	var total_bets: int = 0
+	for bettor in player_bets.keys():
+		total_bets += get_player_bet(bettor)
+	if total_bets != pot:
+		push_error("Cannot split pot: player bets do not match the pot.")
+		return
+
+	for id in player_bets.keys():
+		winnings[id] = 0
+	# Split each contribution independently, returning capped shares to its bettor.
+	for bettor in player_bets.keys():
+		var bet: int = get_player_bet(bettor)
+		var distributed: int = 0
+		for i in range(winner_ids.size()):
+			var id: String = winner_ids[i]
+			var eligible_bet: int = bet
+			if get_player_state(id) == PlayerState.ALL_IN:
+				eligible_bet = min(bet, get_player_bet(id))
+			var amount: int = eligible_bet / winner_ids.size()
+			if i < eligible_bet % winner_ids.size():
+				amount += 1
+			winnings[id] += amount
+			distributed += amount
+		var refund: int = bet - distributed
+		if refund > 0:
+			winnings[bettor] = winnings.get(bettor, 0) + refund
+
+	current_bet = 0
+	pot = 0
+	for id in winnings:
+		send_winnings.emit(id, winnings[id])
+	showdown_winners.emit(winner_ids)
 
 func _advance_dealer() -> void:
 	var count = player_order.size()
@@ -264,6 +347,9 @@ func _transition_game_state(old_state: GameState, new_state: GameState) -> void:
 				game_state_change(GameState.SHOWDOWN)
 				return
 
+			phase_bet = current_bet
+			for key in player_phase_bets.keys():
+				player_phase_bets[key] = 0
 			_move_active_players_to_init()
 			game_state_change(GameState.PLAYER_TURN)
 		GameState.PLAYER_TURN:
@@ -296,12 +382,12 @@ func _check_if_should_advance_player_turn() -> bool:
 
 func _move_active_players_to_init() -> void:
 	for player_id in player_order:
-		if not _is_player_in_final_state(player_id) and get_player_state(player_id) != PlayerState.INIT:
+		if not _is_player_in_final_state(player_id) and get_player_state(player_id) != PlayerState.INIT and get_player_state(player_id) != PlayerState.ALL_IN:
 			player_state_change(player_id, PlayerState.INIT)
 
 func _get_first_player_to_move() -> String:
 	var dealer_id: String = player_order[dealer_index]
-	if not _is_player_in_final_state(dealer_id):
+	if not _is_player_in_final_state(dealer_id) and get_player_state(dealer_id) != PlayerState.ALL_IN:
 		return dealer_id
 	# Dealer is folded/out, so continue with the next eligible player after them.
 	return _try_get_next_player_to_move(dealer_id)
@@ -321,59 +407,7 @@ func _begin_showdown() -> void:
 	for player_id in showdown_players:
 		request_hand_evaluation.emit(player_id, community_cards.duplicate())
 
-func submit_hand_evaluation(player_id: String, score: int) -> void:
-	if game_state != GameState.SHOWDOWN or not showdown_players.has(player_id):
-		push_error("Unexpected hand evaluation for player %s." % [player_id])
-		return
 
-	showdown_scores[player_id] = score
-	if showdown_scores.size() < showdown_players.size():
-		return
-
-	var best_score: int = MIN_SCORE_THRESHOLD
-	var winner_ids: PackedStringArray = []
-	var winnings: Dictionary = {}
-	for evaluated_player in showdown_players:
-		var player_score: int = showdown_scores[evaluated_player]
-		if player_score > best_score:
-			best_score = player_score
-			winner_ids = [evaluated_player]
-		elif player_score == best_score:
-			winner_ids.append(evaluated_player)
-
-	var base_per_player_winnings: int = pot / winner_ids.size()
-	var remainder: int = pot % winner_ids.size()
-	var remaining: int = pot
-	var non_all_in_players: Array[String] = []
-	for i in range(winner_ids.size()):
-		var id: String = winner_ids[i]
-		var amount: int = base_per_player_winnings + (1 if i < remainder else 0)
-		if get_player_state(id) == PlayerState.ALL_IN:
-			amount = mini(amount, _get_all_in_winnings_cap(id, winner_ids.size()))
-		else:
-			non_all_in_players.append(id)
-		winnings[id] = amount
-		remaining -= amount
-
-	if not non_all_in_players.is_empty():
-		var extra_per_player: int = remaining / non_all_in_players.size()
-		var extra_remainder: int = remaining % non_all_in_players.size()
-		for i in range(non_all_in_players.size()):
-			var id: String = non_all_in_players[i]
-			winnings[id] += extra_per_player + (1 if i < extra_remainder else 0)
-		remaining = 0
-	elif remaining > 0:
-		push_warning("Unallocated pot remains because all winners are capped all-in players.")
-
-	current_bet = 0
-	pot = remaining
-	for id in winner_ids:
-		send_winnings.emit(id, winnings[id])
-	showdown_winners.emit(winner_ids)
-
-func _get_all_in_winnings_cap(player_id: String, winner_count: int) -> int:
-	return get_player_bet(player_id) * winner_count
-			
 func _try_get_next_player_to_move(current_player_id: String) -> String:
 	var current_index = player_order.find(current_player_id)
 	if current_index == -1:
@@ -413,14 +447,24 @@ func _on_player_action(player_id: String, action: PlayerAction, amount: int) -> 
 		PlayerAction.CHECK:
 			pot += amount
 			player_bets[player_id] = player_bets.get(player_id, 0) + amount
-			print("Player %s checked with amount %d" % [player_id, amount])
+			player_phase_bets[player_id] = player_phase_bets.get(player_id, 0) + amount
+			current_bet = max(current_bet, player_bets[player_id])
+			phase_bet = max(phase_bet, player_phase_bets[player_id])
 			player_state_change(player_id, PlayerState.CHECKED)
 		PlayerAction.RAISE:
 			pot += amount
 			player_bets[player_id] = player_bets.get(player_id, 0) + amount
+			player_phase_bets[player_id] = player_phase_bets.get(player_id, 0) + amount
 			current_bet = player_bets[player_id]
-			print("Player %s raised to amount %d" % [player_id, current_bet])
+			phase_bet = player_phase_bets[player_id]
 			player_state_change(player_id, PlayerState.RAISED)
+		PlayerAction.ALL_IN:
+			pot += amount
+			player_bets[player_id] = player_bets.get(player_id, 0) + amount
+			player_phase_bets[player_id] = player_phase_bets.get(player_id, 0) + amount
+			current_bet = max(current_bet, player_bets[player_id])
+			phase_bet = max(phase_bet, player_phase_bets[player_id])
+			player_state_change(player_id, PlayerState.ALL_IN)
 
 	print("Current pot: %s" % [pot])
 

@@ -19,11 +19,10 @@
 [node name="PlayerUi" parent="." unique_id=884965420 instance=ExtResource("1_c6r7b")]
 unique_name_in_owner = true
 
-[node name="PlayerController" type="Node" parent="." unique_id=254560071 node_paths=PackedStringArray("player_ui", "deck", "poker_game_manager")]
+[node name="PlayerController" type="Node" parent="." unique_id=254560071 node_paths=PackedStringArray("deck", "poker_game_manager")]
 unique_name_in_owner = true
 script = ExtResource("1_pcbri")
 player_id = "Player"
-player_ui = NodePath("../PlayerUi")
 deck = NodePath("../DeckManager")
 poker_game_manager = NodePath("../PokerGameState")
 
@@ -124,7 +123,7 @@ visible = false
 unique_name_in_owner = true
 visible = false
 
-[node name="PokerGameOrchestrator" type="Node" parent="." unique_id=410881516 node_paths=PackedStringArray("player_controller", "cpu1_controller", "cpu2_controller", "cpu3_controller", "game_state", "deck", "end_game_screen", "help_screen")]
+[node name="PokerGameOrchestrator" type="Node" parent="." unique_id=410881516 node_paths=PackedStringArray("player_controller", "cpu1_controller", "cpu2_controller", "cpu3_controller", "game_state", "deck", "player_ui", "end_game_screen", "help_screen")]
 unique_name_in_owner = true
 script = ExtResource("6_iodx1")
 player_controller = NodePath("../PlayerController")
@@ -133,5 +132,6 @@ cpu2_controller = NodePath("../CPU2/CPU2Controller")
 cpu3_controller = NodePath("../CPU3/CPU3Controller")
 game_state = NodePath("../PokerGameState")
 deck = NodePath("../DeckManager")
+player_ui = NodePath("../PlayerUi")
 end_game_screen = NodePath("../EndGameScreen")
 help_screen = NodePath("../HelpScreen")

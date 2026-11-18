@@ -27,7 +27,8 @@ var max_fishes: int = 0:
 	set(value):
 		max_fishes = value
 		remaining_fishes = max_fishes
-var raise_amount: int = 2
+var raise_amount: int = 0
+var blind_bet: int = 0
 
 var cash: int = 0:
 	set(value):
@@ -39,10 +40,17 @@ var remaining_fishes: int = 0
 var player_hand: PackedStringArray = []
 
 var already_raised: bool = false
+var entered_blind: bool = false
 
 func _ready() -> void:
 	cash = starting_cash
 	remaining_fishes = max_fishes
+
+func post_blind() -> int:
+	var blind_amount = min(blind_bet, cash)
+	cash -= blind_amount
+	entered_blind = true
+	return blind_amount
 
 func make_decision(table_cards: Array, current_bet: int, player_bet: int) -> void:
 	print("CPU player %s making decision with table cards: %s, current bet: %d, player bet: %d" % [player_id, table_cards, current_bet, player_bet])
@@ -125,7 +133,10 @@ func serialize() -> Dictionary:
 		"cash": cash,
 		"remaining_fishes": remaining_fishes,
 		"player_hand": player_hand,
-		"already_raised": already_raised
+		"already_raised": already_raised,
+		"raise_amount": raise_amount,
+		"blind_bet": blind_bet,
+		"entered_blind": entered_blind
 	}
 
 func load_state(state: Dictionary) -> void:
@@ -136,6 +147,9 @@ func load_state(state: Dictionary) -> void:
 	remaining_fishes = state.get("remaining_fishes", 0)
 	player_hand = state.get("player_hand", [])
 	already_raised = state.get("already_raised", false)
+	raise_amount = state.get("raise_amount", Preloads.Instance.minimum_raise)
+	blind_bet = state.get("blind_bet", Preloads.Instance.blind_bet)
+	entered_blind = state.get("entered_blind", false)
 
 func _update_state_label(action) -> void:
 	if state_label:
@@ -191,7 +205,10 @@ func _map_decision_to_action(decision: DecisionSchema.DecisionOutcome) -> int:
 func _make_bet(desired_decision: PokerGameStateManager.PlayerAction, current_bet: int, player_bet: int) -> Array:
 	var final_action: int = desired_decision
 	var bet_amount: int = 0
-	var to_call: int = current_bet - player_bet
+	var to_call: int = current_bet - player_bet 
+	if not entered_blind and to_call == 0:
+		to_call = blind_bet
+		entered_blind = true
 
 	var can_raise = cash > to_call + raise_amount
 
