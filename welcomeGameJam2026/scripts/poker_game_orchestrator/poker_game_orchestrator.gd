@@ -263,9 +263,13 @@ func _update_player_ui_for_turn() -> void:
 
 	if (player_controller.cash > 0 and game_state.phase_bet > 0) or player_controller.entered_blind == false:
 		player_ui.enable_call_button()
+	else:
+		player_ui.disable_call_button()
 
 	if player_controller.can_raise():
 		player_ui.enable_raise_button()
+	else:
+		player_ui.disable_raise_button()
 
 	_update_go_fish_button_state()
 

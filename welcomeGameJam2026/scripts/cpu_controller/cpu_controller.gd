@@ -210,7 +210,7 @@ func _make_bet(desired_decision: PokerGameStateManager.PlayerAction, current_bet
 		to_call = blind_bet
 		entered_blind = true
 
-	var can_raise = cash > to_call + raise_amount
+	var can_raise = cash > to_call + raise_amount and not already_raised
 
 	print("CPU player %s making bet with desired decision: %s, current bet: %d, player bet: %d, to call: %d, cash: %d" % [player_id, desired_decision, current_bet, player_bet, to_call, cash])
 	match desired_decision:
@@ -222,15 +222,15 @@ func _make_bet(desired_decision: PokerGameStateManager.PlayerAction, current_bet
 				bet_amount = min(cash, to_call + raise_amount)
 				final_action = PokerGameStateManager.PlayerAction.RAISE
 			
-			# TODO: enable after ALL_IN implemented
 			if bet_amount == cash:
 				final_action = PokerGameStateManager.PlayerAction.ALL_IN
 		PokerGameStateManager.PlayerAction.RAISE:
 			if can_raise:
 				bet_amount = to_call + raise_amount
+				already_raised = true
 			else:
 				bet_amount = min(cash, to_call)
-				final_action = PokerGameStateManager.PlayerAction.ALL_IN # TODO: change to ALL_IN when implemented
+				final_action = PokerGameStateManager.PlayerAction.ALL_IN if bet_amount >= cash else PokerGameStateManager.PlayerAction.CHECK
 		_:
 			final_action = PokerGameStateManager.PlayerAction.FOLD
 			bet_amount = 0
