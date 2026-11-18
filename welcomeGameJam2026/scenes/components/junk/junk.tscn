@@ -1,27 +1,15 @@
 [gd_scene format=3 uid="uid://bn63wibo00wpe"]
 
-[ext_resource type="Texture2D" uid="uid://bp1psdopekysk" path="res://icon.svg" id="1_pj5e2"]
 [ext_resource type="Script" uid="uid://cv1heq0dcpj7s" path="res://scenes/components/junk/junk.gd" id="1_r7ert"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_myhs1"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_pj5e2")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 5.0
-}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_myhs1"]
 
 [node name="Junk" type="Node2D" unique_id=403164394]
 script = ExtResource("1_r7ert")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=847810122]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=847810122]
+unique_name_in_owner = true
 rotation = 3.1415927
-sprite_frames = SubResource("SpriteFrames_myhs1")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=884217371 groups=["junk"]]
 scale = Vector2(7.5, 7.5)
