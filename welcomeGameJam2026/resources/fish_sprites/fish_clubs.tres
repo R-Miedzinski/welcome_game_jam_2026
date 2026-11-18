@@ -1,0 +1,19 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://b8j7kcwf0p3uy"]
+
+[ext_resource type="Texture2D" uid="uid://bp1psdopekysk" path="res://icon.svg" id="1_13v4v"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_13v4v")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"static",
+"speed": 5.0
+}]

@@ -13,6 +13,7 @@ signal mouse_exited()
 
 @onready var card_label = %CardLabel
 @onready var button = %Button
+@onready var sprite: AnimatedSprite2D = %Sprite
 
 var is_moving: bool = false
 var speed: Vector2 = Vector2(100.0, 0)
@@ -46,6 +47,12 @@ func _process(delta: float) -> void:
 func _refresh_display() -> void:
 	if is_instance_valid(card_label):
 		card_label.text = card_string
+
+	if is_instance_valid(sprite):
+		sprite.sprite_frames = Preloads.Instance.get_fish_sprite(card_string)
+
+		if sprite.sprite_frames == null: return
+		sprite.animation = Preloads.Instance.sprite_animation_names.get("default") if is_moving else Preloads.Instance.sprite_animation_names.get("static")
 
 func _begin_hover() -> void:
 	if not selected and selectable:

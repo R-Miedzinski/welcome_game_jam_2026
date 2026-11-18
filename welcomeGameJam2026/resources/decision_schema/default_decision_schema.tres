@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="DecisionSchema" format=3 uid="uid://bfbrb1xgulmb8"]
+
+[ext_resource type="Script" uid="uid://c8nwycfytcae2" path="res://resources/decision_schema/decision_schema.gd" id="1_ij6ta"]
+[ext_resource type="Script" uid="uid://cflqr1acrr6aq" path="res://resources/decision_schema/cardpair_decision.gd" id="1_tgqly"]
+[ext_resource type="Resource" uid="uid://vpf8posgn5s" path="res://resources/decision_schema/cardpair_decisions/default_0.tres" id="2_66fy1"]
+[ext_resource type="Resource" uid="uid://ba5uvx5spy4c3" path="res://resources/decision_schema/cardpair_decisions/default_3.tres" id="3_u267v"]
+[ext_resource type="Resource" uid="uid://cacteqg7e63sw" path="res://resources/decision_schema/cardpair_decisions/default_4.tres" id="4_kegho"]
+
+[resource]
+script = ExtResource("1_ij6ta")
+decision_table = Dictionary[int, ExtResource("1_tgqly")]({
+0: ExtResource("2_66fy1"),
+3: ExtResource("3_u267v"),
+4: ExtResource("4_kegho")
+})
+metadata/_custom_type_script = "uid://c8nwycfytcae2"

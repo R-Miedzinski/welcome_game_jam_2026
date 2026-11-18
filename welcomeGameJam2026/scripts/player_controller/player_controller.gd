@@ -6,8 +6,6 @@ signal submit_player_decision(player_id: String, decision: PokerGameStateManager
 signal going_fishing(discarded_card: String)
 
 @export var player_id: String
-@export var starting_cash: int
-@export var max_fishes: int = 0
 
 @export var player_ui: PlayerUI
 @export var deck: DeckManager
@@ -21,6 +19,16 @@ var cash: int:
 			player_ui.update_cash_display(cash)
 	get:
 		return cash
+
+var max_fishes: int = 0:
+	set(value):
+		max_fishes = value
+		remaining_fishes = max_fishes
+var starting_cash: int:
+	set(value):
+		starting_cash = value
+		cash = starting_cash
+var raise_amount: int = 0
 
 var remaining_fishes: int = 0
 var selected_fish_index: int = -1:
@@ -81,11 +89,11 @@ func start_player_turn(current_bet: int = 0, player_bet: int = 0) -> void:
 	is_turn_active = true
 
 	if is_instance_valid(player_ui):
-		player_ui.turn_start_update(new_bet, new_bet + 2)
+		player_ui.turn_start_update(new_bet, new_bet + raise_amount)
 
 		player_ui.enable_fold_button()
 
-		if cash > 0:
+		if cash > 0 and current_bet > 0:
 			player_ui.enable_call_button()
 
 		if !already_raised:
@@ -156,8 +164,8 @@ func _on_fold_button_pressed() -> void:
 	end_player_turn()
 
 func _on_raise_button_pressed() -> void:
-	submit_player_decision.emit(player_id, PokerGameStateManager.PlayerAction.RAISE, new_bet + 2)
-	cash -= (new_bet + 2)
+	submit_player_decision.emit(player_id, PokerGameStateManager.PlayerAction.RAISE, new_bet + raise_amount)
+	cash -= (new_bet + raise_amount)
 	already_raised = true
 	end_player_turn()
 

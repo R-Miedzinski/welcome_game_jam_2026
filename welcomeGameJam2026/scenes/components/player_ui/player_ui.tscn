@@ -38,7 +38,6 @@ size_flags_horizontal = 3
 
 [node name="Fish1" parent="PlayerHand/Control" unique_id=1012391387 instance=ExtResource("1_507nr")]
 unique_name_in_owner = true
-card_string = "KH"
 selectable = true
 
 [node name="Control2" type="Control" parent="PlayerHand" unique_id=1779367357]
@@ -47,7 +46,6 @@ size_flags_horizontal = 3
 
 [node name="Fish2" parent="PlayerHand/Control2" unique_id=1933323895 instance=ExtResource("1_507nr")]
 unique_name_in_owner = true
-card_string = "KH"
 selectable = true
 
 [node name="TableCards" type="HBoxContainer" parent="." unique_id=417324822]
@@ -73,7 +71,6 @@ size_flags_horizontal = 3
 
 [node name="TableFish1" parent="TableCards/Control" unique_id=70675117 instance=ExtResource("1_507nr")]
 unique_name_in_owner = true
-card_string = "KH"
 
 [node name="Control2" type="Control" parent="TableCards" unique_id=112888096]
 layout_mode = 2
@@ -81,7 +78,6 @@ size_flags_horizontal = 3
 
 [node name="TableFish2" parent="TableCards/Control2" unique_id=1508471072 instance=ExtResource("1_507nr")]
 unique_name_in_owner = true
-card_string = "KH"
 
 [node name="Control3" type="Control" parent="TableCards" unique_id=41493149]
 layout_mode = 2
@@ -89,7 +85,6 @@ size_flags_horizontal = 3
 
 [node name="TableFish3" parent="TableCards/Control3" unique_id=1545478098 instance=ExtResource("1_507nr")]
 unique_name_in_owner = true
-card_string = "KH"
 
 [node name="Control4" type="Control" parent="TableCards" unique_id=160981209]
 layout_mode = 2
@@ -97,7 +92,6 @@ size_flags_horizontal = 3
 
 [node name="TableFish4" parent="TableCards/Control4" unique_id=1760259745 instance=ExtResource("1_507nr")]
 unique_name_in_owner = true
-card_string = "KH"
 
 [node name="Control5" type="Control" parent="TableCards" unique_id=1688263198]
 layout_mode = 2
@@ -105,7 +99,6 @@ size_flags_horizontal = 3
 
 [node name="TableFish5" parent="TableCards/Control5" unique_id=1664080629 instance=ExtResource("1_507nr")]
 unique_name_in_owner = true
-card_string = "KH"
 
 [node name="PlayerMoney" type="Label" parent="." unique_id=272246422]
 unique_name_in_owner = true

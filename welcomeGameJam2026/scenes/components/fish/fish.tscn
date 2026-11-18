@@ -12,6 +12,11 @@ animations = [{
 "loop": 1,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"static",
+"speed": 5.0
 }]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nm77g"]
@@ -22,9 +27,9 @@ shadow_color = Color(0, 0, 0, 1)
 [node name="Fish" type="Node2D" unique_id=1012391387]
 script = ExtResource("1_nm77g")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1934431804]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1934431804]
+unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_myhs1")
-frame_progress = 0.5582432
 
 [node name="CardLabel" type="Label" parent="." unique_id=992515596]
 unique_name_in_owner = true
