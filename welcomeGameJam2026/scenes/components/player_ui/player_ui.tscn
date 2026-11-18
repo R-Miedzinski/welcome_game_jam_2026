@@ -1,0 +1,177 @@
+[gd_scene format=3 uid="uid://ca4hyef2ak6ld"]
+
+[ext_resource type="PackedScene" uid="uid://cyjn4g8y3bp53" path="res://scenes/components/menu button/menu_button.tscn" id="1_0jaed"]
+[ext_resource type="Script" uid="uid://cp6oq1d71tn0q" path="res://scenes/components/player_ui/player_ui.gd" id="1_6j8jt"]
+[ext_resource type="PackedScene" uid="uid://ddtfre13trud7" path="res://scenes/components/fish/fish.tscn" id="1_507nr"]
+
+[node name="PlayerUi" type="Control" unique_id=884965420]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6j8jt")
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayerHand" type="HBoxContainer" parent="." unique_id=1667763033]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -328.0
+offset_top = -68.0
+offset_right = -56.0
+offset_bottom = -1.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 1
+
+[node name="Control" type="Control" parent="PlayerHand" unique_id=1986391749]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Fish1" parent="PlayerHand/Control" unique_id=1012391387 instance=ExtResource("1_507nr")]
+unique_name_in_owner = true
+card_string = "KH"
+selectable = true
+
+[node name="Control2" type="Control" parent="PlayerHand" unique_id=1779367357]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Fish2" parent="PlayerHand/Control2" unique_id=1933323895 instance=ExtResource("1_507nr")]
+unique_name_in_owner = true
+card_string = "KH"
+selectable = true
+
+[node name="TableCards" type="HBoxContainer" parent="." unique_id=417324822]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1085.0
+offset_top = -580.0
+offset_right = -381.0
+offset_bottom = -513.0
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 1
+
+[node name="Control" type="Control" parent="TableCards" unique_id=524302486]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TableFish1" parent="TableCards/Control" unique_id=70675117 instance=ExtResource("1_507nr")]
+unique_name_in_owner = true
+card_string = "KH"
+
+[node name="Control2" type="Control" parent="TableCards" unique_id=112888096]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TableFish2" parent="TableCards/Control2" unique_id=1508471072 instance=ExtResource("1_507nr")]
+unique_name_in_owner = true
+card_string = "KH"
+
+[node name="Control3" type="Control" parent="TableCards" unique_id=41493149]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TableFish3" parent="TableCards/Control3" unique_id=1545478098 instance=ExtResource("1_507nr")]
+unique_name_in_owner = true
+card_string = "KH"
+
+[node name="Control4" type="Control" parent="TableCards" unique_id=160981209]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TableFish4" parent="TableCards/Control4" unique_id=1760259745 instance=ExtResource("1_507nr")]
+unique_name_in_owner = true
+card_string = "KH"
+
+[node name="Control5" type="Control" parent="TableCards" unique_id=1688263198]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TableFish5" parent="TableCards/Control5" unique_id=1664080629 instance=ExtResource("1_507nr")]
+unique_name_in_owner = true
+card_string = "KH"
+
+[node name="PlayerMoney" type="Label" parent="." unique_id=272246422]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -169.0
+offset_right = 57.0
+offset_bottom = -146.0
+grow_vertical = 0
+text = "Money"
+
+[node name="CurrentPot" type="Label" parent="." unique_id=749522527]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -196.0
+offset_right = 57.0
+offset_bottom = -173.0
+grow_vertical = 0
+text = "Pot"
+
+[node name="PlayerActions" type="HBoxContainer" parent="." unique_id=376983383]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -136.0
+offset_right = 556.0
+grow_vertical = 0
+
+[node name="MenuButtonRaise" parent="PlayerActions" unique_id=186663661 instance=ExtResource("1_0jaed")]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Raise
+"
+
+[node name="MenuButtonCall" parent="PlayerActions" unique_id=418877452 instance=ExtResource("1_0jaed")]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Call"
+
+[node name="MenuButtonFold" parent="PlayerActions" unique_id=2147097157 instance=ExtResource("1_0jaed")]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Fold"
+
+[node name="MenuButtonGoFish" parent="PlayerActions" unique_id=496143731 instance=ExtResource("1_0jaed")]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Fish Card"
+
+[node name="MenuButtonQuit" parent="." unique_id=893405755 instance=ExtResource("1_0jaed")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -136.0
+offset_right = 0.0
+offset_bottom = 136.0
+grow_horizontal = 0
+text = "Quit"

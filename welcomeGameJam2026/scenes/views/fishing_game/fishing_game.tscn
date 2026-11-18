@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c5oqqpnwa3dpv"]
+
+[ext_resource type="Script" uid="uid://dyu8mkihnphyo" path="res://scenes/views/fishing_game/fishing_game.gd" id="1_vdhkj"]
+
+[node name="FishingGame" type="Node2D" unique_id=257744207]
+script = ExtResource("1_vdhkj")
+
+[node name="DebugTimer" type="Timer" parent="." unique_id=1192313628]
+unique_name_in_owner = true
+autostart = true

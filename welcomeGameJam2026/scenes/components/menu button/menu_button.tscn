@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cyjn4g8y3bp53"]
+
+[ext_resource type="Texture2D" uid="uid://bp1psdopekysk" path="res://icon.svg" id="1_6a48b"]
+[ext_resource type="Script" uid="uid://cwx0ky6lmcbct" path="res://scenes/components/menu button/menu_button.gd" id="2_si4xe"]
+
+[node name="MenuButton" type="Button" unique_id=186663661]
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Type label here..."
+icon = ExtResource("1_6a48b")
+flat = true
+autowrap_mode = 2
+autowrap_trim_flags = 192
+icon_alignment = 1
+script = ExtResource("2_si4xe")

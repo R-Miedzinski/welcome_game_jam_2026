@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://b24pgln3wjuto"]
+
+[ext_resource type="Script" uid="uid://8foc23h7fgnp" path="res://scenes/views/main_menu/main_menu.gd" id="1_g4x7w"]
+[ext_resource type="PackedScene" uid="uid://cyjn4g8y3bp53" path="res://scenes/components/menu button/menu_button.tscn" id="1_hbf6i"]
+
+[node name="MainMenu" type="Control" unique_id=1885164395]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g4x7w")
+
+[node name="ButtonBlockMainMenu" type="VBoxContainer" parent="." unique_id=336725309]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="MenuButtonStartGame" parent="ButtonBlockMainMenu" unique_id=186663661 instance=ExtResource("1_hbf6i")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Play"
+
+[node name="MenuButtonOptions" parent="ButtonBlockMainMenu" unique_id=1350746887 instance=ExtResource("1_hbf6i")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Options"
+
+[node name="MenuButtonQuitGame" parent="ButtonBlockMainMenu" unique_id=805454331 instance=ExtResource("1_hbf6i")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit Game"
