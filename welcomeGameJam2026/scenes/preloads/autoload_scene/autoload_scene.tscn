@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://bm6s8tssx8l32"]
+
+[ext_resource type="Script" uid="uid://717ryuvdgc4g" path="res://scenes/preloads/autoload_scene/autoload_scene.gd" id="1_jygrr"]
+[ext_resource type="SpriteFrames" uid="uid://cnk2sntg7lvp2" path="res://resources/junk_sprites/junk_1.tres" id="2_orwtn"]
+[ext_resource type="SpriteFrames" uid="uid://bcwlki5583jfc" path="res://resources/junk_sprites/junk_2.tres" id="3_ngxww"]
+[ext_resource type="SpriteFrames" uid="uid://vsnuvbdu5i2f" path="res://resources/fish_sprites/fish_spades.tres" id="3_wv7os"]
+[ext_resource type="SpriteFrames" uid="uid://deytskt8kws66" path="res://resources/fish_sprites/fish_hearts.tres" id="4_n27cj"]
+[ext_resource type="SpriteFrames" uid="uid://ogc61y4bn6j3" path="res://resources/fish_sprites/fish_diamonds.tres" id="5_61v72"]
+[ext_resource type="SpriteFrames" uid="uid://b8j7kcwf0p3uy" path="res://resources/fish_sprites/fish_clubs.tres" id="6_x0iin"]
+[ext_resource type="SpriteFrames" uid="uid://c5mqj62vplthh" path="res://resources/fish_sprites/fish_jc.tres" id="7_fjx6b"]
+[ext_resource type="SpriteFrames" uid="uid://3tjje3fnrcm3" path="res://resources/fish_sprites/fish_jd.tres" id="8_ngxww"]
+[ext_resource type="SpriteFrames" uid="uid://bf7tlxn3fknl6" path="res://resources/fish_sprites/fish_jh.tres" id="9_wv5xo"]
+[ext_resource type="SpriteFrames" uid="uid://c4wkqplofj880" path="res://resources/fish_sprites/fish_js.tres" id="10_wjslj"]
+[ext_resource type="SpriteFrames" uid="uid://bw63d71g7ng56" path="res://resources/fish_sprites/fish_kc.tres" id="11_mqhku"]
+[ext_resource type="SpriteFrames" uid="uid://bomrd7rylft0a" path="res://resources/fish_sprites/fish_kd.tres" id="12_34ptb"]
+[ext_resource type="SpriteFrames" uid="uid://dpeg5nnun4x0x" path="res://resources/fish_sprites/fish_kh.tres" id="13_2wnxp"]
+[ext_resource type="SpriteFrames" uid="uid://bym3cbiq710yf" path="res://resources/fish_sprites/fish_ks.tres" id="14_2x28y"]
+[ext_resource type="SpriteFrames" uid="uid://1rmspxoi5q8b" path="res://resources/fish_sprites/fish_qc.tres" id="15_7xa4i"]
+[ext_resource type="SpriteFrames" uid="uid://br7s8jvvi7nsx" path="res://resources/fish_sprites/fish_qd.tres" id="16_msg0b"]
+[ext_resource type="SpriteFrames" uid="uid://h6inyunfc438" path="res://resources/fish_sprites/fish_qh.tres" id="17_mls52"]
+[ext_resource type="SpriteFrames" uid="uid://225rb31eea8i" path="res://resources/fish_sprites/fish_qs.tres" id="18_vj2f5"]
+
+[node name="AutoloadScene" type="Node" unique_id=1137974580]
+script = ExtResource("1_jygrr")
+junk_sprites = Array[SpriteFrames]([ExtResource("2_orwtn"), ExtResource("3_ngxww")])
+fish_sprites = Dictionary[String, SpriteFrames]({
+"C": ExtResource("6_x0iin"),
+"D": ExtResource("5_61v72"),
+"H": ExtResource("4_n27cj"),
+"JC": ExtResource("7_fjx6b"),
+"JD": ExtResource("8_ngxww"),
+"JH": ExtResource("9_wv5xo"),
+"JS": ExtResource("10_wjslj"),
+"KC": ExtResource("11_mqhku"),
+"KD": ExtResource("12_34ptb"),
+"KH": ExtResource("13_2wnxp"),
+"KS": ExtResource("14_2x28y"),
+"QC": ExtResource("15_7xa4i"),
+"QD": ExtResource("16_msg0b"),
+"QH": ExtResource("17_mls52"),
+"QS": ExtResource("18_vj2f5"),
+"S": ExtResource("3_wv7os")
+})
+fish_label_offsets = Dictionary[String, Vector2]({
+"C": Vector2(-15, 0),
+"D": Vector2(-16, 0),
+"H": Vector2(-5, 0),
+"JC": Vector2(0, -32),
+"JD": Vector2(0, 10),
+"JH": Vector2(0, 0),
+"JS": Vector2(0, -17),
+"KC": Vector2(0, -32),
+"KD": Vector2(0, 10),
+"KH": Vector2(0, 0),
+"KS": Vector2(0, -17),
+"QC": Vector2(0, -32),
+"QD": Vector2(0, 10),
+"QH": Vector2(0, 0),
+"QS": Vector2(0, -17),
+"S": Vector2(-15, 0)
+})

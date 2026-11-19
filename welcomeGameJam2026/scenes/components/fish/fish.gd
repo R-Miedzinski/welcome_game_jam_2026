@@ -41,6 +41,10 @@ func _ready() -> void:
 	if is_moving:
 		button.disabled = true
 		direction = sign(Preloads.Instance.WINDOW_WIDTH_VPX / 2 - position.x)
+		if direction <= 0:
+			sprite.flip_h = false
+		else:
+			sprite.flip_h = true
 
 	_refresh_display()
 
@@ -50,6 +54,9 @@ func _process(delta: float) -> void:
 		position.y -= speed.y *  delta
 
 func _refresh_display() -> void:
+	if card_string.length() < 2:
+		return
+
 	if is_instance_valid(card_label):
 		card_label.text = card_string
 
@@ -62,9 +69,15 @@ func _refresh_display() -> void:
 		if card_label.text == "0":
 			card_label.text = "10"
 
+		if is_moving:
+			sprite.play()
+
 	if is_instance_valid(card_label):
 		var offset = Preloads.Instance.get_fish_label_offset(card_string)
-		card_label.position = initial_label_position + offset
+		if is_moving:
+			card_label.position = initial_label_position + Vector2(-direction * offset.x, offset.y)
+		else:
+			card_label.position = initial_label_position + offset
 
 func _begin_hover() -> void:
 	if not selected and selectable:
