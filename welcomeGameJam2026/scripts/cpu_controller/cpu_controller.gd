@@ -147,8 +147,8 @@ func load_state(state: Dictionary) -> void:
 	remaining_fishes = state.get("remaining_fishes", 0)
 	player_hand = state.get("player_hand", [])
 	already_raised = state.get("already_raised", false)
-	raise_amount = state.get("raise_amount", Preloads.Instance.minimum_raise)
-	blind_bet = state.get("blind_bet", Preloads.Instance.blind_bet)
+	raise_amount = state.get("raise_amount", Preloads.Instance.game_options.get("raise_amount", 0))
+	blind_bet = state.get("blind_bet", Preloads.Instance.game_options.get("blind_bet", 0))
 	entered_blind = state.get("entered_blind", false)
 
 func _update_state_label(action) -> void:

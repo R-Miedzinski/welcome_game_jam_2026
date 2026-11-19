@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://c3o8ae6qt8fef"]
+
+[ext_resource type="Script" path="res://scenes/components/form/inputs/text_input/string_input.gd" id="1_script"]
+
+[node name="TextInput" type="MarginContainer" unique_id=1982499142]
+custom_maximum_size = Vector2(400, -1)
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_script")
+
+[node name="Content" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Content" unique_id=1093637278]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Label"
+
+[node name="LineEdit" type="LineEdit" parent="Content" unique_id=2046679403]
+layout_mode = 2

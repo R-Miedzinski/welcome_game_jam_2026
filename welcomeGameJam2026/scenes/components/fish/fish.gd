@@ -19,6 +19,8 @@ var is_moving: bool = false
 var speed: Vector2 = Vector2(100.0, 0)
 var direction: int = 1
 
+var initial_label_position: Vector2 = Vector2.ZERO
+
 var selected: bool = false:
 	set(value):
 		selected = value
@@ -33,11 +35,14 @@ func _ready() -> void:
 		button.mouse_entered.connect(_on_mouse_entered)
 		button.mouse_exited.connect(_on_mouse_exited)
 
-	_refresh_display()
-	
+	if is_instance_valid(card_label):
+		initial_label_position = card_label.position
+
 	if is_moving:
 		button.disabled = true
 		direction = sign(Preloads.Instance.WINDOW_WIDTH_VPX / 2 - position.x)
+
+	_refresh_display()
 
 func _process(delta: float) -> void:
 	if is_moving:
@@ -53,6 +58,13 @@ func _refresh_display() -> void:
 
 		if sprite.sprite_frames == null: return
 		sprite.animation = Preloads.Instance.sprite_animation_names.get("default") if is_moving else Preloads.Instance.sprite_animation_names.get("static")
+		card_label.text = card_string[0]
+		if card_label.text == "0":
+			card_label.text = "10"
+
+	if is_instance_valid(card_label):
+		var offset = Preloads.Instance.get_fish_label_offset(card_string)
+		card_label.position = initial_label_position + offset
 
 func _begin_hover() -> void:
 	if not selected and selectable:

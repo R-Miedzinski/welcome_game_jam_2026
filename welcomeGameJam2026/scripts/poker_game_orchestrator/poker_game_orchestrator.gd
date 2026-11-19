@@ -48,13 +48,13 @@ func _ready() -> void:
 
 	game_state.register_player(player_controller.player_id)
 
-	player_controller.max_fishes = Preloads.Instance.max_fishes
-	player_controller.starting_cash = Preloads.Instance.initial_cash
-	player_controller.raise_amount = Preloads.Instance.minimum_raise
-	player_controller.blind_bet = Preloads.Instance.blind_bet
+	player_controller.max_fishes = Preloads.Instance.game_options.get("max_fishes", 0)
+	player_controller.starting_cash = Preloads.Instance.game_options.get("starting_cash", 0)
+	player_controller.raise_amount = Preloads.Instance.game_options.get("raise_amount", 0)
+	player_controller.blind_bet = Preloads.Instance.game_options.get("blind_bet", 0)
 	player_controller.entered_blind = false
 
-	game_state.blind_bet = Preloads.Instance.blind_bet
+	game_state.blind_bet = Preloads.Instance.game_options.get("blind_bet", 0)
 
 	_setup_cpu_player(cpu1_controller)
 	_setup_cpu_player(cpu2_controller)
@@ -100,10 +100,10 @@ func _setup_cpu_player(cpu_controller: CPUController) -> void:
 
 	game_state.register_player(cpu_controller.player_id)
 	
-	cpu_controller.max_fishes = Preloads.Instance.max_fishes
-	cpu_controller.starting_cash = Preloads.Instance.initial_cash
-	cpu_controller.raise_amount = Preloads.Instance.minimum_raise
-	cpu_controller.blind_bet = Preloads.Instance.blind_bet
+	cpu_controller.max_fishes = Preloads.Instance.game_options.get("max_fishes", 0)
+	cpu_controller.starting_cash = Preloads.Instance.game_options.get("starting_cash", 0)
+	cpu_controller.raise_amount = Preloads.Instance.game_options.get("raise_amount", 0)
+	cpu_controller.blind_bet = Preloads.Instance.game_options.get("blind_bet", 0)
 	cpu_controller.entered_blind = false
 
 	cpu_controllers[cpu_controller.player_id] = cpu_controller

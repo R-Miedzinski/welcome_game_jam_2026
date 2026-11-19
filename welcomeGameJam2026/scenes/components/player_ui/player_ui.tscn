@@ -24,12 +24,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -328.0
-offset_top = -68.0
-offset_right = -56.0
-offset_bottom = -1.0
+offset_left = -311.0
+offset_top = -71.0
+offset_right = 179.0
+offset_bottom = -4.0
 grow_horizontal = 0
 grow_vertical = 0
+scale = Vector2(0.8, 0.8)
 alignment = 1
 
 [node name="Control" type="Control" parent="PlayerHand" unique_id=1986391749]
@@ -51,19 +52,12 @@ selectable = true
 [node name="TableCards" type="HBoxContainer" parent="." unique_id=417324822]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -1085.0
-offset_top = -580.0
-offset_right = -381.0
-offset_bottom = -513.0
-grow_horizontal = 0
-grow_vertical = 0
+offset_left = 70.99999
+offset_top = 65.99999
+offset_right = 785.99994
+offset_bottom = 133.0
+scale = Vector2(0.8, 0.8)
 alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="Control" type="Control" parent="TableCards" unique_id=524302486]
 layout_mode = 2
@@ -111,7 +105,7 @@ offset_top = -169.0
 offset_right = 57.0
 offset_bottom = -146.0
 grow_vertical = 0
-text = "Money"
+text = "MONEY"
 
 [node name="CurrentPot" type="Label" parent="." unique_id=749522527]
 unique_name_in_owner = true
@@ -124,7 +118,7 @@ offset_top = -196.0
 offset_right = 57.0
 offset_bottom = -173.0
 grow_vertical = 0
-text = "Pot"
+text = "POT"
 
 [node name="PlayerActions" type="HBoxContainer" parent="." unique_id=376983383]
 layout_mode = 1
@@ -139,26 +133,25 @@ grow_vertical = 0
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
-text = "Raise
-"
+text = "RAISE"
 
 [node name="MenuButtonCall" parent="PlayerActions" unique_id=418877452 instance=ExtResource("1_0jaed")]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
-text = "Call"
+text = "CALL"
 
 [node name="MenuButtonFold" parent="PlayerActions" unique_id=2147097157 instance=ExtResource("1_0jaed")]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
-text = "Fold"
+text = "FOLD"
 
 [node name="MenuButtonGoFish" parent="PlayerActions" unique_id=496143731 instance=ExtResource("1_0jaed")]
 unique_name_in_owner = true
 layout_mode = 2
 disabled = true
-text = "Fish Card"
+text = "FISH"
 
 [node name="MenuButtonQuit" parent="." unique_id=893405755 instance=ExtResource("1_0jaed")]
 unique_name_in_owner = true
@@ -170,7 +163,7 @@ offset_left = -136.0
 offset_right = 0.0
 offset_bottom = 136.0
 grow_horizontal = 0
-text = "Quit"
+text = "MENU_BTN"
 
 [node name="MenuButtonHelp" parent="." unique_id=1755280537 instance=ExtResource("1_0jaed")]
 unique_name_in_owner = true
@@ -182,5 +175,4 @@ offset_left = -273.0
 offset_right = -137.0
 offset_bottom = 136.0
 grow_horizontal = 0
-text = "Help
-"
+text = "HELP_BTN"

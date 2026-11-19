@@ -1,0 +1,30 @@
+keys,eng,pl
+PLAY_BTN,Play,Graj
+OPTIONS_BTN,Options,Opcje
+QUIT_GAME_BTN,Quit Game,Wyjdź z Gry
+CANCEL_BTN,Cancel,Anuluj
+APPLY_CHANGES_BTN,Apply changes,Zastosuj zmiany
+HELP_BTN,Help,Jak grać
+MENU_BTN,Main Menu,Menu Główne
+RAISE,Raise,Podbij
+CALL,Call,Call
+FOLD,Fold,Pass
+FISH,Fish,Łów
+POT,Current Pot,Aktualne Pula
+MONEY,Current Cash,Pieniądze
+GAME_OPT_TAB,Game,Gra
+AUDIO_OPT_TAB,Audio,Audio
+LANG_OPT,Language,Język
+SEED_OPT,Seed,Seed
+MAX_FISH_OPT,Max Fishes,Ilość łowień
+START_MONEY_OPT,Starting Cash,Początkowe Pieniądze
+BLIND_BET_OPT,Blind Bet,Blind Bet
+RAISE_OPT,Raise Amount,Wysokość Podbicia
+MASTER_SOUND_OPT,Master,Master
+TRACK_SOUND_OPT,Soundtrack,Muzyka
+SFX_SOUND_OPT,Sound Effects,Efekty Dźwiękowe
+UI_SOUND_OPT,Interface Effects,Dźwięki Interfejsu
+English,English,Angielski
+Polish,Polish,Polski
+LOST_LBL,You've Lost!,Przegrałeś!
+WON_LBL,You've Won!,Wygrałeś!

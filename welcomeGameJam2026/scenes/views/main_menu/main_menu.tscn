@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://8foc23h7fgnp" path="res://scenes/views/main_menu/main_menu.gd" id="1_g4x7w"]
 [ext_resource type="PackedScene" uid="uid://cyjn4g8y3bp53" path="res://scenes/components/menu button/menu_button.tscn" id="1_hbf6i"]
+[ext_resource type="PackedScene" uid="uid://ddtfre13trud7" path="res://scenes/components/fish/fish.tscn" id="3_gs7fx"]
+[ext_resource type="PackedScene" uid="uid://w574ia2ddm5f" path="res://scenes/components/options/options.tscn" id="4_ua0fs"]
 
 [node name="MainMenu" type="Control" unique_id=1885164395]
 process_mode = 3
@@ -25,14 +27,67 @@ alignment = 1
 [node name="MenuButtonStartGame" parent="ButtonBlockMainMenu" unique_id=186663661 instance=ExtResource("1_hbf6i")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Play"
+text = "PLAY_BTN"
 
 [node name="MenuButtonOptions" parent="ButtonBlockMainMenu" unique_id=1350746887 instance=ExtResource("1_hbf6i")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Options"
+text = "OPTIONS_BTN"
 
 [node name="MenuButtonQuitGame" parent="ButtonBlockMainMenu" unique_id=805454331 instance=ExtResource("1_hbf6i")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Quit Game"
+text = "QUIT_GAME_BTN"
+
+[node name="Fish" parent="." unique_id=1012391387 instance=ExtResource("3_gs7fx")]
+position = Vector2(108, 113)
+card_string = "JC"
+
+[node name="Fish2" parent="." unique_id=1298982812 instance=ExtResource("3_gs7fx")]
+position = Vector2(98, 299)
+card_string = "QC"
+
+[node name="Fish3" parent="." unique_id=449249036 instance=ExtResource("3_gs7fx")]
+position = Vector2(96, 492)
+card_string = "KC"
+
+[node name="Fish4" parent="." unique_id=277098052 instance=ExtResource("3_gs7fx")]
+position = Vector2(305, 113)
+card_string = "JH"
+
+[node name="Fish5" parent="." unique_id=425134719 instance=ExtResource("3_gs7fx")]
+position = Vector2(295, 299)
+card_string = "QH"
+
+[node name="Fish6" parent="." unique_id=502712464 instance=ExtResource("3_gs7fx")]
+position = Vector2(293, 492)
+card_string = "KH"
+
+[node name="Fish7" parent="." unique_id=639840230 instance=ExtResource("3_gs7fx")]
+position = Vector2(819, 102)
+card_string = "JS"
+
+[node name="Fish8" parent="." unique_id=1939314956 instance=ExtResource("3_gs7fx")]
+position = Vector2(809, 288)
+card_string = "QS"
+
+[node name="Fish9" parent="." unique_id=1355137813 instance=ExtResource("3_gs7fx")]
+position = Vector2(807, 481)
+card_string = "KS"
+
+[node name="Fish10" parent="." unique_id=449376811 instance=ExtResource("3_gs7fx")]
+position = Vector2(1029, 100)
+card_string = "JD"
+
+[node name="Fish11" parent="." unique_id=1384157093 instance=ExtResource("3_gs7fx")]
+position = Vector2(1019, 286)
+card_string = "QD"
+
+[node name="Fish12" parent="." unique_id=648813957 instance=ExtResource("3_gs7fx")]
+position = Vector2(1017, 479)
+card_string = "KD"
+
+[node name="Options" parent="." unique_id=2147413792 instance=ExtResource("4_ua0fs")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1

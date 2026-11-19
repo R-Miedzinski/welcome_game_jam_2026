@@ -1,0 +1,22 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bw63d71g7ng56"]
+
+[ext_resource type="Texture2D" uid="uid://5glfno1qgpnb" path="res://resources/fish_sprites/assets/KC.PNG" id="1_37sev"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_37sev")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_37sev")
+}],
+"loop": 1,
+"name": &"static",
+"speed": 5.0
+}]

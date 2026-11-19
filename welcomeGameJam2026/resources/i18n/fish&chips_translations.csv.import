@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dl5f2uyluf4l8"
+
+[deps]
+
+files=["res://resources/i18n/fish&chips_translations.eng.translation", "res://resources/i18n/fish&chips_translations.pl.translation"]
+
+source_file="res://resources/i18n/fish&chips_translations.csv"
+dest_files=["res://resources/i18n/fish&chips_translations.eng.translation", "res://resources/i18n/fish&chips_translations.pl.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

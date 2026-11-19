@@ -47,6 +47,10 @@ HookMoveRight={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://resources/i18n/fish&chips_translations.eng.translation", "res://resources/i18n/fish&chips_translations.pl.translation")
+
 [layer_names]
 
 2d_physics/layer_1="Environment"

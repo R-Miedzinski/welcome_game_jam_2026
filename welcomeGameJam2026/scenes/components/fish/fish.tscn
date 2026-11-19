@@ -19,16 +19,26 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SystemFont" id="SystemFont_ljhvc"]
+font_names = PackedStringArray("Sitka Text")
+
 [sub_resource type="LabelSettings" id="LabelSettings_nm77g"]
+font = SubResource("SystemFont_ljhvc")
+font_size = 24
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_myhs1"]
+radius = 9.0
 
 [node name="Fish" type="Node2D" unique_id=1012391387]
 script = ExtResource("1_nm77g")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1934431804]
 unique_name_in_owner = true
+scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_myhs1")
 
 [node name="CardLabel" type="Label" parent="." unique_id=992515596]

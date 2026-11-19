@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ln5khw01ls8d" path="res://scenes/components/help_screen/help_screen.gd" id="1_2ufnt"]
 [ext_resource type="PackedScene" uid="uid://cyjn4g8y3bp53" path="res://scenes/components/menu button/menu_button.tscn" id="1_b4r2k"]
+[ext_resource type="PackedScene" uid="uid://yravtencv47t" path="res://scenes/components/modal_background/modal_background.tscn" id="2_0uuy3"]
 
 [node name="HelpScreen" type="Control" unique_id=1292824030]
 layout_mode = 3
@@ -13,15 +14,8 @@ grow_vertical = 2
 script = ExtResource("1_2ufnt")
 metadata/_edit_use_anchors_ = true
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1895256041]
+[node name="ModalBackground" parent="." unique_id=334779783 instance=ExtResource("2_0uuy3")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.2231029, 0.2231029, 0.22310287, 0.24705882)
-metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="." unique_id=1942590418]
 custom_minimum_size = Vector2(600, 400)
@@ -48,4 +42,4 @@ offset_left = -136.0
 offset_right = 0.0
 offset_bottom = 136.0
 grow_horizontal = 0
-text = "Close"
+text = "CLOSE_BTN"

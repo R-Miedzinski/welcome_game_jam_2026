@@ -33,12 +33,12 @@ func _ready() -> void:
 	fish2.pressed.connect(_on_card2_in_hand_pressed)
 
 func turn_start_update(to_check: int, raise_bet: int) -> void:
-	raise_button.text = "Raise " + str(raise_bet)
-	call_button.text = "Call " + str(to_check)
+	raise_button.text = tr("RAISE") + " " + str(raise_bet)
+	call_button.text = tr("CALL") + " " + str(to_check)
 
 func end_turn_update() -> void:
-	raise_button.text = "Raise"
-	call_button.text = "Call"
+	raise_button.text = tr("RAISE")
+	call_button.text = tr("CALL")
 
 func enable_raise_button():
 	raise_button.disabled = false
@@ -128,13 +128,12 @@ func update_table_cards_display(cards: PackedStringArray) -> void:
 		table_fish5.visible = false
 
 func update_cash_display(cash: int) -> void:
-	cash_label.text = "Money: " + str(cash)
+	cash_label.text = tr("MONEY") + ": " + str(cash)
 
 func update_current_pot_display(current_pot: int) -> void:
-	current_pot_label.text = "Current Pot: " + str(current_pot)
+	current_pot_label.text = tr("POT") + ": " + str(current_pot)
 
 func _on_card1_in_hand_pressed():
-	print("Card 1 in hand pressed.")
 	if not fish1.selectable:
 		return
 
@@ -143,7 +142,6 @@ func _on_card1_in_hand_pressed():
 	fish_selected.emit(0, fish1.selected)
 
 func _on_card2_in_hand_pressed():
-	print("Card 2 in hand pressed.")
 	if not fish2.selectable:
 		return
 
