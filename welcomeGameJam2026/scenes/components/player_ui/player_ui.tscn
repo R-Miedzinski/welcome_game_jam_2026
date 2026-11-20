@@ -15,8 +15,10 @@
 [ext_resource type="Texture2D" uid="uid://cw8ddnif0s4c1" path="res://scenes/components/player_ui/assets/Red_Default.png" id="9_ks4xb"]
 [ext_resource type="Texture2D" uid="uid://20akyteu45j8" path="res://scenes/components/player_ui/assets/Red_Onclick.png" id="10_c4xxp"]
 [ext_resource type="Texture2D" uid="uid://b62c4gyularb6" path="res://scenes/components/player_ui/assets/Fish_Disabled.png" id="10_tyvj4"]
+[ext_resource type="Texture2D" uid="uid://ngc8gs7epf61" path="res://scenes/components/menu button/assets/chosen_folded.png" id="11_5jys4"]
 [ext_resource type="Texture2D" uid="uid://dol2yhkqspaev" path="res://scenes/components/player_ui/assets/Green_Default.png" id="11_rhq83"]
 [ext_resource type="Texture2D" uid="uid://c8nhyb1ns26ha" path="res://scenes/components/player_ui/assets/Green_OnClick.png" id="12_puotl"]
+[ext_resource type="Texture2D" uid="uid://cpd47arscstwe" path="res://scenes/components/menu button/assets/chosen_call.png" id="12_tyvj4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rhq83"]
 texture = ExtResource("7_5gvnc")
@@ -29,6 +31,16 @@ texture = ExtResource("7_puotl")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5gvnc"]
 texture = ExtResource("10_tyvj4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ua0fs"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+texture = ExtResource("11_5jys4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tyvj4"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+texture = ExtResource("12_tyvj4")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ks4xb"]
 texture = ExtResource("11_rhq83")
@@ -260,6 +272,7 @@ text = "FISH"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/hover = SubResource("StyleBoxTexture_ua0fs")
 disabled = true
 text = "FOLD"
 
@@ -274,6 +287,7 @@ text = "RAISE"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/hover = SubResource("StyleBoxTexture_tyvj4")
 disabled = true
 text = "CALL"
 
