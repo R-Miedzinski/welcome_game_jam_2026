@@ -46,70 +46,34 @@ mesh = SubResource("BoxMesh_myhs1")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0354363, 0.48583806, 1.5278757)
 mesh = SubResource("CapsuleMesh_l3vlx")
 
-[node name="CPU1Controller" type="Node" parent="CPU1" unique_id=1856201156 node_paths=PackedStringArray("cash_label", "state_label", "deck")]
+[node name="CPU1Controller" type="Node" parent="CPU1" unique_id=1856201156 node_paths=PackedStringArray("deck")]
 unique_name_in_owner = true
 script = ExtResource("5_tj53p")
 player_id = "Mors"
-cash_label = NodePath("CashBilboard")
-state_label = NodePath("StateBilboard")
 decision_schema = ExtResource("6_6dssf")
 deck = NodePath("../../DeckManager")
-
-[node name="CashBilboard" type="Label3D" parent="CPU1/CPU1Controller" unique_id=784906944]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.035, 2, 1.528)
-billboard = 1
-text = "test"
-
-[node name="StateBilboard" type="Label3D" parent="CPU1/CPU1Controller" unique_id=848377660]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.035, 2.5, 1.528)
-billboard = 1
-text = "test"
 
 [node name="CPU2" type="MeshInstance3D" parent="." unique_id=1504770250]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8833574, 0.48583806, 0.19221997)
 mesh = SubResource("CapsuleMesh_l3vlx")
 
-[node name="CPU2Controller" type="Node" parent="CPU2" unique_id=499779583 node_paths=PackedStringArray("cash_label", "state_label", "deck")]
+[node name="CPU2Controller" type="Node" parent="CPU2" unique_id=499779583 node_paths=PackedStringArray("deck")]
 unique_name_in_owner = true
 script = ExtResource("5_tj53p")
 player_id = "Yeti"
-cash_label = NodePath("CashBilboard")
-state_label = NodePath("StateBilboard")
 decision_schema = ExtResource("6_6dssf")
 deck = NodePath("../../DeckManager")
-
-[node name="CashBilboard" type="Label3D" parent="CPU2/CPU2Controller" unique_id=1102310000]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.883, 2, 0.192)
-billboard = 1
-text = "test"
-
-[node name="StateBilboard" type="Label3D" parent="CPU2/CPU2Controller" unique_id=1534429356]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.883, 2.5, 0.192)
-billboard = 1
-text = "test"
 
 [node name="CPU3" type="MeshInstance3D" parent="." unique_id=1431122556]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2091228, 0.48583806, -1.3796716)
 mesh = SubResource("CapsuleMesh_l3vlx")
 
-[node name="CPU3Controller" type="Node" parent="CPU3" unique_id=1078727605 node_paths=PackedStringArray("cash_label", "state_label", "deck")]
+[node name="CPU3Controller" type="Node" parent="CPU3" unique_id=1078727605 node_paths=PackedStringArray("deck")]
 unique_name_in_owner = true
 script = ExtResource("5_tj53p")
 player_id = "Eustachy"
-cash_label = NodePath("CashBilboard")
-state_label = NodePath("StateBilboard")
 decision_schema = ExtResource("6_6dssf")
 deck = NodePath("../../DeckManager")
-
-[node name="CashBilboard" type="Label3D" parent="CPU3/CPU3Controller" unique_id=134553150]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.209, 2, -1.38)
-billboard = 1
-text = "test"
-
-[node name="StateBilboard" type="Label3D" parent="CPU3/CPU3Controller" unique_id=1630776283]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.209, 2.5, -1.38)
-billboard = 1
-text = "test"
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1330912494]
 transform = Transform3D(0.86602545, -5.8562137e-09, 0.49999997, -0.49999997, -2.1855692e-08, 0.86602545, 5.856215e-09, -1, -2.1855694e-08, 2.2405267, 2.5583797, -2.3841858e-07)

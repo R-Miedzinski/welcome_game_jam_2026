@@ -3,25 +3,31 @@ extends Control
 
 signal fish_selected(fish_index: int, selected: bool)
 
-@onready var raise_button = %MenuButtonRaise
-@onready var call_button = %MenuButtonCall
-@onready var fold_button = %MenuButtonFold
-@onready var go_fish_button = %MenuButtonGoFish
+@onready var raise_button: Button = %MenuButtonRaise
+@onready var call_button: Button = %MenuButtonCall
+@onready var fold_button: Button = %MenuButtonFold
+@onready var go_fish_button: Button = %MenuButtonGoFish
 
-@onready var quit_button = %MenuButtonQuit
-@onready var help_button = %MenuButtonHelp
+@onready var main_menu_button: Button = %MenuButtonMainMenu
+@onready var quit_game_button: Button = %MenuButtonQuit
+@onready var help_button: Button = %MenuButtonHelp
 
-@onready var fish1 = %Fish1
-@onready var fish2 = %Fish2
+@onready var fish1: Fish = %Fish1
+@onready var fish2: Fish = %Fish2
 
-@onready var table_fish1 = %TableFish1
-@onready var table_fish2 = %TableFish2
-@onready var table_fish3 = %TableFish3
-@onready var table_fish4 = %TableFish4
-@onready var table_fish5 = %TableFish5
+@onready var table_fish1: Fish = %TableFish1
+@onready var table_fish2: Fish = %TableFish2
+@onready var table_fish3: Fish = %TableFish3
+@onready var table_fish4: Fish = %TableFish4
+@onready var table_fish5: Fish = %TableFish5
 
-@onready var cash_label = %PlayerMoney
-@onready var current_pot_label = %CurrentPot
+@onready var cpu1_display: PlayerDisplay = %CPU1Display
+@onready var cpu2_display: PlayerDisplay = %CPU2Display
+@onready var cpu3_display: PlayerDisplay = %CPU3Display
+var cpu_display_connections: Dictionary = {}
+
+@onready var cash_label: Label = %PlayerMoney
+@onready var current_pot_label: Label = %CurrentPot
 
 func _ready() -> void:
 	fish1.card_string = ""
@@ -32,9 +38,11 @@ func _ready() -> void:
 	fish2.visible = false
 	fish2.pressed.connect(_on_card2_in_hand_pressed)
 
-func turn_start_update(to_check: int, raise_bet: int) -> void:
+func turn_start_update(to_check: int, raise_bet: int, remaining_fishes: int) -> void:
 	raise_button.text = tr("RAISE") + " " + str(raise_bet)
 	call_button.text = tr("CALL") + " " + str(to_check)
+	go_fish_button.text = tr("FISH") + " " + str(remaining_fishes) +\
+		"/" + str(Preloads.Instance.game_options.get("max_fishes", 0))
 
 func end_turn_update() -> void:
 	raise_button.text = tr("RAISE")
@@ -64,11 +72,17 @@ func enable_go_fish_button():
 func disable_go_fish_button():
 	go_fish_button.disabled = true
 
-func enable_quit_button():
-	quit_button.disabled = false
+func enable_main_menu_button():
+	main_menu_button.disabled = false
 
-func disable_quit_button():
-	quit_button.disabled = true
+func disable_main_menu_button():
+	main_menu_button.disabled = true
+
+func enable_quit_game_button():
+	quit_game_button.disabled = false
+
+func disable_quit_game_button():
+	quit_game_button.disabled = true
 
 func enable_help_button():
 	help_button.disabled = false
@@ -132,6 +146,34 @@ func update_cash_display(cash: int) -> void:
 
 func update_current_pot_display(current_pot: int) -> void:
 	current_pot_label.text = tr("POT") + ": " + str(current_pot)
+
+func connect_cpu_display(cpu_id: String) -> void:
+	if cpu_id in cpu_display_connections:
+		print("CPU display for %s already connected" % cpu_id)
+		return
+	else:
+		var id = cpu_display_connections.size() + 1
+		match id:
+			1:
+				cpu_display_connections[cpu_id] = cpu1_display
+				cpu1_display.set_player_name(cpu_id)
+			2:
+				cpu_display_connections[cpu_id] = cpu2_display
+				cpu2_display.set_player_name(cpu_id)
+			3:
+				cpu_display_connections[cpu_id] = cpu3_display
+				cpu3_display.set_player_name(cpu_id)
+			_:
+				print("No available CPU display for %s" % cpu_id)
+
+func update_cpu_display(cpu_id: String, cash: int, state: PokerGameStateManager.PlayerState) -> void:
+	if not cpu_display_connections.has(cpu_id):
+		print("No CPU display connected for %s" % cpu_id)
+		return
+
+	var display = cpu_display_connections[cpu_id]
+	display.set_player_cash(str(cash))
+	display.set_banner_texture_by_state(state)
 
 func _on_card1_in_hand_pressed():
 	if not fish1.selectable:

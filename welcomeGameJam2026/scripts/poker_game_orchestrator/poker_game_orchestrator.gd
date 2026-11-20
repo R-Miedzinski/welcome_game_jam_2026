@@ -24,6 +24,7 @@ func _ready() -> void:
 	emit_player_decision.connect(game_state._on_player_action)
 
 	game_state.game_state_changed.connect(_on_game_state_changed)
+	game_state.player_state_changed.connect(_on_player_state_changed)
 	game_state.request_card_draw.connect(_on_request_card_draw)
 	game_state.request_player_action.connect(_on_request_player_action)
 	game_state.request_hand_evaluation.connect(_on_hand_evaluation_request)
@@ -33,9 +34,11 @@ func _ready() -> void:
 	if is_instance_valid(player_ui):
 		game_state.community_cards_changed.connect(player_ui.update_table_cards_display)
 		game_state.pot_value_changed.connect(_on_pot_value_changed)
+
 		player_ui.help_button.pressed.connect(_on_help_button_pressed)
-		
-		player_ui.quit_button.pressed.connect(_on_quit_button_pressed)
+		player_ui.quit_game_button.pressed.connect(_on_quit_game_button_pressed)
+		player_ui.main_menu_button.pressed.connect(_on_main_menu_button_pressed)
+
 		player_ui.call_button.pressed.connect(_on_call_button_pressed)
 		player_ui.fold_button.pressed.connect(_on_fold_button_pressed)
 		player_ui.raise_button.pressed.connect(_on_raise_button_pressed)
@@ -97,6 +100,7 @@ func load_serialized_state() -> void:
 
 func _setup_cpu_player(cpu_controller: CPUController) -> void:
 	cpu_controller.submit_player_decision.connect(_on_submit_player_decision)
+	player_ui.connect_cpu_display(cpu_controller.player_id)
 
 	game_state.register_player(cpu_controller.player_id)
 	
@@ -197,6 +201,10 @@ func _on_send_winnings(winner_id: String, amount: int) -> void:
 		if cpu_controller.cash <= 0 and game_state.get_player_state(cpu_controller.player_id) != PokerGameStateManager.PlayerState.OUT:
 			game_state.player_state_change(cpu_controller.player_id, PokerGameStateManager.PlayerState.OUT)
 
+func _on_player_state_changed(player_id: String, _old_state: PokerGameStateManager.PlayerState, new_state: PokerGameStateManager.PlayerState) -> void:
+	if is_instance_valid(player_ui) and player_id != player_controller.player_id:
+		player_ui.update_cpu_display(player_id, cpu_controllers[player_id].cash, new_state)
+
 func _on_game_state_changed(_old_state: int, _new_state: int) -> void:
 	player_controller.already_raised = false
 	for cpu_controller in cpu_controllers.values():
@@ -220,10 +228,12 @@ func _on_player_going_fishing(discarded_card: String) -> void:
 func _on_help_button_pressed() -> void:
 	help_screen.visible = true
 
-func _on_quit_button_pressed() -> void:
-	print("Quit button pressed.")
+func _on_main_menu_button_pressed() -> void:
 	Preloads.Instance.reset_game_data()
 	get_tree().change_scene_to_packed(Preloads.menu_scene)
+
+func _on_quit_game_button_pressed() -> void:
+	get_tree().quit()
 
 func _on_call_button_pressed() -> void:
 	player_controller._on_call_button_pressed()
@@ -258,7 +268,7 @@ func _update_player_ui_for_turn() -> void:
 	if not is_instance_valid(player_ui):
 		return
 
-	player_ui.turn_start_update(player_controller.new_bet, player_controller.new_bet + player_controller.raise_amount)
+	player_ui.turn_start_update(player_controller.new_bet, player_controller.new_bet + player_controller.raise_amount, player_controller.remaining_fishes)
 	player_ui.enable_fold_button()
 
 	if (player_controller.cash > 0 and game_state.phase_bet > 0) or player_controller.entered_blind == false:

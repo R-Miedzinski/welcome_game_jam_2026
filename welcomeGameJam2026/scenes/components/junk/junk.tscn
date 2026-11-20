@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cv1heq0dcpj7s" path="res://scenes/components/junk/junk.gd" id="1_r7ert"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_myhs1"]
-radius = 9.0
+radius = 8.0
 
 [node name="Junk" type="Node2D" unique_id=403164394]
 script = ExtResource("1_r7ert")

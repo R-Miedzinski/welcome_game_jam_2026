@@ -144,7 +144,8 @@ func new_play() -> void:
 
 	for key in player_states.keys():
 		if player_states[key] != PlayerState.OUT:
-			player_states[key] = PlayerState.INIT
+			# player_states[key] = PlayerState.INIT
+			player_state_change(key, PlayerState.INIT)
 	
 	game_state_change(GameState.WAITING)
 
@@ -268,7 +269,8 @@ func submit_hand_evaluation(player_id: String, score: int) -> void:
 
 	for id in player_bets.keys():
 		winnings[id] = 0
-	# Split each contribution independently, returning capped shares to its bettor.
+	# Rotate remainder slots between contributions while returning capped shares to bettors.
+	var remainder_index: int = 0
 	for bettor in player_bets.keys():
 		var bet: int = get_player_bet(bettor)
 		var distributed: int = 0
@@ -278,13 +280,15 @@ func submit_hand_evaluation(player_id: String, score: int) -> void:
 			if get_player_state(id) == PlayerState.ALL_IN:
 				eligible_bet = min(bet, get_player_bet(id))
 			var amount: int = eligible_bet / winner_ids.size()
-			if i < eligible_bet % winner_ids.size():
+			var remainder_position: int = (i - remainder_index + winner_ids.size()) % winner_ids.size()
+			if remainder_position < eligible_bet % winner_ids.size():
 				amount += 1
 			winnings[id] += amount
 			distributed += amount
 		var refund: int = bet - distributed
 		if refund > 0:
 			winnings[bettor] = winnings.get(bettor, 0) + refund
+		remainder_index = (remainder_index + bet % winner_ids.size()) % winner_ids.size()
 
 	current_bet = 0
 	pot = 0
@@ -370,6 +374,15 @@ func _transition_game_state(old_state: GameState, new_state: GameState) -> void:
 				if not _is_player_in_final_state(player_id):
 					last_player = player_id
 					break
+
+			if last_player == "":
+				push_error("Cannot award pot without an eligible player.")
+				return
+
+			var winnings: int = pot
+			current_bet = 0
+			pot = 0
+			send_winnings.emit(last_player, winnings)
 			var winners: PackedStringArray = [last_player]
 			showdown_winners.emit(winners)
 

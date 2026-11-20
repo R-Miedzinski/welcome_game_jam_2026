@@ -42,9 +42,9 @@ fish_sprites = Dictionary[String, SpriteFrames]({
 "S": ExtResource("3_wv7os")
 })
 fish_label_offsets = Dictionary[String, Vector2]({
-"C": Vector2(-15, 0),
-"D": Vector2(-16, 0),
-"H": Vector2(-5, 0),
+"C": Vector2(-17, 0),
+"D": Vector2(-20, 0),
+"H": Vector2(-3, 0),
 "JC": Vector2(0, -32),
 "JD": Vector2(0, 10),
 "JH": Vector2(0, 0),

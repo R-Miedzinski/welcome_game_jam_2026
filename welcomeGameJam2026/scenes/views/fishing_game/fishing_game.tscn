@@ -82,12 +82,29 @@ playback_auto_capture_ease_type = 1
 unique_name_in_owner = true
 
 [node name="FishingLayer" parent="FishingLayers" unique_id=1212338432 instance=ExtResource("7_0u4uy")]
+distance_from_center_scaling = Vector2(1, 2)
+distance_from_center_factor = 0.7
+speed_randomness_percent = 25.0
 
 [node name="FishingLayer2" parent="FishingLayers" unique_id=275675458 instance=ExtResource("7_0u4uy")]
+distance_from_center_scaling = Vector2(1, 2)
+distance_from_center_factor = 0.7
+speed_randomness_percent = 25.0
 
 [node name="FishingLayer3" parent="FishingLayers" unique_id=1042151207 instance=ExtResource("7_0u4uy")]
+distance_from_center_scaling = Vector2(1, 2)
+distance_from_center_factor = 0.7
+speed_randomness_percent = 25.0
 
 [node name="FishingLayer4" parent="FishingLayers" unique_id=396722271 instance=ExtResource("7_0u4uy")]
+distance_from_center_scaling = Vector2(1, 2)
+distance_from_center_factor = 0.7
+speed_randomness_percent = 25.0
+
+[node name="FishingLayer5" parent="FishingLayers" unique_id=1638921093 instance=ExtResource("7_0u4uy")]
+distance_from_center_scaling = Vector2(1, 2)
+distance_from_center_factor = 0.7
+speed_randomness_percent = 25.0
 
 [node name="FishingLayerDespawn" type="Area2D" parent="." unique_id=498310173]
 unique_name_in_owner = true

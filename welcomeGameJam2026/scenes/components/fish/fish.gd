@@ -40,7 +40,7 @@ func _ready() -> void:
 
 	if is_moving:
 		button.disabled = true
-		direction = sign(Preloads.Instance.WINDOW_WIDTH_VPX / 2 - position.x)
+		direction = 1 if position.x < Preloads.Instance.WINDOW_WIDTH_VPX / 2.0 else -1
 		if direction <= 0:
 			sprite.flip_h = false
 		else:

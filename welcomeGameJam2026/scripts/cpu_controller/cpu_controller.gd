@@ -1,20 +1,9 @@
 class_name CPUController
 extends Node
 
-var state_label_text = {
-	PokerGameStateManager.PlayerAction.FOLD: "Folding",
-	PokerGameStateManager.PlayerAction.CHECK: "Calling",
-	PokerGameStateManager.PlayerAction.RAISE: "Raising",
-	PokerGameStateManager.PlayerAction.ALL_IN: "Going All-In",
-	"FISH": "Fishing"
-}
-
 signal submit_player_decision(player_id: String, decision: PokerGameStateManager.PlayerAction, new_bet: int)
 
 @export var player_id: String
-
-@export var cash_label: Label3D
-@export var state_label: Label3D
 
 @export var decision_schema: DecisionSchema
 @export var deck: DeckManager
@@ -30,11 +19,7 @@ var max_fishes: int = 0:
 var raise_amount: int = 0
 var blind_bet: int = 0
 
-var cash: int = 0:
-	set(value):
-		cash = value
-		if cash_label:
-			cash_label.text = player_id + ": " + str(cash) + " $"
+var cash: int = 0
 var remaining_fishes: int = 0
 
 var player_hand: PackedStringArray = []
@@ -53,13 +38,10 @@ func post_blind() -> int:
 	return blind_amount
 
 func make_decision(table_cards: Array, current_bet: int, player_bet: int) -> void:
-	print("CPU player %s making decision with table cards: %s, current bet: %d, player bet: %d" % [player_id, table_cards, current_bet, player_bet])
 	var schema_decision = decision_schema.get_decision(table_cards.size(), player_hand[1], player_hand[0])
-	print("CPU player %s schema decision: %s" % [player_id, schema_decision])
 	var decision_outcome = null
 	if schema_decision != null:
 		decision_outcome = schema_decision.decision_can_fish if _can_fish() else schema_decision.decision_cannot_fish
-	print("CPU player %s decision outcome: %s; cards in hand: %s; he can fish: %s" % [player_id, decision_outcome, player_hand, _can_fish()])
 
 	var desired_decision = null
 
@@ -77,7 +59,6 @@ func make_decision(table_cards: Array, current_bet: int, player_bet: int) -> voi
 		var evaluation = evaluate_hand(table_cards)
 		var hand_score = evaluation.get("hand_score", 0)
 
-		print("CPU player %s hand score: %d" % [player_id, hand_score])
 		if hand_score >= Preloads.Poker.SCORING_THRESHOLDS.get(Preloads.Poker.Combination.STRAIGHT):
 			desired_decision = _map_decision_to_action(DecisionSchema.DecisionOutcome.RAISE)
 		elif hand_score >= Preloads.Poker.SCORING_THRESHOLDS.get(Preloads.Poker.Combination.ONE_PAIR):
@@ -91,12 +72,9 @@ func make_decision(table_cards: Array, current_bet: int, player_bet: int) -> voi
 				if desired_decision == -1:
 					desired_decision = DecisionSchema.DecisionOutcome.FOLD
 
-	print("CPU player %s final desired decision: %s" % [player_id, desired_decision])
 	var action_with_bet = _make_bet(desired_decision, current_bet, player_bet)
 	cash -= action_with_bet[1]
 
-	print("CPU player %s action with bet: %s" % [player_id, action_with_bet])
-	_update_state_label(action_with_bet[0])
 	submit_player_decision.emit(player_id, action_with_bet[0], action_with_bet[1])
 
 func evaluate_hand(table_cards: Array) -> Dictionary:
@@ -151,10 +129,6 @@ func load_state(state: Dictionary) -> void:
 	blind_bet = state.get("blind_bet", Preloads.Instance.game_options.get("blind_bet", 0))
 	entered_blind = state.get("entered_blind", false)
 
-func _update_state_label(action) -> void:
-	if state_label:
-		state_label.text = state_label_text.get(action, "") + " " + str(player_hand)
-
 func _can_fish() -> bool:
 	return remaining_fishes > 0
 
@@ -164,7 +138,6 @@ func _fish() -> void:
 		push_error("CPU player %s cannot fish." % player_id)
 		return
 	remaining_fishes -= 1
-	_update_state_label("FISH")
 
 	# remove lowest card from hand
 	var card1_rank = Preloads.Poker.Card.new(player_hand.get(0)).rank
@@ -177,7 +150,6 @@ func _fish() -> void:
 	# draw new card
 	var drawn_card: String = deck.draw(1)
 	add_card_to_hand(drawn_card)
-	print("CPU player %s drew card: %s; new hand: %s" % [player_id, drawn_card, player_hand])
 
 func _sort_hand() -> void:
 	if player_hand.size() != 2:
@@ -212,7 +184,6 @@ func _make_bet(desired_decision: PokerGameStateManager.PlayerAction, current_bet
 
 	var can_raise = cash > to_call + raise_amount and not already_raised
 
-	print("CPU player %s making bet with desired decision: %s, current bet: %d, player bet: %d, to call: %d, cash: %d" % [player_id, desired_decision, current_bet, player_bet, to_call, cash])
 	match desired_decision:
 		PokerGameStateManager.PlayerAction.FOLD:
 			bet_amount = 0
