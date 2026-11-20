@@ -101,6 +101,8 @@ func load_serialized_state() -> void:
 func _setup_cpu_player(cpu_controller: CPUController) -> void:
 	cpu_controller.submit_player_decision.connect(_on_submit_player_decision)
 	player_ui.connect_cpu_display(cpu_controller.player_id)
+	if is_instance_valid(cpu_controller.avatar):
+		player_ui.set_cpu_avatar(cpu_controller.player_id, cpu_controller.avatar)
 
 	game_state.register_player(cpu_controller.player_id)
 	

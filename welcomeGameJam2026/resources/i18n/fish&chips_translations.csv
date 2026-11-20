@@ -6,6 +6,7 @@ CANCEL_BTN,Cancel,Anuluj
 APPLY_CHANGES_BTN,Apply changes,Zastosuj zmiany
 HELP_BTN,Help,Jak grać
 MENU_BTN,Main Menu,Menu Główne
+CLOSE_BTN,Close,Zamknij
 RAISE,Raise,Podbij
 CALL,Call,Call
 FOLD,Fold,Pass
@@ -28,3 +29,4 @@ English,English,Angielski
 Polish,Polish,Polski
 LOST_LBL,You've Lost!,Przegrałeś!
 WON_LBL,You've Won!,Wygrałeś!
+$,$,zł

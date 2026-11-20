@@ -1,22 +1,23 @@
 [gd_scene format=3 uid="uid://c7chbdc7buy2f"]
 
-[ext_resource type="Script" path="res://scenes/components/form/inputs/slider_input/slider_input.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://ca1sapohiorhk" path="res://scenes/components/form/inputs/slider_input/slider_input.gd" id="1_script"]
 
 [node name="SliderInput" type="MarginContainer" unique_id=259813285]
 custom_maximum_size = Vector2(400, -1)
 theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 0
 script = ExtResource("1_script")
 
-[node name="Content" type="VBoxContainer" parent="."]
+[node name="Content" type="VBoxContainer" parent="." unique_id=1224273507]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Content" unique_id=459558592]
 layout_mode = 2
 text = "Label"
 
-[node name="Row" type="HBoxContainer" parent="Content"]
+[node name="Row" type="HBoxContainer" parent="Content" unique_id=1274353646]
 layout_mode = 2
 
 [node name="HSlider" type="HSlider" parent="Content/Row" unique_id=662358424]
@@ -25,6 +26,6 @@ size_flags_horizontal = 3
 scrollable = false
 ticks_on_borders = true
 
-[node name="ValueLabel" type="Label" parent="Content/Row"]
+[node name="ValueLabel" type="Label" parent="Content/Row" unique_id=1152482997]
 layout_mode = 2
 text = "0"

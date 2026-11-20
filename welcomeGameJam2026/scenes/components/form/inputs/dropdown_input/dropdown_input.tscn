@@ -5,8 +5,9 @@
 [node name="DropdownInput" type="MarginContainer" unique_id=819816791]
 custom_maximum_size = Vector2(400, -1)
 theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 0
 script = ExtResource("1_script")
 
 [node name="Content" type="VBoxContainer" parent="." unique_id=456367133]

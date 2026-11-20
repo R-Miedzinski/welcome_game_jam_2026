@@ -9,10 +9,21 @@
 [ext_resource type="Script" uid="uid://dvlnw751kbvvs" path="res://scripts/poker_game_orchestrator/poker_game_orchestrator.gd" id="6_iodx1"]
 [ext_resource type="PackedScene" uid="uid://drgp3i6dvjfaq" path="res://scenes/components/help_screen/help_screen.tscn" id="7_341c8"]
 [ext_resource type="PackedScene" uid="uid://bwkw1y3h6kgnn" path="res://scenes/components/end_game_screen/end_game_screen.tscn" id="7_cd4ow"]
+[ext_resource type="Texture2D" uid="uid://bp1psdopekysk" path="res://icon.svg" id="7_f463q"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_myhs1"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dkctf"]
+size = Vector2(128, 128)
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_l3vlx"]
+
+[sub_resource type="Gradient" id="Gradient_f463q"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cvekp"]
+gradient = SubResource("Gradient_f463q")
+width = 128
+height = 128
 
 [node name="PokerTable" type="Node3D" unique_id=690689141]
 
@@ -42,38 +53,41 @@ transform = Transform3D(-4.3690914e-08, -0.28825974, 0.95755225, -1.3377766e-09,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48583806, 0)
 mesh = SubResource("BoxMesh_myhs1")
 
-[node name="CPU1" type="MeshInstance3D" parent="." unique_id=765407998]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0354363, 0.48583806, 1.5278757)
-mesh = SubResource("CapsuleMesh_l3vlx")
-
-[node name="CPU1Controller" type="Node" parent="CPU1" unique_id=1856201156 node_paths=PackedStringArray("deck")]
+[node name="CPU1Controller" type="Node" parent="." unique_id=1856201156 node_paths=PackedStringArray("deck")]
 unique_name_in_owner = true
 script = ExtResource("5_tj53p")
 player_id = "Mors"
 decision_schema = ExtResource("6_6dssf")
-deck = NodePath("../../DeckManager")
+deck = NodePath("../DeckManager")
+avatar = SubResource("PlaceholderTexture2D_dkctf")
 
-[node name="CPU2" type="MeshInstance3D" parent="." unique_id=1504770250]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8833574, 0.48583806, 0.19221997)
+[node name="CPU1" type="MeshInstance3D" parent="CPU1Controller" unique_id=765407998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0354363, 0.48583806, 1.5278757)
 mesh = SubResource("CapsuleMesh_l3vlx")
 
-[node name="CPU2Controller" type="Node" parent="CPU2" unique_id=499779583 node_paths=PackedStringArray("deck")]
+[node name="CPU2Controller" type="Node" parent="." unique_id=499779583 node_paths=PackedStringArray("deck")]
 unique_name_in_owner = true
 script = ExtResource("5_tj53p")
 player_id = "Yeti"
 decision_schema = ExtResource("6_6dssf")
-deck = NodePath("../../DeckManager")
+deck = NodePath("../DeckManager")
+avatar = ExtResource("7_f463q")
 
-[node name="CPU3" type="MeshInstance3D" parent="." unique_id=1431122556]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2091228, 0.48583806, -1.3796716)
+[node name="CPU2" type="MeshInstance3D" parent="CPU2Controller" unique_id=1504770250]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8833574, 0.48583806, 0.19221997)
 mesh = SubResource("CapsuleMesh_l3vlx")
 
-[node name="CPU3Controller" type="Node" parent="CPU3" unique_id=1078727605 node_paths=PackedStringArray("deck")]
+[node name="CPU3Controller" type="Node" parent="." unique_id=1078727605 node_paths=PackedStringArray("deck")]
 unique_name_in_owner = true
 script = ExtResource("5_tj53p")
 player_id = "Eustachy"
 decision_schema = ExtResource("6_6dssf")
-deck = NodePath("../../DeckManager")
+deck = NodePath("../DeckManager")
+avatar = SubResource("GradientTexture2D_cvekp")
+
+[node name="CPU3" type="MeshInstance3D" parent="CPU3Controller" unique_id=1431122556]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2091228, 0.48583806, -1.3796716)
+mesh = SubResource("CapsuleMesh_l3vlx")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1330912494]
 transform = Transform3D(0.86602545, -5.8562137e-09, 0.49999997, -0.49999997, -2.1855692e-08, 0.86602545, 5.856215e-09, -1, -2.1855694e-08, 2.2405267, 2.5583797, -2.3841858e-07)
@@ -91,9 +105,9 @@ visible = false
 unique_name_in_owner = true
 script = ExtResource("6_iodx1")
 player_controller = NodePath("../PlayerController")
-cpu1_controller = NodePath("../CPU1/CPU1Controller")
-cpu2_controller = NodePath("../CPU2/CPU2Controller")
-cpu3_controller = NodePath("../CPU3/CPU3Controller")
+cpu1_controller = NodePath("../CPU1Controller")
+cpu2_controller = NodePath("../CPU2Controller")
+cpu3_controller = NodePath("../CPU3Controller")
 game_state = NodePath("../PokerGameState")
 deck = NodePath("../DeckManager")
 player_ui = NodePath("../PlayerUi")

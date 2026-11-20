@@ -8,6 +8,8 @@ signal submit_player_decision(player_id: String, decision: PokerGameStateManager
 @export var decision_schema: DecisionSchema
 @export var deck: DeckManager
 
+@export var avatar: Texture2D
+
 var starting_cash: int = 0:
 	set(value):
 		starting_cash = value

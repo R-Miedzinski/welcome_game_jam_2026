@@ -33,7 +33,7 @@ func set_player_name(player_name: String) -> void:
 	player_name_label.text = player_name
 
 func set_player_cash(cash: String) -> void:
-	player_cash_label.text = cash
+	player_cash_label.text = cash  + " " + tr("$")
 
 func set_player_avatar(avatar_texture: Texture2D) -> void:
 	profile_display.texture = avatar_texture

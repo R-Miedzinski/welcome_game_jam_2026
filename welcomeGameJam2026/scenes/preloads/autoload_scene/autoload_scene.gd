@@ -1,8 +1,8 @@
 class_name Preloads 
 extends Node
 
-const WINDOW_WIDTH_VPX: int = 1152
-const WINDOW_HEIGHT_VPX: int = 648
+const WINDOW_WIDTH_VPX: int = 1920
+const WINDOW_HEIGHT_VPX: int = 1080
 
 static var Instance: Preloads:
 	set(value):

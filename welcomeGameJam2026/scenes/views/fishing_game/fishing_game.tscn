@@ -35,7 +35,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(580, -40), Vector2(580, 220)]
+"values": [Vector2(960, -40), Vector2(960, 400)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7s4ht"]
@@ -43,6 +43,8 @@ _data = {
 &"RESET": SubResource("Animation_qtwaw"),
 &"move_hook_to_start": SubResource("Animation_jnssj")
 }
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3yyv6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_myhs1"]
 
@@ -62,7 +64,7 @@ speed_multiplier = 1.0
 [node name="HookController" type="Node" parent="." unique_id=846755875 node_paths=PackedStringArray("hook")]
 unique_name_in_owner = true
 script = ExtResource("2_qtwaw")
-hook_speed = 200.0
+hook_speed = 300.0
 hook = NodePath("../FishingHook")
 
 [node name="DeckManager" type="Node" parent="." unique_id=1033946764]
@@ -82,26 +84,44 @@ playback_auto_capture_ease_type = 1
 unique_name_in_owner = true
 
 [node name="FishingLayer" parent="FishingLayers" unique_id=1212338432 instance=ExtResource("7_0u4uy")]
+spawn_columns = 6
+spawn_rows = 2
+background_texture = SubResource("PlaceholderTexture2D_3yyv6")
 distance_from_center_scaling = Vector2(1, 2)
 distance_from_center_factor = 0.7
 speed_randomness_percent = 25.0
 
-[node name="FishingLayer2" parent="FishingLayers" unique_id=275675458 instance=ExtResource("7_0u4uy")]
+[node name="FishingLayer2" parent="FishingLayers" unique_id=1100567730 instance=ExtResource("7_0u4uy")]
+spawn_columns = 6
+spawn_rows = 2
 distance_from_center_scaling = Vector2(1, 2)
 distance_from_center_factor = 0.7
 speed_randomness_percent = 25.0
 
-[node name="FishingLayer3" parent="FishingLayers" unique_id=1042151207 instance=ExtResource("7_0u4uy")]
+[node name="FishingLayer3" parent="FishingLayers" unique_id=47964186 instance=ExtResource("7_0u4uy")]
+spawn_columns = 6
+spawn_rows = 2
 distance_from_center_scaling = Vector2(1, 2)
 distance_from_center_factor = 0.7
 speed_randomness_percent = 25.0
 
-[node name="FishingLayer4" parent="FishingLayers" unique_id=396722271 instance=ExtResource("7_0u4uy")]
+[node name="FishingLayer4" parent="FishingLayers" unique_id=1621157865 instance=ExtResource("7_0u4uy")]
+spawn_columns = 6
+spawn_rows = 2
 distance_from_center_scaling = Vector2(1, 2)
 distance_from_center_factor = 0.7
 speed_randomness_percent = 25.0
 
-[node name="FishingLayer5" parent="FishingLayers" unique_id=1638921093 instance=ExtResource("7_0u4uy")]
+[node name="FishingLayer5" parent="FishingLayers" unique_id=1622911490 instance=ExtResource("7_0u4uy")]
+spawn_columns = 6
+spawn_rows = 2
+distance_from_center_scaling = Vector2(1, 2)
+distance_from_center_factor = 0.7
+speed_randomness_percent = 25.0
+
+[node name="FishingLayer6" parent="FishingLayers" unique_id=2079493473 instance=ExtResource("7_0u4uy")]
+spawn_columns = 6
+spawn_rows = 2
 distance_from_center_scaling = Vector2(1, 2)
 distance_from_center_factor = 0.7
 speed_randomness_percent = 25.0

@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dy7irlr3abbw7" path="res://scenes/components/player_ui/assets/interface_top.png" id="2_msq8d"]
 [ext_resource type="Texture2D" uid="uid://b1ydmx85726e3" path="res://scenes/components/player_ui/assets/interface_bottom.png" id="3_6bfia"]
 [ext_resource type="Texture2D" uid="uid://bpgh5g6d5egbn" path="res://scenes/components/player_ui/assets/money_info.png" id="5_6bfia"]
+[ext_resource type="Texture2D" uid="uid://kd4d51vm1nl1" path="res://scenes/components/player_ui/assets/money_info_2.png" id="5_bhnel"]
 [ext_resource type="Texture2D" uid="uid://d11b4cmds0ehj" path="res://scenes/components/player_ui/assets/Fish_Used.png" id="7_5gvnc"]
 [ext_resource type="PackedScene" uid="uid://ue62o57ebqht" path="res://scenes/components/player_display/player_display.tscn" id="7_6bfia"]
 [ext_resource type="Texture2D" uid="uid://btn83b3ako5wh" path="res://scenes/components/player_ui/assets/Blue_Default.png" id="7_lxtlc"]
@@ -78,13 +79,10 @@ metadata/_edit_use_anchors_ = true
 
 [node name="BackgroundTop" type="TextureRect" parent="." unique_id=1621527147]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
+anchors_preset = 10
 anchor_right = 1.0
-offset_left = -761.0
-offset_top = -17.0
-offset_bottom = 124.0
-grow_horizontal = 0
+offset_bottom = 197.96785
+grow_horizontal = 2
 texture = ExtResource("2_msq8d")
 expand_mode = 5
 stretch_mode = 5
@@ -95,15 +93,12 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -1.0
-offset_top = -176.0
-offset_right = -1.0
-offset_bottom = 22.0
+offset_top = -261.61813
 grow_horizontal = 2
 grow_vertical = 0
 texture = ExtResource("3_6bfia")
-expand_mode = 2
-stretch_mode = 5
+expand_mode = 5
+stretch_mode = 6
 
 [node name="PlayerHand" type="HBoxContainer" parent="." unique_id=1667763033]
 unique_name_in_owner = true
@@ -111,12 +106,12 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 107.0
-offset_top = -104.0
-offset_right = 363.24997
-offset_bottom = -37.0
+offset_left = 1574.0001
+offset_top = -136.99994
+offset_right = 1830.2501
+offset_bottom = -70.0
 grow_vertical = 0
-scale = Vector2(0.9, 0.9)
+scale = Vector2(1.3, 1.3)
 alignment = 1
 
 [node name="Control" type="Control" parent="PlayerHand" unique_id=1986391749]
@@ -143,12 +138,12 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -294.99994
-offset_top = -67.0
-offset_right = 231.66675
+offset_left = -1799.0
+offset_top = -114.0
+offset_right = -1272.3333
+offset_bottom = -47.0
 grow_horizontal = 0
 grow_vertical = 0
-scale = Vector2(0.6, 0.6)
 alignment = 1
 
 [node name="Control" type="Control" parent="TableCards" unique_id=524302486]
@@ -188,19 +183,17 @@ unique_name_in_owner = true
 
 [node name="MoneyBackground" type="TextureRect" parent="." unique_id=2130244455]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5842014
-anchor_top = 0.6620374
-anchor_right = 0.6475694
-anchor_bottom = 0.69290125
-offset_left = -75.0
-offset_top = 52.0
-offset_right = 76.0
-offset_bottom = 92.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -239.0
+offset_top = 2.0
+offset_right = 13.666504
+offset_bottom = 96.03347
 grow_horizontal = 2
-texture = ExtResource("5_6bfia")
-expand_mode = 2
-metadata/_edit_use_anchors_ = true
+texture = ExtResource("5_bhnel")
+expand_mode = 5
+stretch_mode = 5
 
 [node name="PlayerMoney" type="Label" parent="MoneyBackground" unique_id=272246422]
 unique_name_in_owner = true
@@ -209,9 +202,10 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 56.0
-offset_right = -23.0
+offset_right = -22.666504
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 20
 text = "MONEY"
 vertical_alignment = 1
 
@@ -220,13 +214,14 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -112.0
-offset_top = 10.0
-offset_right = 112.0
-offset_bottom = 70.0
+offset_left = 21.0
+offset_top = 2.0
+offset_right = 273.6665
+offset_bottom = 96.03347
 grow_horizontal = 2
 texture = ExtResource("5_6bfia")
-expand_mode = 2
+expand_mode = 5
+stretch_mode = 5
 
 [node name="CurrentPot" type="Label" parent="PotBackground" unique_id=749522527]
 unique_name_in_owner = true
@@ -235,9 +230,10 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 56.0
-offset_right = -23.0
+offset_right = -22.666504
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 20
 text = "POT"
 vertical_alignment = 1
 
@@ -248,10 +244,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -229.0
-offset_top = -90.0
-offset_right = 229.0
-offset_bottom = -47.0
+offset_left = -275.0
+offset_top = -149.0
+offset_right = 275.0
+offset_bottom = -87.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 20
@@ -299,13 +295,13 @@ offset_bottom = 265.0
 
 [node name="MenuButtonQuit" type="Button" parent="MenuButtons" unique_id=2140820297]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 100)
-custom_maximum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(140, 140)
+custom_maximum_size = Vector2(140, 140)
 layout_mode = 0
-offset_left = 3.0
-offset_top = 172.0
-offset_right = 103.0
-offset_bottom = 272.0
+offset_left = 39.0
+offset_top = 278.0
+offset_right = 179.0
+offset_bottom = 418.0
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_ks4xb")
@@ -318,13 +314,13 @@ expand_icon = true
 
 [node name="MenuButtonMainMenu" type="Button" parent="MenuButtons" unique_id=1340606541]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 120)
-custom_maximum_size = Vector2(120, 120)
+custom_minimum_size = Vector2(160, 160)
+custom_maximum_size = Vector2(160, 160)
 layout_mode = 0
-offset_left = 26.0
-offset_top = 63.0
-offset_right = 146.0
-offset_bottom = 183.0
+offset_left = 100.0
+offset_top = 160.0
+offset_right = 260.0
+offset_bottom = 320.0
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_lxtlc")
@@ -337,15 +333,16 @@ expand_icon = true
 
 [node name="MenuButtonHelp" type="Button" parent="MenuButtons" unique_id=618773116]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(90, 90)
-custom_maximum_size = Vector2(90, 90)
+custom_minimum_size = Vector2(180, 180)
+custom_maximum_size = Vector2(180, 180)
 layout_mode = 0
-offset_left = 97.0
-offset_top = 16.0
-offset_right = 187.0
-offset_bottom = 106.0
+offset_left = 26.0
+offset_top = 15.0
+offset_right = 206.0
+offset_bottom = 195.0
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxTexture_myhs1")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_kcrox")
 theme_override_styles/hover = SubResource("StyleBoxTexture_myhs1")
@@ -359,12 +356,13 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -414.0
-offset_top = 5.0
-offset_right = -10.0
-offset_bottom = 246.0
+offset_left = -476.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 275.0
 grow_horizontal = 0
-theme_override_constants/separation = 10
+theme_override_constants/separation = 15
+alignment = 1
 
 [node name="CPU1Display" parent="PlayersDisplays" unique_id=2035241845 instance=ExtResource("7_6bfia")]
 unique_name_in_owner = true

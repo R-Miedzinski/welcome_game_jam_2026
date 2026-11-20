@@ -142,10 +142,10 @@ func update_table_cards_display(cards: PackedStringArray) -> void:
 		table_fish5.visible = false
 
 func update_cash_display(cash: int) -> void:
-	cash_label.text = tr("MONEY") + ": " + str(cash)
+	cash_label.text = tr("MONEY") + ": " + str(cash) + " " + tr("$")
 
 func update_current_pot_display(current_pot: int) -> void:
-	current_pot_label.text = tr("POT") + ": " + str(current_pot)
+	current_pot_label.text = tr("POT") + ": " + str(current_pot) + " " + tr("$")
 
 func connect_cpu_display(cpu_id: String) -> void:
 	if cpu_id in cpu_display_connections:
@@ -165,6 +165,14 @@ func connect_cpu_display(cpu_id: String) -> void:
 				cpu3_display.set_player_name(cpu_id)
 			_:
 				print("No available CPU display for %s" % cpu_id)
+
+func set_cpu_avatar(cpu_id: String, avatar: Texture2D) -> void:
+	if not cpu_display_connections.has(cpu_id):
+		print("No CPU display connected for %s" % cpu_id)
+		return
+
+	var display = cpu_display_connections[cpu_id]
+	display.set_player_avatar(avatar)
 
 func update_cpu_display(cpu_id: String, cash: int, state: PokerGameStateManager.PlayerState) -> void:
 	if not cpu_display_connections.has(cpu_id):
