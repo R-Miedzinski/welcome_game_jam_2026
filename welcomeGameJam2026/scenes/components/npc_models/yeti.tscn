@@ -1,8 +1,24 @@
 [gd_scene format=3 uid="uid://b2a0kutw3rg6y"]
 
 [ext_resource type="Script" uid="uid://bx3c6gja40lmc" path="res://scenes/components/npc_models/npc.gd" id="1_vio7t"]
+[ext_resource type="AudioStream" uid="uid://ld1yncvw4dpg" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_fish1.wav" id="2_t6mxj"]
+[ext_resource type="AudioStream" uid="uid://lptqgiknuo46" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_fish2.wav" id="3_5bgp7"]
+[ext_resource type="AudioStream" uid="uid://eywjxqeq5py8" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_call1.wav" id="4_i7xhf"]
+[ext_resource type="AudioStream" uid="uid://bx734flvt6tpc" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_call2.wav" id="5_hdgs8"]
+[ext_resource type="AudioStream" uid="uid://ctdi428y25tkw" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_raising1.wav" id="6_l7c1f"]
+[ext_resource type="AudioStream" uid="uid://cutjtyyb3orxb" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_raising2.wav" id="7_si45v"]
+[ext_resource type="AudioStream" uid="uid://bhtamblm8i246" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_fold1.wav" id="8_51xot"]
+[ext_resource type="AudioStream" uid="uid://dphy7y3b1tu4g" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_fold2.wav" id="9_mif1c"]
+[ext_resource type="AudioStream" uid="uid://dbvq87bnl3wsn" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_elimination.wav" id="10_xi087"]
+[ext_resource type="AudioStream" uid="uid://b8abveu4fcv72" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_allin.wav" id="11_l7c1f"]
+[ext_resource type="AudioStream" uid="uid://bm3m0n3hobkaw" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_win.wav" id="12_si45v"]
+[ext_resource type="AudioStream" uid="uid://khisiiwp4mqg" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_lose.wav" id="13_51xot"]
+[ext_resource type="AudioStream" uid="uid://y1fwy5aaul7b" path="res://scenes/components/npc_models/assets/sound/yeti/yeti_split.wav" id="14_mif1c"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_l3vlx"]
+
+[sub_resource type="Animation" id="Animation_t6mxj"]
+resource_name = "all_in"
 
 [sub_resource type="Animation" id="Animation_eom2e"]
 resource_name = "call"
@@ -30,6 +46,7 @@ resource_name = "showdown"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2kgmm"]
 _data = {
+&"all_in": SubResource("Animation_t6mxj"),
 &"call": SubResource("Animation_eom2e"),
 &"fish": SubResource("Animation_280v7"),
 &"fold": SubResource("Animation_stn2x"),
@@ -42,6 +59,15 @@ _data = {
 
 [node name="Yeti" type="Node3D" unique_id=105059117]
 script = ExtResource("1_vio7t")
+fish_voicelines = Array[AudioStream]([ExtResource("2_t6mxj"), ExtResource("3_5bgp7")])
+call_voicelines = Array[AudioStream]([ExtResource("4_i7xhf"), ExtResource("5_hdgs8")])
+raise_voicelines = Array[AudioStream]([ExtResource("6_l7c1f"), ExtResource("7_si45v")])
+fold_voicelines = Array[AudioStream]([ExtResource("8_51xot"), ExtResource("9_mif1c")])
+out_voicelines = Array[AudioStream]([ExtResource("10_xi087")])
+all_in_voicelines = Array[AudioStream]([ExtResource("11_l7c1f")])
+win_voicelines = Array[AudioStream]([ExtResource("12_si45v")])
+lose_voicelines = Array[AudioStream]([ExtResource("13_51xot")])
+split_voicelines = Array[AudioStream]([ExtResource("14_mif1c")])
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1755265249]
 mesh = SubResource("CapsuleMesh_l3vlx")

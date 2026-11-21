@@ -3,17 +3,42 @@ extends Node
 
 signal emit_player_decision(player_id: String, action: PokerGameStateManager.PlayerAction, amount: int)
 
+@export_category("Controllers")
 @export var player_controller: PlayerController
 @export var cpu1_controller: CPUController
 @export var cpu2_controller: CPUController
 @export var cpu3_controller: CPUController
 
+@export_category("Game and UI elements")
 @export var game_state: PokerGameStateManager
 @export var deck: DeckManager
 
 @export var player_ui: PlayerUI
 @export var end_game_screen: EndGameScreen
 @export var help_screen: HelpScreen
+
+@export_category("Message Feed Messages")
+@export var npc_state_change_messages: Dictionary[PokerGameStateManager.PlayerState, String] = {
+	PokerGameStateManager.PlayerState.OUT: "NPC_OUT_MSG",
+}
+@export var npc_action_messages: Dictionary[PokerGameStateManager.PlayerAction, String] = {
+	PokerGameStateManager.PlayerAction.FOLD: "NPC_FOLD_MSG",
+	PokerGameStateManager.PlayerAction.CHECK: "NPC_CALL_MSG",
+	PokerGameStateManager.PlayerAction.RAISE: "NPC_RAISE_MSG",
+	PokerGameStateManager.PlayerAction.ALL_IN: "NPC_ALL_IN_MSG",
+}
+
+@export var player_state_change_messages: Dictionary[PokerGameStateManager.PlayerState, String] = {
+	PokerGameStateManager.PlayerState.OUT: "PLAYER_OUT_MSG",
+}
+@export var player_action_messages: Dictionary[PokerGameStateManager.PlayerAction, String] = {
+	PokerGameStateManager.PlayerAction.FOLD: "PLAYER_FOLD_MSG",
+	PokerGameStateManager.PlayerAction.CHECK: "PLAYER_CALL_MSG",
+	PokerGameStateManager.PlayerAction.RAISE: "PLAYER_RAISE_MSG",
+	PokerGameStateManager.PlayerAction.ALL_IN: "PLAYER_ALL_IN_MSG",
+}
+
+@export var game_state_change_messages: Dictionary[PokerGameStateManager.GameState, String] = {}
 
 var cpu_controllers: Dictionary = {}
 var loaded_from_serialized_state: bool = false
@@ -30,14 +55,18 @@ func _ready() -> void:
 	game_state.request_hand_evaluation.connect(_on_hand_evaluation_request)
 	game_state.showdown_winners.connect(_on_showdown_winners)
 	game_state.send_winnings.connect(_on_send_winnings)
+	game_state.round_started.connect(_on_round_started)
 
 	if is_instance_valid(player_ui):
-		game_state.community_cards_changed.connect(player_ui.update_table_cards_display)
+		game_state.community_cards_changed.connect(_on_community_cards_changed)
 		game_state.pot_value_changed.connect(_on_pot_value_changed)
 
 		player_ui.help_button.pressed.connect(_on_help_button_pressed)
 		player_ui.quit_game_button.pressed.connect(_on_quit_game_button_pressed)
 		player_ui.main_menu_button.pressed.connect(_on_main_menu_button_pressed)
+
+		player_ui.next_play_button.pressed.connect(_on_next_play_button_pressed)
+		player_ui.disable_next_play_button()
 
 		player_ui.call_button.pressed.connect(_on_call_button_pressed)
 		player_ui.fold_button.pressed.connect(_on_fold_button_pressed)
@@ -68,6 +97,9 @@ func _ready() -> void:
 		deck._initialize_deck()
 
 	if not loaded_from_serialized_state:
+		player_ui.message_feed.add_message(tr("GAME_START_MSG").format({
+			"starting_amount": Preloads.Instance.game_options.get("starting_cash", 0)
+		}))
 		game_state.new_play()
 	else:
 		_update_ui_from_state()
@@ -174,24 +206,56 @@ func _on_hand_evaluation_request(player_id: String, community_cards: Array) -> v
 
 func _on_submit_player_decision(player_id: String, action: PokerGameStateManager.PlayerAction, amount: int) -> void:
 	emit_player_decision.emit(player_id, action, amount)
+	
+	if player_id == player_controller.player_id:
+		_end_player_turn_ui()
+		_post_player_action_message(player_id, action, amount)
+	elif cpu_controllers.has(player_id):
+		_post_npc_action_message(player_id, action, amount)
 
 func _on_showdown_winners(winner_ids: PackedStringArray) -> void:
 	print("Showdown winners: %s" % [winner_ids])
 
-	for cpu_controller in cpu_controllers.values():
+	var showdown_players = cpu_controllers.values().filter(func(cpu_controller):
+		return game_state.get_player_state(cpu_controller.player_id) != PokerGameStateManager.PlayerState.OUT and \
+			game_state.get_player_state(cpu_controller.player_id) != PokerGameStateManager.PlayerState.FOLDED
+		)
+
+	# Add player to showdown list if they haven't folded or gone out
+	var all_showdown_players = []
+	if game_state.get_player_state(player_controller.player_id) != PokerGameStateManager.PlayerState.OUT and \
+		 game_state.get_player_state(player_controller.player_id) != PokerGameStateManager.PlayerState.FOLDED:
+		all_showdown_players.append(player_controller)
+	all_showdown_players.append_array(showdown_players)
+
+	for cpu_controller in showdown_players:
 		player_ui.show_cpu_cards(cpu_controller.player_id, cpu_controller.player_hand)
+
+		if cpu_controller.player_id in winner_ids and winner_ids.size() > 1:
+			cpu_controller.npc_model.play_split_voiceline()
+		elif cpu_controller.player_id in winner_ids:
+			cpu_controller.npc_model.play_win_voiceline()
+		else:
+			cpu_controller.npc_model.play_lose_voiceline()
+
+	_post_round_end_message(all_showdown_players, winner_ids)
+
+	for cpu_controller in showdown_players:
 		cpu_controller.clear_hand()
+		player_ui.update_cpu_display(cpu_controller.player_id, cpu_controller.cash, game_state.get_player_state(cpu_controller.player_id))
 
 	if _check_end_game():
 		get_tree().paused = true
 		return
 
-	await get_tree().create_timer(5.0).timeout
-	player_controller.clear_hand()
-	_update_player_cards_display()
-	for cpu_controller in cpu_controllers.values():
-		player_ui.hide_cpu_cards(cpu_controller.player_id)
-	game_state.new_play()
+	player_ui.enable_next_play_button()
+
+func _on_round_started(dealer_id: String) -> void:
+	_post_round_started_message(dealer_id)
+
+func _on_community_cards_changed(new_cards: PackedStringArray) -> void:
+	player_ui.update_table_cards_display(new_cards)
+	_post_cards_dealt_message(new_cards)
 
 func _on_send_winnings(winner_id: String, amount: int) -> void:
 	print("Player %s received winnings: %d" % [winner_id, amount])
@@ -213,11 +277,17 @@ func _on_player_state_changed(player_id: String, _old_state: PokerGameStateManag
 	if is_instance_valid(player_ui) and player_id != player_controller.player_id:
 		player_ui.update_cpu_display(player_id, cpu_controllers[player_id].cash, new_state)
 
+	if player_id == player_controller.player_id:
+		_post_player_state_change_message(player_id, new_state)
+	elif cpu_controllers.has(player_id):
+		_post_npc_state_change_message(player_id, new_state)
+
 func _on_game_state_changed(_old_state: int, _new_state: int) -> void:
 	player_controller.already_raised = false
 	for cpu_controller in cpu_controllers.values():
 		cpu_controller.already_raised = false
-	_end_player_turn_ui()
+
+	_post_game_state_change_message(_new_state)
 
 func _check_end_game() -> bool:
 	if player_controller.cash <= 0:
@@ -227,6 +297,18 @@ func _check_end_game() -> bool:
 		end_game_screen.show_won()
 		return true
 	return false
+
+func _start_next_play() -> void:
+	player_controller.clear_hand()
+	_update_player_cards_display()
+	for cpu_controller in cpu_controllers.values():
+		player_ui.hide_cpu_cards(cpu_controller.player_id)
+
+	game_state.new_play()
+
+func _on_next_play_button_pressed() -> void:
+	_start_next_play()
+	player_ui.disable_next_play_button()
 
 func _on_player_going_fishing(discarded_card: String) -> void:
 	deck.reshuffle(discarded_card)
@@ -329,3 +411,233 @@ func _validate_exports() -> void:
 		push_error("Deck is not assigned or invalid.")
 	if not is_instance_valid(player_ui):
 		push_error("Player UI is not assigned or invalid.")
+
+func _post_player_action_message(player_id: String, action: PokerGameStateManager.PlayerAction, amount: int) -> void:
+	if not is_instance_valid(player_ui) or not player_action_messages.has(action):
+		return
+	
+	var message_key = player_action_messages[action]
+	var message_text = tr(message_key).format({
+		"player_name": player_id,
+		"amount": amount,
+		"current_bet": amount
+	})
+	player_ui.message_feed.add_message(message_text)
+
+func _post_npc_action_message(player_id: String, action: PokerGameStateManager.PlayerAction, amount: int) -> void:
+	if not is_instance_valid(player_ui) or not npc_action_messages.has(action):
+		return
+	
+	var cpu_name = player_id
+	var message_key = npc_action_messages[action]
+	var message_text = tr(message_key).format({
+		"player_name": cpu_name,
+		"amount": amount,
+		"current_bet": amount
+	})
+	player_ui.message_feed.add_message(message_text)
+
+func _post_player_state_change_message(player_id: String, state: PokerGameStateManager.PlayerState) -> void:
+	if not is_instance_valid(player_ui) or not player_state_change_messages.has(state):
+		return
+	
+	var message_key = player_state_change_messages[state]
+	var message_text = tr(message_key).format({
+		"player_name": player_id,
+		"current_round": game_state.round_number if game_state else 0
+	})
+	player_ui.message_feed.add_message(message_text)
+
+func _post_npc_state_change_message(player_id: String, state: PokerGameStateManager.PlayerState) -> void:
+	if not is_instance_valid(player_ui) or not npc_state_change_messages.has(state):
+		return
+	
+	var cpu_name = player_id
+	var message_key = npc_state_change_messages[state]
+	var message_text = tr(message_key).format({
+		"player_name": cpu_name,
+		"current_round": game_state.round_number if game_state else 0
+	})
+	player_ui.message_feed.add_message(message_text)
+
+func _post_game_state_change_message(new_state: int) -> void:
+	if not is_instance_valid(player_ui) or not game_state_change_messages.has(new_state):
+		return
+	
+	var message_key = game_state_change_messages[new_state]
+	var dealer_id = game_state.get_dealer() if game_state else "Unknown"
+	
+	var message_text = tr(message_key).format({
+		"player_name": dealer_id,
+		"starting_amount": player_controller.starting_cash if player_controller else 0
+	})
+	player_ui.message_feed.add_message(message_text)
+
+func _post_round_started_message(dealer_id: String) -> void:
+	if not is_instance_valid(player_ui):
+		return
+	
+	var message_text = tr("GAME_DEAL_MSG").format({
+		"player_name": dealer_id
+	})
+	player_ui.message_feed.add_message(message_text)
+
+func _post_cards_dealt_message(community_cards: PackedStringArray) -> void:
+	if not is_instance_valid(player_ui) or community_cards.is_empty():
+		return
+	
+	var message_key = ""
+	
+	match community_cards.size():
+		3:
+			message_key = "GAME_FIRST_CARDS"
+		4:
+			message_key = "GAME_FOURTH_CARD"
+		5:
+			message_key = "GAME_FIFTH_CARD"
+		_:
+			return
+	
+	var message_text = tr(message_key).format({
+		"card1": _get_card_name(community_cards[0]) if community_cards.size() > 0 else "",
+		"card2": _get_card_name(community_cards[1]) if community_cards.size() > 1 else "",
+		"card3": _get_card_name(community_cards[2]) if community_cards.size() > 2 else "",
+		"card4": _get_card_name(community_cards[3]) if community_cards.size() > 3 else "",
+		"card5": _get_card_name(community_cards[4]) if community_cards.size() > 4 else ""
+	})
+	player_ui.message_feed.add_message(message_text)
+
+func _post_round_end_message(showdown_players: Array, winner_ids: PackedStringArray) -> void:
+	if not is_instance_valid(player_ui) or showdown_players.is_empty():
+		return
+	
+	# Handle early fold (single winner, not a showdown)
+	if showdown_players.size() == 1:
+		var message_text = tr("ROUND_END_MSG").format({
+			"winner_name": showdown_players[0].player_id
+		})
+		player_ui.message_feed.add_message(message_text)
+		return
+	
+	var message_key = ""
+	var message_format = {}
+	
+	match showdown_players.size():
+		2:
+			message_key = "ROUND_END_SHOWDOWN_2_MSG"
+			var p1 = showdown_players[0]
+			var p2 = showdown_players[1]
+			message_format = {
+				"player1": p1.player_id,
+				"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
+				"player2": p2.player_id,
+				"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
+				"winning_name": winner_ids[0] if winner_ids.size() > 0 else ""
+			}
+		3:
+			message_key = "ROUND_END_SHOWDOWN_3_MSG"
+			var p1 = showdown_players[0]
+			var p2 = showdown_players[1]
+			var p3 = showdown_players[2]
+			message_format = {
+				"player1": p1.player_id,
+				"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
+				"player2": p2.player_id,
+				"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
+				"player3": p3.player_id,
+				"combination_name3": _get_combination_name(p3.evaluate_hand(game_state.community_cards).get("combination", "")),
+				"winning_name": winner_ids[0] if winner_ids.size() > 0 else ""
+			}
+		4:
+			message_key = "ROUND_END_SHOWDOWN_4_MSG"
+			var p1 = showdown_players[0]
+			var p2 = showdown_players[1]
+			var p3 = showdown_players[2]
+			var p4 = showdown_players[3]
+			message_format = {
+				"player1": p1.player_id,
+				"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
+				"player2": p2.player_id,
+				"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
+				"player3": p3.player_id,
+				"combination_name3": _get_combination_name(p3.evaluate_hand(game_state.community_cards).get("combination", "")),
+				"player4": p4.player_id,
+				"combination_name4": _get_combination_name(p4.evaluate_hand(game_state.community_cards).get("combination", "")),
+				"winning_name": winner_ids[0] if winner_ids.size() > 0 else ""
+			}
+		_:
+			return
+	
+	var message_text = tr(message_key).format(message_format)
+	player_ui.message_feed.add_message(message_text)
+
+func _get_combination_name(combination: Preloads.Poker.Combination) -> String:
+	match combination:
+		Preloads.Poker.Combination.ROYAL_FLUSH:
+			return tr("ROYAL_FLUSH")
+		Preloads.Poker.Combination.STRAIGHT_FLUSH:
+			return tr("STRAIGHT_FLUSH")
+		Preloads.Poker.Combination.FOUR_OF_A_KIND:
+			return tr("FOUR_OF_A_KIND")
+		Preloads.Poker.Combination.FULL_HOUSE:
+			return tr("FULL_HOUSE")
+		Preloads.Poker.Combination.FLUSH:
+			return tr("FLUSH")
+		Preloads.Poker.Combination.STRAIGHT:
+			return tr("STRAIGHT")
+		Preloads.Poker.Combination.THREE_OF_A_KIND:
+			return tr("THREE_OF_A_KIND")
+		Preloads.Poker.Combination.TWO_PAIR:
+			return tr("TWO_PAIR")
+		Preloads.Poker.Combination.ONE_PAIR:
+			return tr("ONE_PAIR")
+		Preloads.Poker.Combination.HIGH_CARD:
+			return tr("HIGH_CARD")
+		_:
+			return ""
+		
+func _get_card_name(card_string: String) -> String:
+	var rank = card_string[0]
+	var suit = card_string[1]
+
+	var rank_string = ""
+	var suit_string = ""
+	match rank:
+		"A":
+			rank_string = tr("ACE")
+		"K":
+			rank_string = tr("KING")
+		"Q":
+			rank_string = tr("QUEEN")
+		"J":
+			rank_string = tr("JACK")
+		"T":
+			rank_string = tr("TEN")
+		"9":
+			rank_string = tr("NINE")
+		"8":
+			rank_string = tr("EIGHT")
+		"7":
+			rank_string = tr("SEVEN")
+		"6":
+			rank_string = tr("SIX")
+		"5":
+			rank_string = tr("FIVE")
+		"4":
+			rank_string = tr("FOUR")
+		"3":
+			rank_string = tr("THREE")
+		"2":
+			rank_string = tr("TWO")
+
+	match suit:
+		"H":
+			suit_string = tr("HEARTS")
+		"D":
+			suit_string = tr("DIAMONDS")
+		"C":
+			suit_string = tr("CLUBS")
+		"S":
+			suit_string = tr("SPADES")
+
+	return "%s %s" % [rank_string, suit_string]

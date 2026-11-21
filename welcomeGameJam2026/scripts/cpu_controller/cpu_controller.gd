@@ -173,8 +173,10 @@ func _fish() -> void:
 	var card1_rank = Preloads.Poker.Card.new(player_hand.get(0)).rank
 	var card2_rank = Preloads.Poker.Card.new(player_hand.get(1)).rank
 	if card1_rank <= card2_rank:
+		deck.reshuffle(player_hand.get(0))
 		player_hand.remove_at(0)
 	else:
+		deck.reshuffle(player_hand.get(1))
 		player_hand.remove_at(1)
 
 	# draw new card
@@ -247,7 +249,7 @@ func _map_action_to_animation(action: PokerGameStateManager.PlayerAction) -> Str
 		PokerGameStateManager.PlayerAction.RAISE:
 			return "raise"
 		PokerGameStateManager.PlayerAction.ALL_IN:
-			return "raise"
+			return "all_in"
 		_:
 			return current_idle_animation
 

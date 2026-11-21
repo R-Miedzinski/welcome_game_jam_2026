@@ -1,8 +1,24 @@
 [gd_scene format=3 uid="uid://bnj5qev7ojsxe"]
 
 [ext_resource type="Script" uid="uid://bx3c6gja40lmc" path="res://scenes/components/npc_models/npc.gd" id="1_280v7"]
+[ext_resource type="AudioStream" uid="uid://bfb2n3cnbpihi" path="res://scenes/components/npc_models/assets/sound/mors/Mors_fishing1.wav" id="2_gbegu"]
+[ext_resource type="AudioStream" uid="uid://dhiyh8nvp8qso" path="res://scenes/components/npc_models/assets/sound/mors/Mors_fishing2.wav" id="3_siern"]
+[ext_resource type="AudioStream" uid="uid://douhmpna7alxt" path="res://scenes/components/npc_models/assets/sound/mors/Mors_call1.wav" id="4_gxwah"]
+[ext_resource type="AudioStream" uid="uid://c7yrlnrfmemqv" path="res://scenes/components/npc_models/assets/sound/mors/Mors_call2.wav" id="5_tnmvj"]
+[ext_resource type="AudioStream" uid="uid://cgi2stjwv55me" path="res://scenes/components/npc_models/assets/sound/mors/Mors_raise1.wav" id="6_gxtnm"]
+[ext_resource type="AudioStream" uid="uid://ci68o0vncgnoh" path="res://scenes/components/npc_models/assets/sound/mors/Mors_raise2.wav" id="7_tjul1"]
+[ext_resource type="AudioStream" uid="uid://de7k1kn3ejrj3" path="res://scenes/components/npc_models/assets/sound/mors/Mors_fold1.wav" id="8_i7tj1"]
+[ext_resource type="AudioStream" uid="uid://dnlqq67uigkce" path="res://scenes/components/npc_models/assets/sound/mors/Mors_fold2.wav" id="9_h2820"]
+[ext_resource type="AudioStream" uid="uid://rmifa0a3bpvu" path="res://scenes/components/npc_models/assets/sound/mors/Mors_eliminated.wav" id="10_umuc4"]
+[ext_resource type="AudioStream" uid="uid://dnt8ylawuoriv" path="res://scenes/components/npc_models/assets/sound/mors/Mors_allin.wav" id="11_4nrft"]
+[ext_resource type="AudioStream" uid="uid://byx2qlou3gx0k" path="res://scenes/components/npc_models/assets/sound/mors/Mors_win.wav" id="12_apyvk"]
+[ext_resource type="AudioStream" uid="uid://dkmnthabrlfp6" path="res://scenes/components/npc_models/assets/sound/mors/Mors_lose.wav" id="13_qewyi"]
+[ext_resource type="AudioStream" uid="uid://dp4xguxulptg" path="res://scenes/components/npc_models/assets/sound/mors/Mors_split.wav" id="14_0o34p"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_l3vlx"]
+
+[sub_resource type="Animation" id="Animation_t6mxj"]
+resource_name = "all_in"
 
 [sub_resource type="Animation" id="Animation_eom2e"]
 resource_name = "call"
@@ -15,11 +31,9 @@ resource_name = "fold"
 
 [sub_resource type="Animation" id="Animation_6g1v0"]
 resource_name = "idle"
-loop_mode = 1
 
 [sub_resource type="Animation" id="Animation_sqati"]
 resource_name = "idle_out"
-loop_mode = 1
 
 [sub_resource type="Animation" id="Animation_lpu5b"]
 resource_name = "out"
@@ -30,8 +44,9 @@ resource_name = "raise"
 [sub_resource type="Animation" id="Animation_1c8vw"]
 resource_name = "showdown"
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_2kgmm"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_280v7"]
 _data = {
+&"all_in": SubResource("Animation_t6mxj"),
 &"call": SubResource("Animation_eom2e"),
 &"fish": SubResource("Animation_280v7"),
 &"fold": SubResource("Animation_stn2x"),
@@ -44,10 +59,19 @@ _data = {
 
 [node name="Mors" type="Node3D" unique_id=105059117]
 script = ExtResource("1_280v7")
+fish_voicelines = Array[AudioStream]([ExtResource("2_gbegu"), ExtResource("3_siern")])
+call_voicelines = Array[AudioStream]([ExtResource("4_gxwah"), ExtResource("5_tnmvj")])
+raise_voicelines = Array[AudioStream]([ExtResource("6_gxtnm"), ExtResource("7_tjul1")])
+fold_voicelines = Array[AudioStream]([ExtResource("8_i7tj1"), ExtResource("9_h2820")])
+out_voicelines = Array[AudioStream]([ExtResource("10_umuc4")])
+all_in_voicelines = Array[AudioStream]([ExtResource("11_4nrft")])
+win_voicelines = Array[AudioStream]([ExtResource("12_apyvk")])
+lose_voicelines = Array[AudioStream]([ExtResource("13_qewyi")])
+split_voicelines = Array[AudioStream]([ExtResource("14_0o34p")])
 
 [node name="Mesh" type="MeshInstance3D" parent="." unique_id=1755265249]
 mesh = SubResource("CapsuleMesh_l3vlx")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=731087104]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1290418246]
 unique_name_in_owner = true
-libraries/ = SubResource("AnimationLibrary_2kgmm")
+libraries/ = SubResource("AnimationLibrary_280v7")

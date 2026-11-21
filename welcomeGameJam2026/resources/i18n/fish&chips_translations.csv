@@ -25,8 +25,58 @@ MASTER_SOUND_OPT,Master,Master
 TRACK_SOUND_OPT,Soundtrack,Muzyka
 SFX_SOUND_OPT,Sound Effects,Efekty Dźwiękowe
 UI_SOUND_OPT,Interface Effects,Dźwięki Interfejsu
+VO_SOUND_OPT,Voicelines,Głosy Postaci
 English,English,Angielski
 Polish,Polish,Polski
 LOST_LBL,You've Lost!,Przegrałeś!
 WON_LBL,You've Won!,Wygrałeś!
 $,$,zł
+NEXT_PLAY,Next Round,Następne Rozdanie
+,,
+PLAYER_RAISE_MSG,Player raises the stakes by {amount}.,Graczc podnosi stawkę o {amount}.
+PLAYER_CALL_MSG,Player calls {amount}.,Gracz sprawdza {amount}.
+PLAYER_FOLD_MSG,"Player folds, leaving {current_bet} in the pool.","Gracz spasowuje, zostawiając {current_bet} w puli."
+PLAYER_ALL_IN_MSG,"Player goes all in, they have {current_bet} in the pool.","Gracz idzie va banque, ma w puli {current_bet}."
+PLAYER_OUT_MSG,"Player is eliminated, they lasted {current_round} rounds.","Gracz jest bankrutem, uprzednio wytrzymując {current_round} rund."
+NPC_RAISE_MSG,{player_name} raises the stakes by {amount}.,{player_name} podnosi stawkę o {amount}.
+NPC_CALL_MSG,{player_name} calls {amount}.,{player_name} sprawdza {amount}.
+NPC_FOLD_MSG,"{player_name} folds, leaving {current_bet} in the pool.","{player_name} spasowuje, zostawiając {current_bet} w puli."
+NPC_ALL_IN_MSG,"{player_name} goes all in, they have {current_bet} in the pool.","{player_name} idzie va banque, ma w puli {current_bet}."
+NPC_OUT_MSG,"{player_name} is eliminated, they lasted {current_round}.","{player_name} jest bankrutem, uprzednio wytrzymując {current_round} rund."
+GAME_START_MSG,"The game begins, all players start with {starting_amount}.","Gra rozpoczyna się, każdy z graczy zaczyna z {starting_amount}."
+GAME_DEAL_MSG,"The round begins, current dealer is {player_name}.","Runda rozpoczyna się, obecnym rozdającym jest {player_name}."
+ROUND_END_MSG,"Round has ended, {winner_name} is the winner, all other players have folded.","Runda zakończona, {winner_name} zwycięża, pozostali gracze spasowali."
+ROUND_END_SHOWDOWN_2_MSG,"Round has ended, {player1} has {combination_name1}, {player2} has {combination_name2}. {winning_name} wins.","Runda zakończona, {player1} ma {combination_name1}, {player2} ma {combination_name2}. {winning_name} wygrywa."
+ROUND_END_SHOWDOWN_3_MSG,"Round has ended, {player1} has {combination_name1}, {player2} has {combination_name2}, {player3} has {combination_name3}. {winning_name} wins.","Runda zakończona, {player1} ma {combination_name1}, {player2} ma {combination_name2}, {player3} ma {combination_name3}. {winning_name} wygrywa."
+ROUND_END_SHOWDOWN_4_MSG,"Round has ended, {player1} has {combination_name1}, {player2} has {combination_name2}, {player3} has {combination_name3}, {player4} has {combination_name4}. {winning_name} wins.","Runda zakończona, {player1} ma {combination_name1}, {player2} ma {combination_name2}, {player3} ma {combination_name3}, {player4} ma {combination_name4}. {winning_name} wygrywa."
+GAME_WINNERS_MSG,"Game has ended, {final_winner_name} is the ultimate winner!","Gra zakończona, {final_winner_name} jest ostatecznym zwycięzcą!"
+GAME_FIRST_CARDS,"The first cards are revealed: {card1}, {card2}, {card3}.","Pierwsze karty zostają odsłonięte: {card1}, {card2}, {card3}"
+GAME_FOURTH_CARD,The fourth card is revealed: {card4}.,Czwarta karta zostaje odsłonięta: {card4}.
+GAME_FIFTH_CARD,The fifth card is revealed: {card5}.,Piąta karta zostaje odsłonięta: {card5}.
+ROYAL_FLUSH,Royal Flush,Poker Królewski
+STRAIGHT_FLUSH,Straight Flush,Poker
+FOUR_OF_A_KIND,Four of a Kind,Kareta
+FULL_HOUSE,Full House,Full
+FLUSH,Flush,Kolor
+STRAIGHT,Straight,Strit
+THREE_OF_A_KIND,Three of a Kind,Trójka
+TWO_PAIR,Two Pairs,Dwie Pary
+ONE_PAIR,One Pair,Para
+HIGH_CARD,High Card,Wysoka Karta
+ACE,Ace,As
+KING,King,Król
+QUEEN,Queen,Królowa
+JACK,Jack,Walet
+TEN,Ten,Dziesiątka
+NINE,Nine,Dziewiątka
+EIGHT,Eight,Ósemka
+SEVEN,Seven,Siódemka
+SIX,Six,Szóstka
+FIVE,Five,Piątka
+FOUR,Four,Czwórka
+THREE,Three,Trójka
+TWO,Two,Dwójka
+HEARTS,of Hearts,Kier
+DIAMONDS,of Diamonds,Karo
+CLUBS,of Clubs,Trefl
+SPADES,of Spades,Pik

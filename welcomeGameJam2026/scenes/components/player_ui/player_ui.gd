@@ -7,6 +7,7 @@ signal fish_selected(fish_index: int, selected: bool)
 @onready var call_button: Button = %MenuButtonCall
 @onready var fold_button: Button = %MenuButtonFold
 @onready var go_fish_button: Button = %MenuButtonGoFish
+@onready var next_play_button: Button = %MenuButtonNextPlay
 
 @onready var main_menu_button: Button = %MenuButtonMainMenu
 @onready var quit_game_button: Button = %MenuButtonQuit
@@ -28,6 +29,7 @@ var cpu_display_connections: Dictionary = {}
 
 @onready var cash_label: Label = %PlayerMoney
 @onready var current_pot_label: Label = %CurrentPot
+@onready var message_feed: MessageFeed = %MessageFeed
 
 func _ready() -> void:
 	fish1.card_string = ""
@@ -89,6 +91,14 @@ func enable_help_button():
 
 func disable_help_button():
 	help_button.disabled = true
+
+func enable_next_play_button():
+	next_play_button.disabled = false
+	next_play_button.visible = true
+
+func disable_next_play_button():
+	next_play_button.disabled = true
+	next_play_button.visible = false
 
 func update_cards_display(cards: PackedStringArray) -> void:
 	if cards.size() > 0:

@@ -78,6 +78,7 @@ signal player_state_changed(player_id: String, old_state: PlayerState, new_state
 signal pot_value_changed(old_pot: int, new_pot: int)
 signal community_cards_changed(new_cards: PackedStringArray)
 
+signal round_started(dealer_id: String)
 signal request_player_action(player_id: String)
 signal request_card_draw(player_ids: PackedStringArray)
 
@@ -109,6 +110,8 @@ var community_cards: PackedStringArray = []
 var showdown_scores: Dictionary = {}
 var showdown_players: PackedStringArray = []
 
+var round_started_emitted: bool = false
+
 var state_change_stack: Array[Callable] = []
 
 func _ready() -> void:
@@ -129,6 +132,7 @@ func new_play() -> void:
 	game_state = GameState.INIT
 	showdown_scores.clear()
 	showdown_players.clear()
+	round_started_emitted = false
 
 	for key in player_bets.keys():
 		player_bets[key] = 0
@@ -170,6 +174,9 @@ func get_player_phase_bet(player_id: String) -> int:
 
 func get_player_state(player_id: String) -> PlayerState:
 	return player_states.get(player_id, null)
+
+func get_dealer() -> String:
+	return player_order[dealer_index] if dealer_index >= 0 and dealer_index < player_order.size() else ""
 
 func serialize() -> Dictionary:
 	return {
@@ -361,6 +368,10 @@ func _transition_game_state(old_state: GameState, new_state: GameState) -> void:
 				game_state_change(GameState.LAST_MAN_STANDING)
 				return
 
+			if not round_started_emitted:
+				round_started_emitted = true
+				round_started.emit(player_order[dealer_index])
+			
 			var first_player = _get_first_player_to_move()
 			if first_player == "":
 				game_state_change(GameState.DEALING)

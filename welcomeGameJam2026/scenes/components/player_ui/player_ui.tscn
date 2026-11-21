@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://dol2yhkqspaev" path="res://scenes/components/player_ui/assets/Green_Default.png" id="11_rhq83"]
 [ext_resource type="Texture2D" uid="uid://c8nhyb1ns26ha" path="res://scenes/components/player_ui/assets/Green_OnClick.png" id="12_puotl"]
 [ext_resource type="Texture2D" uid="uid://cpd47arscstwe" path="res://scenes/components/menu button/assets/chosen_call.png" id="12_tyvj4"]
+[ext_resource type="PackedScene" uid="uid://sa2eaxphyrk1" path="res://scenes/components/message_feed/message_feed.tscn" id="21_eljtp"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rhq83"]
 texture = ExtResource("7_5gvnc")
@@ -377,3 +378,25 @@ layout_mode = 2
 [node name="CPU3Display" parent="PlayersDisplays" unique_id=123078472 instance=ExtResource("7_6bfia")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="MenuButtonNextPlay" parent="." unique_id=1042725740 instance=ExtResource("1_0jaed")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = 282.5
+offset_right = -103.0
+offset_bottom = 344.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "NEXT_PLAY"
+
+[node name="MessageFeed" parent="." unique_id=2115170674 instance=ExtResource("21_eljtp")]
+unique_name_in_owner = true
+layout_mode = 1
+offset_top = -297.0
+offset_bottom = -225.0

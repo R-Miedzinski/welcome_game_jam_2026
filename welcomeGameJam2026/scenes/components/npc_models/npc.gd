@@ -9,14 +9,24 @@ signal animation_finished(anim_name: String)
 @export var raise_voicelines: Array[AudioStream] = []
 @export var fold_voicelines: Array[AudioStream] = []
 @export var out_voicelines: Array[AudioStream] = []
+@export var all_in_voicelines: Array[AudioStream] = []
+
+@export_category("Other Voicelines")
+@export var win_voicelines: Array[AudioStream] = []
+@export var lose_voicelines: Array[AudioStream] = []
+@export var split_voicelines: Array[AudioStream] = []
 
 var local_random: RandomNumberGenerator = RandomNumberGenerator.new()
-var anim_to_vo_map: Dictionary[String, Array] = {
+@onready var anim_to_vo_map: Dictionary[String, Array] = {
 	"fish": fish_voicelines,
 	"call": call_voicelines,
 	"raise": raise_voicelines,
 	"fold": fold_voicelines,
-	"out": out_voicelines
+	"out": out_voicelines,
+	"all_in": all_in_voicelines,
+	"split": split_voicelines,
+	"win": win_voicelines,
+	"lose": lose_voicelines
 }
 
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
@@ -31,12 +41,24 @@ func play_animation(anim_name: String) -> void:
 	else:
 		animation_player.stop()
 
+	play_voiceline_for_animation(anim_name)
+
+	animation_player.play(anim_name)
+
+func play_voiceline_for_animation(anim_name: String) -> void:
 	var voicelines = anim_to_vo_map.get(anim_name, [])
 	if voicelines.size() > 0:
 		var voiceline = voicelines[local_random.randi_range(0, voicelines.size() - 1)]
 		SoundManager.play_voiceline(voiceline)
 
-	animation_player.play(anim_name)
+func play_lose_voiceline() -> void:
+	play_voiceline_for_animation("lose")
+
+func play_win_voiceline() -> void:
+	play_voiceline_for_animation("win")
+
+func play_split_voiceline() -> void:
+	play_voiceline_for_animation("split")
 
 func _on_animation_finished(anim_name: String) -> void:
 	animation_finished.emit(anim_name)
