@@ -13,8 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bnj5qev7ojsxe" path="res://scenes/components/npc_models/mors.tscn" id="7_swb63"]
 [ext_resource type="PackedScene" uid="uid://dho64dgkhbmfk" path="res://scenes/components/npc_models/eustachy.tscn" id="9_exd02"]
 [ext_resource type="PackedScene" uid="uid://b2a0kutw3rg6y" path="res://scenes/components/npc_models/yeti.tscn" id="9_hcftp"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_myhs1"]
+[ext_resource type="PackedScene" uid="uid://bukr46amqa44a" path="res://scenes/views/poker_table/assets/mapa_blockout.glb" id="14_hcftp"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dkctf"]
 size = Vector2(128, 128)
@@ -47,12 +46,16 @@ unique_name_in_owner = true
 script = ExtResource("3_7jrhj")
 deck = NodePath("../DeckManager")
 
+[node name="EndGameScreen" parent="." unique_id=2069405153 instance=ExtResource("7_cd4ow")]
+unique_name_in_owner = true
+visible = false
+
+[node name="HelpScreen" parent="." unique_id=1292824030 instance=ExtResource("7_341c8")]
+unique_name_in_owner = true
+visible = false
+
 [node name="PlayerCamera" type="Camera3D" parent="." unique_id=6409917]
 transform = Transform3D(-4.3690914e-08, -0.28825974, 0.95755225, -1.3377766e-09, 0.9575523, 0.28825974, -1, 1.13133405e-08, -4.222196e-08, 2.7702587, 2.4618275, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=322531930]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48583806, 0)
-mesh = SubResource("BoxMesh_myhs1")
 
 [node name="CPU1Controller" type="Node" parent="." unique_id=1856201156 node_paths=PackedStringArray("deck", "npc_model")]
 unique_name_in_owner = true
@@ -64,7 +67,7 @@ avatar = SubResource("PlaceholderTexture2D_dkctf")
 npc_model = NodePath("Mors")
 
 [node name="Mors" parent="CPU1Controller" unique_id=105059117 instance=ExtResource("7_swb63")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0354363, 0.48583806, 1.5278757)
+transform = Transform3D(-0.10331062, 0, 0.9946491, 0, 1, 0, -0.9946491, 0, -0.10331062, 0.75187945, 0.48583806, 2.0867617)
 
 [node name="CPU2Controller" type="Node" parent="." unique_id=499779583 node_paths=PackedStringArray("deck", "npc_model")]
 unique_name_in_owner = true
@@ -76,7 +79,7 @@ avatar = ExtResource("7_f463q")
 npc_model = NodePath("Yeti")
 
 [node name="Yeti" parent="CPU2Controller" unique_id=67668679 instance=ExtResource("9_hcftp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8833574, 0.48583806, 0.19221997)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1314344, 0.48583806, 0.81870955)
 
 [node name="CPU3Controller" type="Node" parent="." unique_id=1078727605 node_paths=PackedStringArray("deck", "npc_model")]
 unique_name_in_owner = true
@@ -88,19 +91,16 @@ avatar = SubResource("GradientTexture2D_cvekp")
 npc_model = NodePath("Eustachy")
 
 [node name="Eustachy" parent="CPU3Controller" unique_id=1707714365 instance=ExtResource("9_exd02")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2091228, 0.48583806, -1.3796716)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.540947, 0.48583806, -1.7776725)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1330912494]
 transform = Transform3D(0.86602545, -5.8562137e-09, 0.49999997, -0.49999997, -2.1855692e-08, 0.86602545, 5.856215e-09, -1, -2.1855694e-08, 2.2405267, 2.5583797, -2.3841858e-07)
 light_energy = 5.0
 
-[node name="EndGameScreen" parent="." unique_id=2069405153 instance=ExtResource("7_cd4ow")]
-unique_name_in_owner = true
-visible = false
+[node name="Mapa Proto 2" parent="." unique_id=1434944584 instance=ExtResource("14_hcftp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.014114, -2.061152, -0.24062586)
 
-[node name="HelpScreen" parent="." unique_id=1292824030 instance=ExtResource("7_341c8")]
-unique_name_in_owner = true
-visible = false
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2007170898]
 
 [node name="PokerGameOrchestrator" type="Node" parent="." unique_id=410881516 node_paths=PackedStringArray("player_controller", "cpu1_controller", "cpu2_controller", "cpu3_controller", "game_state", "deck", "player_ui", "end_game_screen", "help_screen")]
 unique_name_in_owner = true
