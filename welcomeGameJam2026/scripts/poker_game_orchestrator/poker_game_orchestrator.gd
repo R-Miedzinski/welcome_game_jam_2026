@@ -116,7 +116,6 @@ func serialize_and_save_state() -> void:
 
 	Preloads.serialized_state = state
 
-# TODO: Revisit serialization when fishing game is completed
 func load_serialized_state() -> void:
 	var state: Dictionary = Preloads.serialized_state
 	if state.keys().size() == 0 and state.values().size() == 0:
@@ -387,7 +386,9 @@ func _update_go_fish_button_state() -> void:
 	if not is_instance_valid(player_ui):
 		return
 
-	if player_controller.remaining_fishes > 0 and player_controller.selected_fish_index != -1:
+	if player_controller.remaining_fishes > 0 and \
+	player_controller.selected_fish_index != -1 and \
+	game_state.get_player_state(player_controller.player_id) == PokerGameStateManager.PlayerState.ACTIVE:
 		player_ui.enable_go_fish_button()
 	else:
 		player_ui.disable_go_fish_button()
@@ -444,7 +445,7 @@ func _post_player_state_change_message(player_id: String, state: PokerGameStateM
 	var message_key = player_state_change_messages[state]
 	var message_text = tr(message_key).format({
 		"player_name": player_id,
-		"current_round": game_state.round_number if game_state else 0
+		"current_round": game_state.round_number if player_id == player_controller.player_id and game_state else cpu_controllers[player_id].rounds_played
 	})
 	player_ui.message_feed.add_message(message_text)
 

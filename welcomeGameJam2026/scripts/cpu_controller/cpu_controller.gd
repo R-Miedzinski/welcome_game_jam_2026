@@ -24,6 +24,7 @@ var blind_bet: int = 0
 
 var cash: int = 0
 var remaining_fishes: int = 0
+var rounds_played: int = 0
 
 var player_hand: PackedStringArray = []
 
@@ -144,7 +145,9 @@ func serialize() -> Dictionary:
 		"already_raised": already_raised,
 		"raise_amount": raise_amount,
 		"blind_bet": blind_bet,
-		"entered_blind": entered_blind
+		"entered_blind": entered_blind,
+		"current_idle_animation": current_idle_animation,
+		"rounds_played": rounds_played
 	}
 
 func load_state(state: Dictionary) -> void:
@@ -158,6 +161,8 @@ func load_state(state: Dictionary) -> void:
 	raise_amount = state.get("raise_amount", Preloads.Instance.game_options.get("raise_amount", 0))
 	blind_bet = state.get("blind_bet", Preloads.Instance.game_options.get("blind_bet", 0))
 	entered_blind = state.get("entered_blind", false)
+	current_idle_animation = state.get("current_idle_animation", "idle")
+	rounds_played = state.get("rounds_played", 0)
 
 func _can_fish() -> bool:
 	return remaining_fishes > 0

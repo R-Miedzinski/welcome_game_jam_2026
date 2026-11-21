@@ -21,6 +21,9 @@
 [ext_resource type="Texture2D" uid="uid://c8nhyb1ns26ha" path="res://scenes/components/player_ui/assets/Green_OnClick.png" id="12_puotl"]
 [ext_resource type="Texture2D" uid="uid://cpd47arscstwe" path="res://scenes/components/menu button/assets/chosen_call.png" id="12_tyvj4"]
 [ext_resource type="PackedScene" uid="uid://sa2eaxphyrk1" path="res://scenes/components/message_feed/message_feed.tscn" id="21_eljtp"]
+[ext_resource type="Texture2D" uid="uid://ki1sqwsiqxpx" path="res://scenes/components/player_ui/assets/Play_Default.png" id="21_kcwtw"]
+[ext_resource type="Texture2D" uid="uid://qkhuy6dl8l3n" path="res://scenes/components/player_ui/assets/Play_OnClick.png" id="22_11p7a"]
+[ext_resource type="Texture2D" uid="uid://cboamppc1m63b" path="res://scenes/components/player_ui/assets/Play_OnSet.png" id="23_dlqpn"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rhq83"]
 texture = ExtResource("7_5gvnc")
@@ -65,6 +68,15 @@ texture = ExtResource("7_lxtlc")
 content_margin_left = 10.0
 content_margin_right = 5.0
 texture = ExtResource("8_6dme5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eljtp"]
+texture = ExtResource("21_kcwtw")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yvytb"]
+texture = ExtResource("22_11p7a")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mljms"]
+texture = ExtResource("23_dlqpn")
 
 [node name="PlayerUi" type="Control" unique_id=884965420]
 layout_mode = 3
@@ -370,14 +382,17 @@ alignment = 1
 [node name="CPU1Display" parent="PlayersDisplays" unique_id=2035241845 instance=ExtResource("7_6bfia")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="CPU2Display" parent="PlayersDisplays" unique_id=111045228 instance=ExtResource("7_6bfia")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="CPU3Display" parent="PlayersDisplays" unique_id=123078472 instance=ExtResource("7_6bfia")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="MenuButtonNextPlay" parent="." unique_id=1042725740 instance=ExtResource("1_0jaed")]
 unique_name_in_owner = true
@@ -393,10 +408,20 @@ offset_right = -103.0
 offset_bottom = 344.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_eljtp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_yvytb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_mljms")
 text = "NEXT_PLAY"
 
 [node name="MessageFeed" parent="." unique_id=2115170674 instance=ExtResource("21_eljtp")]
 unique_name_in_owner = true
 layout_mode = 1
-offset_top = -297.0
-offset_bottom = -225.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 53.0
+offset_top = -397.0
+offset_right = 416.0
+offset_bottom = -205.0
+grow_vertical = 0
+stretch_mode = 0

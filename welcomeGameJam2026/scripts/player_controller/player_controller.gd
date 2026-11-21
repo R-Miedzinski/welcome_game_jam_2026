@@ -102,7 +102,9 @@ func serialize() -> Dictionary:
 		"player_hand": player_hand,
 		"already_raised": already_raised,
 		"selected_fish_index": selected_fish_index,
-		"entered_blind": entered_blind
+		"entered_blind": entered_blind,
+		"raise_amount": raise_amount,
+		"blind_bet": blind_bet
 	}
 
 func load_state(state: Dictionary) -> void:
@@ -115,6 +117,8 @@ func load_state(state: Dictionary) -> void:
 	already_raised = state.get("already_raised", false)
 	selected_fish_index = state.get("selected_fish_index", -1)
 	entered_blind = state.get("entered_blind", false)
+	raise_amount = state.get("raise_amount", 0)
+	blind_bet = state.get("blind_bet", 0)
 
 func _on_call_button_pressed() -> void:
 	if new_bet >= cash:

@@ -96,6 +96,7 @@ var player_phase_bets: Dictionary = {}
 var player_blind_posted: Dictionary = {}
 var player_order: Array = []
 
+var round_number: int = 0
 var dealer_index: int = -1
 var blind_bet: int = 0
 var current_bet: int = 0
@@ -144,11 +145,11 @@ func new_play() -> void:
 	community_cards.clear()
 	community_cards_changed.emit(community_cards)
 	deck.shuffle()
+	round_number += 1
 	_advance_dealer()
 
 	for key in player_states.keys():
-		if player_states[key] != PlayerState.OUT:
-			# player_states[key] = PlayerState.INIT
+		if player_states[key] != PlayerState.OUT and player_states[key] != PlayerState.INIT:
 			player_state_change(key, PlayerState.INIT)
 	
 	game_state_change(GameState.WAITING)
@@ -193,7 +194,9 @@ func serialize() -> Dictionary:
 		"player_phase_bets": player_phase_bets,
 		"player_blind_posted": player_blind_posted,
 		"player_order": player_order,
-		"game_state": game_state
+		"game_state": game_state,
+		"round_started_emitted": round_started_emitted,
+		"round_number": round_number
 	}
 
 func load_state(state: Dictionary) -> void:
@@ -212,6 +215,9 @@ func load_state(state: Dictionary) -> void:
 	player_phase_bets = state.get("player_phase_bets", {})
 	player_blind_posted = state.get("player_blind_posted", {})
 	player_order = state.get("player_order", [])
+	
+	round_started_emitted = state.get("round_started_emitted", false)
+	round_number = state.get("round_number", 0)
 
 	game_state = GameState.LOADED
 	game_state_change(state.get("game_state", GameState.WAITING))

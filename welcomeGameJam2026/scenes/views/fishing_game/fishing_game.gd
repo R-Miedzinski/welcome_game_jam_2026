@@ -1,5 +1,5 @@
 class_name FishingGame
-extends Node2D
+extends Control
 
 @onready var sequence_controller: AnimationPlayer = %SequenceController
 @onready var deck: DeckManager = %DeckManager

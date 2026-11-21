@@ -1,11 +1,16 @@
 [gd_scene format=3 uid="uid://c5oqqpnwa3dpv"]
 
 [ext_resource type="Script" uid="uid://dyu8mkihnphyo" path="res://scenes/views/fishing_game/fishing_game.gd" id="1_vdhkj"]
+[ext_resource type="PackedScene" uid="uid://c0gm4k58dkqxt" path="res://scenes/components/fishing_game_background/fishing_game_background.tscn" id="2_0u4uy"]
 [ext_resource type="Script" uid="uid://da5tckxffau4m" path="res://scripts/fishing_orchestrator/fishing_orchestrator.gd" id="2_jnssj"]
 [ext_resource type="Script" uid="uid://dx8628pcddoix" path="res://scripts/hook_controller/hook_controller.gd" id="2_qtwaw"]
 [ext_resource type="PackedScene" uid="uid://uno6ukidotr1" path="res://scenes/components/fishing_hook/fishing_hook.tscn" id="3_jnssj"]
 [ext_resource type="Script" uid="uid://cgpif7c60joiv" path="res://scripts/deck_manager/deck_manager.gd" id="4_dkctf"]
 [ext_resource type="PackedScene" uid="uid://fm7ldayo1k4f" path="res://scenes/components/fishing_layer/fishing_layer.tscn" id="7_0u4uy"]
+[ext_resource type="Texture2D" uid="uid://jxfypj0epw24" path="res://scenes/components/fishing_layer/assets/WALL1.png" id="8_xomej"]
+[ext_resource type="Texture2D" uid="uid://bgbf4dybhr41a" path="res://scenes/components/fishing_layer/assets/WALL2.png" id="9_qase4"]
+[ext_resource type="Texture2D" uid="uid://b4jjik4825nsx" path="res://scenes/components/fishing_layer/assets/WALL3.png" id="10_x3fyl"]
+[ext_resource type="Texture2D" uid="uid://n34hdktn6dgd" path="res://scenes/components/fishing_layer/assets/WALL4.png" id="11_a42rt"]
 
 [sub_resource type="Animation" id="Animation_qtwaw"]
 length = 0.001
@@ -44,12 +49,20 @@ _data = {
 &"move_hook_to_start": SubResource("Animation_jnssj")
 }
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3yyv6"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_myhs1"]
 
-[node name="FishingGame" type="Node2D" unique_id=257744207]
+[node name="FishingGame" type="Control" unique_id=1544938087]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_vdhkj")
+
+[node name="Backgorund" parent="." unique_id=672236312 instance=ExtResource("2_0u4uy")]
+z_index = -2
+layout_mode = 1
 
 [node name="FishingOrchestrator" type="Node" parent="." unique_id=1768629690 node_paths=PackedStringArray("fishing_hook", "deck", "fishing_layers_parent", "fishing_layer_despawn", "fishing_layer_spawn")]
 unique_name_in_owner = true
@@ -86,7 +99,7 @@ unique_name_in_owner = true
 [node name="FishingLayer" parent="FishingLayers" unique_id=1212338432 instance=ExtResource("7_0u4uy")]
 spawn_columns = 6
 spawn_rows = 2
-background_texture = SubResource("PlaceholderTexture2D_3yyv6")
+background_texture = ExtResource("8_xomej")
 distance_from_center_scaling = Vector2(1, 2)
 distance_from_center_factor = 0.7
 speed_randomness_percent = 25.0
@@ -94,6 +107,7 @@ speed_randomness_percent = 25.0
 [node name="FishingLayer2" parent="FishingLayers" unique_id=1100567730 instance=ExtResource("7_0u4uy")]
 spawn_columns = 6
 spawn_rows = 2
+background_texture = ExtResource("9_qase4")
 distance_from_center_scaling = Vector2(1, 2)
 distance_from_center_factor = 0.7
 speed_randomness_percent = 25.0
@@ -101,6 +115,7 @@ speed_randomness_percent = 25.0
 [node name="FishingLayer3" parent="FishingLayers" unique_id=47964186 instance=ExtResource("7_0u4uy")]
 spawn_columns = 6
 spawn_rows = 2
+background_texture = ExtResource("10_x3fyl")
 distance_from_center_scaling = Vector2(1, 2)
 distance_from_center_factor = 0.7
 speed_randomness_percent = 25.0
@@ -108,6 +123,7 @@ speed_randomness_percent = 25.0
 [node name="FishingLayer4" parent="FishingLayers" unique_id=1621157865 instance=ExtResource("7_0u4uy")]
 spawn_columns = 6
 spawn_rows = 2
+background_texture = ExtResource("11_a42rt")
 distance_from_center_scaling = Vector2(1, 2)
 distance_from_center_factor = 0.7
 speed_randomness_percent = 25.0
@@ -115,6 +131,7 @@ speed_randomness_percent = 25.0
 [node name="FishingLayer5" parent="FishingLayers" unique_id=1622911490 instance=ExtResource("7_0u4uy")]
 spawn_columns = 6
 spawn_rows = 2
+background_texture = ExtResource("8_xomej")
 distance_from_center_scaling = Vector2(1, 2)
 distance_from_center_factor = 0.7
 speed_randomness_percent = 25.0
@@ -122,6 +139,7 @@ speed_randomness_percent = 25.0
 [node name="FishingLayer6" parent="FishingLayers" unique_id=2079493473 instance=ExtResource("7_0u4uy")]
 spawn_columns = 6
 spawn_rows = 2
+background_texture = ExtResource("10_x3fyl")
 distance_from_center_scaling = Vector2(1, 2)
 distance_from_center_factor = 0.7
 speed_randomness_percent = 25.0

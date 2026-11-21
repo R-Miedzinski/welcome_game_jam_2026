@@ -1,9 +1,10 @@
 class_name MessageFeed
-extends ScrollContainer
+extends TextureRect
 
 @export var max_messages: int = 100
 
 @onready var message_container: VBoxContainer = %MessageContainer
+@onready var scroll_container: ScrollContainer = %ScrollContainer
 
 func add_message(message: String) -> void:
 	var label = Label.new()
@@ -21,6 +22,6 @@ func add_message(message: String) -> void:
 	call_deferred("_scroll_to_bottom")
 
 func _scroll_to_bottom() -> void:
-	var scroll_value = get_v_scroll_bar().max_value
-	if scroll_value != get_v_scroll_bar().value:
-		set_deferred("scroll_vertical", scroll_value)
+	var scroll_value = scroll_container.get_v_scroll_bar().max_value
+	if scroll_value != scroll_container.get_v_scroll_bar().value:
+		scroll_container.set_deferred("scroll_vertical", scroll_value)
