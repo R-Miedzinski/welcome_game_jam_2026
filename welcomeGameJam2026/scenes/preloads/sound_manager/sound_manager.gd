@@ -1,39 +1,87 @@
-class_name SoundManager
 extends Node
 
-static var Instance: SoundManager = null:
-  set(value):
-    if Instance != null and Instance != value:
-      Instance.queue_free()
-    Instance = value
+@export var ui_button_sound: AudioStream
 
-@onready var soundtrack_player: AudioStreamPlayer = %SoundtrackPlayer
-@onready var sfx_player: AudioStreamPlayer = %SFXPlayer
-@onready var ui_player: AudioStreamPlayer = %UIPlayer
+@onready var soundtrack_player_node: AudioStreamPlayer = %SoundtrackPlayer
+@onready var sfx_bus_name: StringName = &"SFX"
+@onready var ui_bus_name: StringName = &"UI"
+@onready var voicelines_bus_name: StringName = &"VoiceLines"
+
+
+var min_volume_db: float = -72.0
+var max_volume_db: float = 6
+
+var active_sfx_players: Array[AudioStreamPlayer] = []
+var active_ui_players: Array[AudioStreamPlayer] = []
+var active_voiceline_players: Array[AudioStreamPlayer] = []
 
 func _ready() -> void:
-    Instance = self
+	get_tree().node_added.connect(_on_node_added)
+	_scan_existing_buttons(get_tree().root)
 
 func play_soundtrack(stream: AudioStream) -> void:
-  soundtrack_player.stream = stream
-  soundtrack_player.play()
+	soundtrack_player_node.stream = stream
+	soundtrack_player_node.play()
 
 func play_sfx(stream: AudioStream) -> void:
-  sfx_player.stream = stream
-  sfx_player.play()
+	_play_sound(stream, sfx_bus_name, active_sfx_players)
 
 func play_ui(stream: AudioStream) -> void:
-  ui_player.stream = stream
-  ui_player.play()
+	_play_sound(stream, ui_bus_name, active_ui_players)
+
+func play_voiceline(stream: AudioStream) -> void:
+	_play_sound(stream, voicelines_bus_name, active_voiceline_players)
 
 func set_master_volume(volume: float) -> void:
-  AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), volume)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), _scale_volume_to_db(volume))
 
 func set_soundtrack_volume(volume: float) -> void:
-  AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Soundtrack"), volume)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Soundtrack"), _scale_volume_to_db(volume))
 
 func set_sfx_volume(volume: float) -> void:
-  AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), volume)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), _scale_volume_to_db(volume))
 
 func set_ui_volume(volume: float) -> void:
-  AudioServer.set_bus_volume_db(AudioServer.get_bus_index("UI"), volume)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("UI"), _scale_volume_to_db(volume))
+
+func set_voicelines_volume(volume: float) -> void:
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("VoiceLines"), _scale_volume_to_db(volume))
+
+func _play_sound(stream: AudioStream, bus_name: StringName, players_array: Array[AudioStreamPlayer]) -> void:
+	var player := AudioStreamPlayer.new()
+	player.stream = stream
+	player.bus = bus_name
+	add_child(player)
+	player.play()
+	
+	players_array.append(player)
+	player.finished.connect(func(): _on_player_finished(player, players_array))
+
+func _on_player_finished(player: AudioStreamPlayer, players_array: Array[AudioStreamPlayer]) -> void:
+	players_array.erase(player)
+	player.queue_free()
+
+func _on_node_added(node: Node) -> void:
+	if node is Button and not node.get_parent() is Fish:
+		_on_button_entered(node)
+
+func _scan_existing_buttons(node: Node) -> void:
+	if node is Button and not node.get_parent() is Fish:
+		_on_button_entered(node)
+
+	for child in node.get_children():
+		_scan_existing_buttons(child)
+
+func _scale_volume_to_db(volume: float) -> float:
+	return volume/100.0 * (max_volume_db - min_volume_db) + min_volume_db
+
+func _on_button_entered(button: Button) -> void:
+	button.tree_exiting.connect(_on_button_exited.bind(button))
+	button.pressed.connect(_on_button_pressed)
+
+func _on_button_exited(button: Button) -> void:
+	button.tree_exiting.disconnect(_on_button_exited.bind(button))
+	button.pressed.disconnect(_on_button_pressed)
+
+func _on_button_pressed() -> void:
+	play_ui(ui_button_sound)

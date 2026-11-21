@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d2qdvlljr081g" path="res://scenes/components/player_display/assets/Call.png" id="5_qyano"]
 [ext_resource type="Texture2D" uid="uid://cfeftiqvuu7a1" path="res://scenes/components/player_display/assets/Empty.png" id="6_ry73j"]
 [ext_resource type="Texture2D" uid="uid://qcql3fp3c3gj" path="res://scenes/components/player_display/assets/Money_Info_NPC.png" id="7_ed2t2"]
+[ext_resource type="PackedScene" uid="uid://ddtfre13trud7" path="res://scenes/components/fish/fish.tscn" id="8_qyano"]
 
 [node name="Display" type="VBoxContainer" unique_id=2035241845]
 theme_override_constants/separation = 10
@@ -62,3 +63,30 @@ grow_vertical = 2
 text = "Cash"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1058956937]
+layout_mode = 2
+theme_override_constants/margin_top = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1900236304]
+layout_mode = 2
+theme_override_constants/separation = 80
+alignment = 2
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer" unique_id=720595391]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Fish1" parent="MarginContainer/VBoxContainer/Control" unique_id=1012391387 instance=ExtResource("8_qyano")]
+unique_name_in_owner = true
+scale = Vector2(0.8, 0.8)
+
+[node name="Control2" type="Control" parent="MarginContainer/VBoxContainer" unique_id=1470336115]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="Fish2" parent="MarginContainer/VBoxContainer/Control2" unique_id=1168499516 instance=ExtResource("8_qyano")]
+unique_name_in_owner = true
+scale = Vector2(0.8, 0.8)

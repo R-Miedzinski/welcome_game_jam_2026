@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://b2a0kutw3rg6y"]
+
+[ext_resource type="Script" uid="uid://bx3c6gja40lmc" path="res://scenes/components/npc_models/npc.gd" id="1_vio7t"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_l3vlx"]
+
+[sub_resource type="Animation" id="Animation_eom2e"]
+resource_name = "call"
+
+[sub_resource type="Animation" id="Animation_280v7"]
+resource_name = "fish"
+
+[sub_resource type="Animation" id="Animation_stn2x"]
+resource_name = "fold"
+
+[sub_resource type="Animation" id="Animation_6g1v0"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_sqati"]
+resource_name = "idle_out"
+
+[sub_resource type="Animation" id="Animation_lpu5b"]
+resource_name = "out"
+
+[sub_resource type="Animation" id="Animation_koid6"]
+resource_name = "raise"
+
+[sub_resource type="Animation" id="Animation_1c8vw"]
+resource_name = "showdown"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2kgmm"]
+_data = {
+&"call": SubResource("Animation_eom2e"),
+&"fish": SubResource("Animation_280v7"),
+&"fold": SubResource("Animation_stn2x"),
+&"idle": SubResource("Animation_6g1v0"),
+&"idle_out": SubResource("Animation_sqati"),
+&"out": SubResource("Animation_lpu5b"),
+&"raise": SubResource("Animation_koid6"),
+&"showdown": SubResource("Animation_1c8vw")
+}
+
+[node name="Yeti" type="Node3D" unique_id=105059117]
+script = ExtResource("1_vio7t")
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1755265249]
+mesh = SubResource("CapsuleMesh_l3vlx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=731087104]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_2kgmm")

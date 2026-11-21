@@ -113,6 +113,7 @@ func _setup_cpu_player(cpu_controller: CPUController) -> void:
 	cpu_controller.entered_blind = false
 
 	cpu_controllers[cpu_controller.player_id] = cpu_controller
+	cpu_controller.npc_model.play_animation(cpu_controller.current_idle_animation)
 
 func _on_request_card_draw(player_ids: PackedStringArray) -> void:
 	print("Requesting card draw for players: %s" % [player_ids])
@@ -178,6 +179,7 @@ func _on_showdown_winners(winner_ids: PackedStringArray) -> void:
 	print("Showdown winners: %s" % [winner_ids])
 
 	for cpu_controller in cpu_controllers.values():
+		player_ui.show_cpu_cards(cpu_controller.player_id, cpu_controller.player_hand)
 		cpu_controller.clear_hand()
 
 	if _check_end_game():
@@ -187,6 +189,8 @@ func _on_showdown_winners(winner_ids: PackedStringArray) -> void:
 	await get_tree().create_timer(5.0).timeout
 	player_controller.clear_hand()
 	_update_player_cards_display()
+	for cpu_controller in cpu_controllers.values():
+		player_ui.hide_cpu_cards(cpu_controller.player_id)
 	game_state.new_play()
 
 func _on_send_winnings(winner_id: String, amount: int) -> void:
@@ -202,6 +206,8 @@ func _on_send_winnings(winner_id: String, amount: int) -> void:
 
 		if cpu_controller.cash <= 0 and game_state.get_player_state(cpu_controller.player_id) != PokerGameStateManager.PlayerState.OUT:
 			game_state.player_state_change(cpu_controller.player_id, PokerGameStateManager.PlayerState.OUT)
+			cpu_controller.current_idle_animation = "idle_out"
+			cpu_controller.npc_model.play_animation("out")
 
 func _on_player_state_changed(player_id: String, _old_state: PokerGameStateManager.PlayerState, new_state: PokerGameStateManager.PlayerState) -> void:
 	if is_instance_valid(player_ui) and player_id != player_controller.player_id:

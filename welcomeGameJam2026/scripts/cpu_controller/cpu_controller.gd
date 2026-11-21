@@ -9,6 +9,7 @@ signal submit_player_decision(player_id: String, decision: PokerGameStateManager
 @export var deck: DeckManager
 
 @export var avatar: Texture2D
+@export var npc_model: NPC
 
 var starting_cash: int = 0:
 	set(value):
@@ -29,7 +30,19 @@ var player_hand: PackedStringArray = []
 var already_raised: bool = false
 var entered_blind: bool = false
 
+var idle_animation_names: PackedStringArray = ["idle", "idle_out"]
+var current_idle_animation: String = "idle":
+	set(value):
+		current_idle_animation = value if value in idle_animation_names else idle_animation_names[0]
+
+var animation_finished_bindings: Dictionary[String, Callable] = {}
+
 func _ready() -> void:
+	if is_instance_valid(npc_model):
+		npc_model.animation_finished.connect(_on_animation_finished)
+	else:
+		push_error("NPC model for %s is not valid." % player_id)
+
 	cash = starting_cash
 	remaining_fishes = max_fishes
 
@@ -50,8 +63,12 @@ func make_decision(table_cards: Array, current_bet: int, player_bet: int) -> voi
 	# Decision pre-flop: if no table cards
 	if table_cards.size() == 0:
 		if decision_outcome == DecisionSchema.DecisionOutcome.FISH:
-			_fish()
-			return make_decision(table_cards, current_bet, player_bet)
+			animation_finished_bindings["fish"] = func () -> void:
+				_fish()
+				make_decision(table_cards, current_bet, player_bet)
+			
+			npc_model.play_animation("fish")
+			return
 		else:
 			desired_decision = _map_decision_to_action(decision_outcome)
 			if desired_decision == -1:
@@ -67,17 +84,28 @@ func make_decision(table_cards: Array, current_bet: int, player_bet: int) -> voi
 			desired_decision = _map_decision_to_action(DecisionSchema.DecisionOutcome.CALL)
 		else:
 			if decision_outcome == DecisionSchema.DecisionOutcome.FISH:
-				_fish()
-				return make_decision(table_cards, current_bet, player_bet)
+				# _fish()
+				# return make_decision(table_cards, current_bet, player_bet)
+				animation_finished_bindings["fish"] = func () -> void:
+					_fish()
+					make_decision(table_cards, current_bet, player_bet)
+				
+				npc_model.play_animation("fish")
+				return		
 			else:
 				desired_decision = _map_decision_to_action(decision_outcome)
 				if desired_decision == -1:
 					desired_decision = DecisionSchema.DecisionOutcome.FOLD
 
 	var action_with_bet = _make_bet(desired_decision, current_bet, player_bet)
-	cash -= action_with_bet[1]
+	var animation: String = _map_action_to_animation(action_with_bet[0])
 
-	submit_player_decision.emit(player_id, action_with_bet[0], action_with_bet[1])
+	if animation != "":
+		animation_finished_bindings[animation] = func () -> void:
+			cash -= action_with_bet[1]
+			submit_player_decision.emit(player_id, action_with_bet[0], action_with_bet[1])
+
+		npc_model.play_animation(animation)
 
 func evaluate_hand(table_cards: Array) -> Dictionary:
 	var held_cards: Array[Preloads.Poker.Card] = []
@@ -209,4 +237,27 @@ func _make_bet(desired_decision: PokerGameStateManager.PlayerAction, current_bet
 			bet_amount = 0
 
 	return [final_action, bet_amount]
-	
+
+func _map_action_to_animation(action: PokerGameStateManager.PlayerAction) -> String:
+	match action:
+		PokerGameStateManager.PlayerAction.FOLD:
+			return "fold"
+		PokerGameStateManager.PlayerAction.CHECK:
+			return "call"
+		PokerGameStateManager.PlayerAction.RAISE:
+			return "raise"
+		PokerGameStateManager.PlayerAction.ALL_IN:
+			return "raise"
+		_:
+			return current_idle_animation
+
+func _on_animation_finished(anim_name: String) -> void:
+	print("Animation finished: %s" % anim_name)
+	if animation_finished_bindings.has(anim_name):
+		print("Calling animation finished binding for: %s" % anim_name)
+		animation_finished_bindings[anim_name].call()
+		animation_finished_bindings.erase(anim_name)
+
+	if not anim_name in idle_animation_names and not npc_model.animation_player.is_playing():
+		print("Animation %s is not an idle animation, switching to %s after finishing." % [anim_name, current_idle_animation])
+		npc_model.play_animation(current_idle_animation)

@@ -25,3 +25,5 @@ mono_crash.*.json
 # *.pck
 
 .vscode/
+.build/
+.build_*/

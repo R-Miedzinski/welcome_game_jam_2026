@@ -100,6 +100,15 @@ component = ExtResource("7_27unh")
 initial_value = 100.0
 metadata/_custom_type_script = "uid://ds2vfcceo8sih"
 
+[sub_resource type="Resource" id="Resource_d7nqd"]
+script = ExtResource("4_1ihu2")
+name = "VO_SOUND_OPT"
+value_type = 3
+max_value = 100.0
+component = ExtResource("7_27unh")
+initial_value = 100.0
+metadata/_custom_type_script = "uid://ds2vfcceo8sih"
+
 [node name="Options" type="Control" unique_id=2147413792]
 layout_mode = 3
 anchors_preset = 15
@@ -169,7 +178,8 @@ form_schema = Dictionary[String, ExtResource("4_1ihu2")]({
 "master": SubResource("Resource_ho7dg"),
 "sfx": SubResource("Resource_m1nau"),
 "soundtrack": SubResource("Resource_w8det"),
-"ui": SubResource("Resource_pyimt")
+"ui": SubResource("Resource_pyimt"),
+"voicelines": SubResource("Resource_d7nqd")
 })
 field_order = Array[String](["master", "soundtrack", "sfx", "ui"])
 metadata/_tab_index = 1

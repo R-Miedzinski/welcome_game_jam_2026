@@ -20,7 +20,7 @@ var current_speed: float = 0.0:
 
 var fishing_layers: Array[FishingLayer] = []
 var layer_wrap_counts: Array[int] = []
-var layer_height: int = 0
+var layer_height: float = 0
 var scroll_distance: float = 0.0
 
 func _ready() -> void:
@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 	for i in range(fishing_layers.size()):
 		var layer = fishing_layers[i]
 		var starting_y = (i - 0.5) * layer_height
-		var wraps = maxi(0, ceili((scroll_distance - (starting_y - fishing_layer_despawn.position.y)) / wrap_distance))
+		var wraps = max(0, ceil((scroll_distance - (starting_y - fishing_layer_despawn.position.y)) / wrap_distance))
 		layer.position.y = starting_y - scroll_distance + wraps * wrap_distance
 		while layer_wrap_counts[i] < wraps:
 			layer_wrap_counts[i] += 1
@@ -78,7 +78,7 @@ func _setup_fishing_layers() -> void:
 		return
 
 	var layer_width = Preloads.Instance.WINDOW_WIDTH_VPX
-	layer_height = Preloads.Instance.WINDOW_HEIGHT_VPX / (fishing_layers.size() - 2)
+	layer_height = float(Preloads.Instance.WINDOW_HEIGHT_VPX) / float(fishing_layers.size() - 2.0)
 	fishing_layer_spawn.position = Vector2(0, (fishing_layers.size() - 1.5) * layer_height)
 	fishing_layer_despawn.position = Vector2(0, -layer_height * 1.5)
 	for i in range(fishing_layers.size()):

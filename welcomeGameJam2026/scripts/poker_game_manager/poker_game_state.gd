@@ -279,7 +279,7 @@ func submit_hand_evaluation(player_id: String, score: int) -> void:
 			var eligible_bet: int = bet
 			if get_player_state(id) == PlayerState.ALL_IN:
 				eligible_bet = min(bet, get_player_bet(id))
-			var amount: int = eligible_bet / winner_ids.size()
+			var amount: int = floor(float(eligible_bet) / float(winner_ids.size()))
 			var remainder_position: int = (i - remainder_index + winner_ids.size()) % winner_ids.size()
 			if remainder_position < eligible_bet % winner_ids.size():
 				amount += 1

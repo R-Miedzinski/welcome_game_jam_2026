@@ -64,7 +64,8 @@ static var serialized_state: Dictionary = {}
 	"master": 100.0,
 	"sfx": 100.0,
 	"soundtrack": 100.0,
-	"ui": 100.0
+	"ui": 100.0,
+	"voicelines": 100.0
 }: 
 	set(value):
 		audio_options = value
@@ -75,6 +76,8 @@ var game_seed: int = 0
 func _ready() -> void:
 	Instance = self
 	reset_game_data()
+	_update_game_options()
+	_update_audio_options()
 
 func reset_game_data() -> void:
 	serialized_state = {}
@@ -125,7 +128,9 @@ func _update_game_options() -> void:
 	_set_language()
 
 func _update_audio_options() -> void:
-	SoundManager.Instance.set_master_volume(linear_to_db(audio_options.get("master", 100.0)))
-	SoundManager.Instance.set_sfx_volume(linear_to_db(audio_options.get("sfx", 100.0)))
-	SoundManager.Instance.set_soundtrack_volume(linear_to_db(audio_options.get("soundtrack", 100.0)))
-	SoundManager.Instance.set_ui_volume(linear_to_db(audio_options.get("ui", 100.0)))
+	print("Updating audio options: %s" % audio_options)
+	SoundManager.set_master_volume(audio_options.get("master", 100.0))
+	SoundManager.set_sfx_volume(audio_options.get("sfx", 100.0))
+	SoundManager.set_soundtrack_volume(audio_options.get("soundtrack", 100.0))
+	SoundManager.set_ui_volume(audio_options.get("ui", 100.0))
+	SoundManager.set_voicelines_volume(audio_options.get("voicelines", 100.0))

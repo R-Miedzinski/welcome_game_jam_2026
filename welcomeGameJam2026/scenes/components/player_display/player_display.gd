@@ -14,6 +14,9 @@ extends VBoxContainer
 @onready var profile_display: TextureRect = %ProfileDisplay
 @onready var name_display: TextureRect = %NameDisplay
 
+@onready var fish: Fish = %Fish1
+@onready var fish2: Fish = %Fish2
+
 func _ready() -> void:
 	set_player_cash("0")
 	set_player_name("")
@@ -41,6 +44,19 @@ func set_player_avatar(avatar_texture: Texture2D) -> void:
 func set_player_banner(banner_texture: Texture2D) -> void:
 	name_display.texture = banner_texture
 
+func set_fish_1(card_string: String) -> void:
+	fish.card_string = card_string
+	fish.visible = true
+
+func hide_fish_1() -> void:
+	fish.visible = false
+
+func set_fish_2(card_string: String) -> void:
+	fish2.card_string = card_string
+	fish2.visible = true
+
+func hide_fish_2() -> void:
+	fish2.visible = false
 func set_banner_texture_by_state(player_state: PokerGameStateManager.PlayerState) -> void:
 	match player_state:
 		PokerGameStateManager.PlayerState.FOLDED:
@@ -51,7 +67,7 @@ func set_banner_texture_by_state(player_state: PokerGameStateManager.PlayerState
 			set_player_banner(called_banner)
 		PokerGameStateManager.PlayerState.OUT:
 			set_player_banner(eliminated_banner)
-		PokerGameStateManager.PlayerState.ACTIVE, PokerGameStateManager.PlayerState.INIT:
+		PokerGameStateManager.PlayerState.ACTIVE:#, PokerGameStateManager.PlayerState.INIT:
 			set_player_banner(base_banner)
 		_:
 			set_player_banner(base_banner)

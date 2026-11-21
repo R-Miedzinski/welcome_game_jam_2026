@@ -8,13 +8,3 @@ script = ExtResource("1_d7nqd")
 [node name="SoundtrackPlayer" type="AudioStreamPlayer" parent="." unique_id=523676592]
 unique_name_in_owner = true
 bus = &"Soundtrack"
-
-[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=1607855729]
-unique_name_in_owner = true
-max_polyphony = 10
-bus = &"SFX"
-
-[node name="UIPlayer" type="AudioStreamPlayer" parent="." unique_id=185947865]
-unique_name_in_owner = true
-max_polyphony = 10
-bus = &"UI"

@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="WelcomeGameJam2026"
+config/version="0.0.1"
 run/main_scene="uid://b24pgln3wjuto"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
@@ -21,6 +22,7 @@ buses/default_bus_layout="uid://dxf21y6xkdx6h"
 
 [autoload]
 
+SoundManager="*uid://57u1r0vj30jw"
 AutoloadScene="*uid://bm6s8tssx8l32"
 
 [display]

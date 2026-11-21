@@ -41,4 +41,4 @@ func _on_game_form_submitted(_form_name: String, form_data: Dictionary) -> void:
 
 func _on_audio_form_submitted(_form_name: String, form_data: Dictionary) -> void:
 	Preloads.Instance.audio_options.assign(form_data)
-	Preloads.Instance._update_game_options()
+	Preloads.Instance._update_audio_options()

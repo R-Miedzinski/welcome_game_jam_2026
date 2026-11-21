@@ -173,6 +173,8 @@ func set_cpu_avatar(cpu_id: String, avatar: Texture2D) -> void:
 
 	var display = cpu_display_connections[cpu_id]
 	display.set_player_avatar(avatar)
+	display.hide_fish_1()
+	display.hide_fish_2()
 
 func update_cpu_display(cpu_id: String, cash: int, state: PokerGameStateManager.PlayerState) -> void:
 	if not cpu_display_connections.has(cpu_id):
@@ -182,6 +184,31 @@ func update_cpu_display(cpu_id: String, cash: int, state: PokerGameStateManager.
 	var display = cpu_display_connections[cpu_id]
 	display.set_player_cash(str(cash))
 	display.set_banner_texture_by_state(state)
+
+func show_cpu_cards(cpu_id: String, cards: Array) -> void:
+	if not cpu_display_connections.has(cpu_id):
+		print("No CPU display connected for %s" % cpu_id)
+		return
+
+	var display = cpu_display_connections[cpu_id]
+	if cards.size() > 0:
+		display.set_fish_1(cards[0])
+	else:
+		display.hide_fish_1()
+
+	if cards.size() > 1:
+		display.set_fish_2(cards[1])
+	else:
+		display.hide_fish_2()
+
+func hide_cpu_cards(cpu_id: String) -> void:
+	if not cpu_display_connections.has(cpu_id):
+		print("No CPU display connected for %s" % cpu_id)
+		return
+
+	var display = cpu_display_connections[cpu_id]
+	display.hide_fish_1()
+	display.hide_fish_2()
 
 func _on_card1_in_hand_pressed():
 	if not fish1.selectable:

@@ -1,11 +1,6 @@
 class_name Form
 extends Control
 
-# const IntegerInputClass = preload("res://scenes/components/form/inputs/integer_input/integer_input.gd")
-# const StringInputClass = preload("res://scenes/components/form/inputs/text_input/string_input.gd")
-# const SliderInputClass = preload("res://scenes/components/form/inputs/slider_input/slider_input.gd")
-# const DropdownInputClass = preload("res://scenes/components/form/inputs/dropdown_input/dropdown_input.gd")
-
 signal form_submitted(form_name: String, form_data: Dictionary)
 
 @export var form_name: String
