@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://57u1r0vj30jw"]
 
 [ext_resource type="Script" uid="uid://c0b7st2awme8x" path="res://scenes/preloads/sound_manager/sound_manager.gd" id="1_d7nqd"]
+[ext_resource type="AudioStream" uid="uid://vh267url0rgf" path="res://resources/sound/sfx/Button.wav" id="2_73vyo"]
 
 [node name="SoundManager" type="Node" unique_id=868041127]
+process_mode = 3
 script = ExtResource("1_d7nqd")
+ui_button_sound = ExtResource("2_73vyo")
+sfx_global_offset_db = -5.0
 soundtrack_global_offset_db = -15.0
 
 [node name="SoundtrackPlayer" type="AudioStreamPlayer" parent="." unique_id=523676592]

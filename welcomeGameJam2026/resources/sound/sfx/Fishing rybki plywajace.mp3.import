@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dtgjj7it7pdjr"
+path="res://.godot/imported/Fishing rybki plywajace.mp3-76b2409ebc87f239a32ea1a4ea243670.mp3str"
+
+[deps]
+
+source_file="res://resources/sound/sfx/Fishing rybki plywajace.mp3"
+dest_files=["res://.godot/imported/Fishing rybki plywajace.mp3-76b2409ebc87f239a32ea1a4ea243670.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

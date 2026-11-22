@@ -28,14 +28,14 @@ func play_soundtrack(stream: AudioStream) -> void:
 		soundtrack_player_node.volume_db = soundtrack_global_offset_db
 	soundtrack_player_node.play()
 
-func play_sfx(stream: AudioStream) -> void:
-	_play_sound(stream, sfx_bus_name, active_sfx_players)
+func play_sfx(stream: AudioStream, offset_db: float = 0.0, playback_speed: float = 0.0) -> void:
+	_play_sound(stream, sfx_bus_name, active_sfx_players, offset_db, playback_speed)
 
-func play_ui(stream: AudioStream) -> void:
-	_play_sound(stream, ui_bus_name, active_ui_players)
+func play_ui(stream: AudioStream, offset_db: float = 0.0, playback_speed: float = 0.0) -> void:
+	_play_sound(stream, ui_bus_name, active_ui_players, offset_db, playback_speed)
 
-func play_voiceline(stream: AudioStream, voiceline_volume_offset_db: float) -> void:
-	_play_sound(stream, voicelines_bus_name, active_voiceline_players, voiceline_volume_offset_db)
+func play_voiceline(stream: AudioStream, offset_db: float = 0.0, playback_speed: float = 0.0) -> void:
+	_play_sound(stream, voicelines_bus_name, active_voiceline_players, offset_db, playback_speed)
 
 func set_master_volume(volume: float) -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), _scale_volume_to_db(volume))
@@ -52,18 +52,22 @@ func set_ui_volume(volume: float) -> void:
 func set_voicelines_volume(volume: float) -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("VoiceLines"), _scale_volume_to_db(volume))
 
-func _play_sound(stream: AudioStream, bus_name: StringName, players_array: Array[AudioStreamPlayer], custom_volume_offset_db: float = 0.0) -> void:
+func _play_sound(stream: AudioStream, bus_name: StringName, players_array: Array[AudioStreamPlayer], custom_volume_offset_db: float = 0.0, playback_speed: float = 0.0) -> void:
 	var player := AudioStreamPlayer.new()
 	player.stream = stream
 	player.bus = bus_name
 	if custom_volume_offset_db != 0.0:
 		player.volume_db = custom_volume_offset_db
-	elif sfx_global_offset_db != 0.0 and bus_name == sfx_bus_name:
-		player.volume_db = sfx_global_offset_db
+
+	if playback_speed != 0.0:
+		player.pitch_scale = playback_speed
+
+	if sfx_global_offset_db != 0.0 and bus_name == sfx_bus_name:
+		player.volume_db += sfx_global_offset_db
 	elif ui_global_offset_db != 0.0 and bus_name == ui_bus_name:
-		player.volume_db = ui_global_offset_db
+		player.volume_db += ui_global_offset_db
 	elif voicelines_global_offset_db != 0.0 and bus_name == voicelines_bus_name:
-		player.volume_db = voicelines_global_offset_db
+		player.volume_db += voicelines_global_offset_db
 	add_child(player)
 	player.play()
 	

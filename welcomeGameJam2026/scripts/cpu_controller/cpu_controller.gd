@@ -11,6 +11,14 @@ signal submit_player_decision(player_id: String, decision: PokerGameStateManager
 @export var avatar: Texture2D
 @export var npc_model: NPC
 
+@export_category("SFX")
+@export var sfx: Dictionary[String, AudioStream] = {
+	"fishing_start": null,
+	"fishing_end": null
+}
+@export var fishing_begin_delay: float = 2.8
+@export var fishing_end_delay: float = 3.5
+
 var starting_cash: int = 0:
 	set(value):
 		starting_cash = value
@@ -64,6 +72,7 @@ func make_decision(table_cards: Array, current_bet: int, player_bet: int) -> voi
 	# Decision pre-flop: if no table cards
 	if table_cards.size() == 0:
 		if decision_outcome == DecisionSchema.DecisionOutcome.FISH:
+			_play_fishing_sounds()
 			animation_finished_bindings["fish"] = func () -> void:
 				_fish()
 				make_decision(table_cards, current_bet, player_bet)
@@ -87,6 +96,7 @@ func make_decision(table_cards: Array, current_bet: int, player_bet: int) -> voi
 			if decision_outcome == DecisionSchema.DecisionOutcome.FISH:
 				# _fish()
 				# return make_decision(table_cards, current_bet, player_bet)
+				_play_fishing_sounds()
 				animation_finished_bindings["fish"] = func () -> void:
 					_fish()
 					make_decision(table_cards, current_bet, player_bet)
@@ -270,3 +280,13 @@ func _on_animation_finished(anim_name: String) -> void:
 	if not anim_name in idle_animation_names and not npc_model.animation_player.is_playing():
 		print("Animation %s is not an idle animation, switching to %s after finishing." % [anim_name, current_idle_animation])
 		npc_model.play_animation(current_idle_animation)
+
+func _play_sfx_if_valid(key: String, offset_db: float = 0.0) -> void:
+	if sfx.has(key) and sfx[key] != null:
+		SoundManager.play_sfx(sfx[key], offset_db)
+
+func _play_fishing_sounds() -> void:
+	await get_tree().create_timer(fishing_begin_delay).timeout
+	_play_sfx_if_valid("fishing_start")
+	await get_tree().create_timer(fishing_end_delay - fishing_begin_delay).timeout
+	_play_sfx_if_valid("fishing_end")

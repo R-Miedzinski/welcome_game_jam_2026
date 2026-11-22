@@ -1,8 +1,19 @@
 [gd_scene format=3 uid="uid://drgp3i6dvjfaq"]
 
 [ext_resource type="Script" uid="uid://ln5khw01ls8d" path="res://scenes/components/help_screen/help_screen.gd" id="1_2ufnt"]
-[ext_resource type="PackedScene" uid="uid://cyjn4g8y3bp53" path="res://scenes/components/menu button/menu_button.tscn" id="1_b4r2k"]
 [ext_resource type="PackedScene" uid="uid://yravtencv47t" path="res://scenes/components/modal_background/modal_background.tscn" id="2_0uuy3"]
+[ext_resource type="Texture2D" uid="uid://btn83b3ako5wh" path="res://scenes/components/player_ui/assets/Blue_Default.png" id="6_v0kj3"]
+[ext_resource type="Texture2D" uid="uid://bqc6766gk4e74" path="res://scenes/components/player_ui/assets/Blue_OnClick.png" id="7_f60oj"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5fgao"]
+content_margin_left = 10.0
+content_margin_right = 5.0
+texture = ExtResource("6_v0kj3")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4o5r2"]
+content_margin_left = 10.0
+content_margin_right = 5.0
+texture = ExtResource("7_f60oj")
 
 [node name="HelpScreen" type="Control" unique_id=1292824030]
 layout_mode = 3
@@ -32,15 +43,27 @@ offset_bottom = 407.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MenuButtonCloseHelp" parent="Panel" unique_id=186663661 instance=ExtResource("1_b4r2k")]
+[node name="MenuButtonCloseHelp" type="Button" parent="Panel" unique_id=49340933]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 150)
+custom_maximum_size = Vector2(150, 150)
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -144.5
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = 48.0
+offset_left = -190.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 190.0
 grow_horizontal = 0
-text = "CLOSE_BTN"
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_5fgao")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_4o5r2")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5fgao")
+text = "CLOSE_BTN
+"
+autowrap_trim_flags = 192
+icon_alignment = 1
+expand_icon = true

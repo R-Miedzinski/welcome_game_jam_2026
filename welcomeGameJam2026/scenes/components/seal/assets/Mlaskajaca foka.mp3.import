@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://3uusurb5ioq7"
+path="res://.godot/imported/Mlaskajaca foka.mp3-412ee38a3580764c2454ce4d04e65af0.mp3str"
+
+[deps]
+
+source_file="res://scenes/components/seal/assets/Mlaskajaca foka.mp3"
+dest_files=["res://.godot/imported/Mlaskajaca foka.mp3-412ee38a3580764c2454ce4d04e65af0.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

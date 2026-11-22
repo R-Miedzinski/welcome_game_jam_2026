@@ -13,6 +13,13 @@ signal exit_from_fishing_request()
 @export var speed_increment: float = 10.0
 @export var speed_multiplier: float = 1.5
 
+@export_category("Fishing SFX")
+@export var sfx: Dictionary[String, AudioStream] = {
+	"catch_fish": null,
+	"catch_junk": null,
+	"fish_swim": null
+}
+
 var player_controller_modifier: float = 1.0
 var is_sped_up: bool = false
 var current_speed: float = 0.0:
@@ -54,6 +61,7 @@ func start() -> void:
 	current_speed = starting_speed
 
 func _on_caught_fish(card: String) -> void:
+	_play_sfx_if_valid(sfx.get("catch_fish"))
 	deck.take_out(card)
 	Preloads.serialized_state["deck"] = deck.serialize()
 	_add_card_to_player_state(card)
@@ -61,6 +69,7 @@ func _on_caught_fish(card: String) -> void:
 	exit_from_fishing_request.emit()
 
 func _on_caught_junk() -> void:
+	_play_sfx_if_valid(sfx.get("catch_junk"))
 	var card = deck.draw()
 	Preloads.serialized_state["deck"] = deck.serialize()
 	_add_card_to_player_state(card)
@@ -100,3 +109,10 @@ func _setup_fishing_layers() -> void:
 func _on_layer_moved_to_bottom() -> void:
 	current_speed = current_speed/player_controller_modifier + speed_increment
 	speed_increment *= speed_multiplier
+
+	_play_sfx_if_valid(sfx.get("fish_swim"))
+
+
+func _play_sfx_if_valid(stream: AudioStream) -> void:
+	if stream != null:
+		SoundManager.play_sfx(stream)
