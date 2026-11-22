@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="WelcomeGameJam2026"
-config/version="0.0.1"
+config/name="Fish&Chips"
+config/version="0.1.0"
 run/main_scene="uid://b24pgln3wjuto"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
