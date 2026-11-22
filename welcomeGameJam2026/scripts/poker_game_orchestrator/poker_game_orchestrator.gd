@@ -40,6 +40,18 @@ signal emit_player_decision(player_id: String, action: PokerGameStateManager.Pla
 
 @export var game_state_change_messages: Dictionary[PokerGameStateManager.GameState, String] = {}
 
+@export_category("Poker Game SFX")
+@export var sfx: Dictionary[String, AudioStream] = {
+	"win_round": null,
+	"lose_round": null,
+	"win_game": null,
+	"lose_game": null,
+	"chips_in": null,
+	"chips_out": null,
+	"drawing_cards": null,
+	"showdown": null
+}
+
 var cpu_controllers: Dictionary = {}
 var loaded_from_serialized_state: bool = false
 
@@ -175,8 +187,10 @@ func _on_request_card_draw(player_ids: PackedStringArray) -> void:
 
 			if cpu_controller.cash == 0:
 				game_state.player_state_change(player_id, PokerGameStateManager.PlayerState.ALL_IN)
-			print("CPU player hand: %s" % [cpu_controller.player_hand])
 
+			player_ui.update_cpu_display(cpu_controller.player_id, cpu_controller.cash, game_state.get_player_state(cpu_controller.player_id))
+
+	_play_sfx_if_valid(sfx.get("drawing_cards"))
 	game_state.game_state_change(PokerGameStateManager.GameState.PLAYER_TURN)
 
 func _on_request_player_action(player_id: String) -> void:
@@ -207,6 +221,8 @@ func _on_hand_evaluation_request(player_id: String, community_cards: Array) -> v
 
 func _on_submit_player_decision(player_id: String, action: PokerGameStateManager.PlayerAction, amount: int) -> void:
 	emit_player_decision.emit(player_id, action, amount)
+	if amount > 0:
+		_play_sfx_if_valid(sfx.get("chips_in"))
 	
 	if player_id == player_controller.player_id:
 		_end_player_turn_ui()
@@ -230,6 +246,12 @@ func _on_showdown_winners(winner_ids: PackedStringArray) -> void:
 		 game_state.get_player_state(player_controller.player_id) != PokerGameStateManager.PlayerState.FOLDED:
 		all_showdown_players.append(player_controller)
 	all_showdown_players.append_array(showdown_players)
+	_play_sfx_if_valid(sfx.get("showdown"))
+
+	if player_controller.player_id in winner_ids:
+		_play_sfx_if_valid(sfx.get("win_round"))
+	else:
+		_play_sfx_if_valid(sfx.get("lose_round"))
 
 	for cpu_controller in showdown_players:
 		player_ui.show_cpu_cards(cpu_controller.player_id, cpu_controller.player_hand)
@@ -265,11 +287,13 @@ func _on_send_winnings(winner_id: String, amount: int) -> void:
 	if winner_id == player_controller.player_id:
 		player_controller.cash += amount
 		player_controller.already_raised = false
+		_play_sfx_if_valid(sfx.get("chips_out"))
 		_update_player_cash(player_controller.cash)
 	elif cpu_controllers.has(winner_id):
 		var cpu_controller = cpu_controllers.get(winner_id)
 		cpu_controller.cash += amount
 		cpu_controller.already_raised = false
+		_play_sfx_if_valid(sfx.get("chips_out"))
 
 		if cpu_controller.cash <= 0 and game_state.get_player_state(cpu_controller.player_id) != PokerGameStateManager.PlayerState.OUT:
 			game_state.player_state_change(cpu_controller.player_id, PokerGameStateManager.PlayerState.OUT)
@@ -307,9 +331,11 @@ func _on_game_state_changed(old_state: int, new_state: int) -> void:
 
 func _check_end_game() -> bool:
 	if player_controller.cash <= 0:
+		_play_sfx_if_valid(sfx.get("lose_game"))
 		end_game_screen.show_lost()
 		return true
 	elif cpu_controllers.values().all(func(c): return c.cash <= 0):
+		_play_sfx_if_valid(sfx.get("win_game"))
 		end_game_screen.show_won()
 		return true
 	return false
@@ -429,6 +455,10 @@ func _validate_exports() -> void:
 		push_error("Deck is not assigned or invalid.")
 	if not is_instance_valid(player_ui):
 		push_error("Player UI is not assigned or invalid.")
+
+func _play_sfx_if_valid(stream: AudioStream, offset_db: float = 0.0) -> void:
+	if stream != null:
+		SoundManager.play_sfx(stream, offset_db)
 
 func _post_player_action_message(player_id: String, action: PokerGameStateManager.PlayerAction, amount: int) -> void:
 	if not is_instance_valid(player_ui) or not player_action_messages.has(action):

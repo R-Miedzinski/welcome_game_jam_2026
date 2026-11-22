@@ -19,6 +19,18 @@
 [ext_resource type="PackedScene" uid="uid://b866aqyif4nrs" path="res://scenes/components/seal/assets/garbo_seal.glb" id="14_3j26o"]
 [ext_resource type="PackedScene" uid="uid://dsdgk0kf55h0d" path="res://scenes/views/poker_table/assets/bckg.glb" id="14_60vmi"]
 [ext_resource type="PackedScene" uid="uid://dinae8sp7jinr" path="res://scenes/views/poker_table/assets/fishinboat.glb" id="15_3j26o"]
+[ext_resource type="AudioStream" uid="uid://bs1c8u6cf2o7j" path="res://resources/sound/sfx/Fishing start.wav" id="15_415y7"]
+[ext_resource type="AudioStream" uid="uid://diyxx4cur5th5" path="res://resources/sound/sfx/Fishing wyciaganie ryby.mp3" id="16_al4we"]
+[ext_resource type="AudioStream" uid="uid://1357xpmoglgc" path="res://resources/sound/sfx/Zwyciestwo (jedno rozdanie).mp3" id="17_w0xjv"]
+[ext_resource type="AudioStream" uid="uid://5lpc850cef6b" path="res://resources/sound/sfx/Porażka (jedno rozdanie).mp3" id="18_44ypn"]
+[ext_resource type="AudioStream" uid="uid://co2ei01s1cno6" path="res://resources/sound/sfx/Zwyciestwo (cala gra).mp3" id="19_415y7"]
+[ext_resource type="AudioStream" uid="uid://byoirqfiq8drs" path="res://resources/sound/sfx/Porażka (cala gra).mp3" id="20_al4we"]
+[ext_resource type="AudioStream" uid="uid://4hibxkhesrmv" path="res://resources/sound/sfx/Dorzucanie zetonow.mp3" id="21_shy40"]
+[ext_resource type="AudioStream" uid="uid://diun7ohjasj0q" path="res://resources/sound/sfx/Zabieranie zetonow.mp3" id="22_wgk0x"]
+[ext_resource type="AudioStream" uid="uid://q778vpfjvkpi" path="res://resources/sound/sfx/Rozdawanie kart.wav" id="23_ykwpy"]
+[ext_resource type="AudioStream" uid="uid://bq1acxs0my38n" path="res://resources/sound/sfx/Wykladanie kart.mp3" id="24_7algf"]
+[ext_resource type="PackedScene" uid="uid://jla3vco6ybs6" path="res://resources/Particles/Particles.tscn" id="28_al4we"]
+[ext_resource type="AudioStream" uid="uid://3uusurb5ioq7" path="res://scenes/components/seal/assets/Mlaskajaca foka.mp3" id="28_shy40"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_60vmi"]
 load_path = "res://.godot/imported/yeti_avatar.PNG-f992a388cca7b43c8c3301dd3b65dbd7.ctex"
@@ -105,9 +117,13 @@ decision_schema = ExtResource("6_6dssf")
 deck = NodePath("../DeckManager")
 avatar = ExtResource("9_60vmi")
 npc_model = NodePath("Mors")
+sfx = Dictionary[String, AudioStream]({
+"fishing_end": ExtResource("16_al4we"),
+"fishing_start": ExtResource("15_415y7")
+})
 
 [node name="Mors" parent="CPUMorsController" unique_id=105059117 instance=ExtResource("7_swb63")]
-transform = Transform3D(-0.12294996, 0, 0.99241287, 0, 1, 0, -0.99241287, 0, -0.12294996, -2.358967, -0.055934094, 0.20931834)
+transform = Transform3D(-0.004829906, 0, 0.9999884, 0, 1, 0, -0.9999884, 0, -0.004829906, -2.1286721, -0.00936725, 0.17507282)
 
 [node name="CPUYetiController" type="Node" parent="." unique_id=499779583 node_paths=PackedStringArray("deck", "npc_model")]
 unique_name_in_owner = true
@@ -117,9 +133,13 @@ decision_schema = ExtResource("6_6dssf")
 deck = NodePath("../DeckManager")
 avatar = SubResource("CompressedTexture2D_60vmi")
 npc_model = NodePath("Yeti")
+sfx = Dictionary[String, AudioStream]({
+"fishing_end": ExtResource("16_al4we"),
+"fishing_start": ExtResource("15_415y7")
+})
 
 [node name="Yeti" parent="CPUYetiController" unique_id=67668679 instance=ExtResource("9_hcftp")]
-transform = Transform3D(0.7627457, 0, 0.64669853, 0, 1, 0, -0.64669853, 0, 0.7627457, -1.6280113, 0.06640792, -1.345942)
+transform = Transform3D(0.7778025, -0.025327835, 0.62799835, 0.038553447, 0.9992288, -0.007450113, -0.62732536, 0.030006215, 0.7781791, -1.6107286, -0.68797857, -1.214068)
 
 [node name="CPUEustachyController" type="Node" parent="." unique_id=1078727605 node_paths=PackedStringArray("deck", "npc_model")]
 unique_name_in_owner = true
@@ -129,9 +149,14 @@ decision_schema = ExtResource("6_6dssf")
 deck = NodePath("../DeckManager")
 avatar = ExtResource("13_3j26o")
 npc_model = NodePath("Eustachy")
+sfx = Dictionary[String, AudioStream]({
+"fishing_end": ExtResource("16_al4we"),
+"fishing_start": ExtResource("15_415y7")
+})
 
 [node name="Eustachy" parent="CPUEustachyController" unique_id=1707714365 instance=ExtResource("9_exd02")]
-transform = Transform3D(-0.65511453, 0, 0.7555296, 0, 1, 0, -0.7555296, 0, -0.65511453, -1.4692844, 0.004026115, 1.3320082)
+transform = Transform3D(-0.537587, 0, 0.84320843, 0, 1, 0, -0.84320843, 0, -0.537587, -1.4018197, -0.7488364, 0.9757092)
+voiceline_volume_offset_db = -15.0
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1330912494]
 transform = Transform3D(0.91439956, -3.4925431e-09, 0.40481284, -0.40481284, -2.2355504e-08, 0.91439956, 5.8562146e-09, -1, -2.1855689e-08, 0.36167514, 2.2905242, -0.05985537)
@@ -155,6 +180,16 @@ deck = NodePath("../DeckManager")
 player_ui = NodePath("../PlayerUi")
 end_game_screen = NodePath("../EndGameScreen")
 help_screen = NodePath("../HelpScreen")
+sfx = Dictionary[String, AudioStream]({
+"chips_in": ExtResource("21_shy40"),
+"chips_out": ExtResource("22_wgk0x"),
+"drawing_cards": ExtResource("23_ykwpy"),
+"lose_game": ExtResource("20_al4we"),
+"lose_round": ExtResource("18_44ypn"),
+"showdown": ExtResource("24_7algf"),
+"win_game": ExtResource("19_415y7"),
+"win_round": ExtResource("17_w0xjv")
+})
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1049355877]
 transform = Transform3D(0.5200694, 0.447361, 0.7275961, -0.698643, -0.26724094, 0.6636869, 0.49135104, -0.8534931, 0.17356175, 3.2212968, 5.1461906, -2.9273667)
@@ -165,9 +200,15 @@ light_energy = 1.317
 environment = SubResource("Environment_3xd07")
 camera_attributes = SubResource("CameraAttributesPractical_hcftp")
 
-[node name="garbo_seal" parent="DirectionalLight3D" unique_id=931454245 instance=ExtResource("14_3j26o")]
+[node name="garbo_seal" parent="DirectionalLight3D" unique_id=931454245 node_paths=PackedStringArray("eat_particles") instance=ExtResource("14_3j26o")]
 transform = Transform3D(0.044610128, -0.39024174, 0.30938923, 0.4251722, -0.1318948, -0.22766742, 0.25930417, 0.2834001, 0.3200722, 2.731586, -1.1890651, -5.7703304)
 eat_animation = "_Action Stash]"
+seal_sound_offset_db = 5.0
+eating_sfx = ExtResource("28_shy40")
+eat_particles = NodePath("FokaEat")
+
+[node name="FokaEat" parent="DirectionalLight3D/garbo_seal" unique_id=67027337 instance=ExtResource("28_al4we")]
+transform = Transform3D(0.5, 1.3038516e-08, 1.7881393e-07, -1.3038516e-08, 0.5, -7.450581e-09, -2.0861626e-07, 1.1175871e-08, 0.5, 0.015380383, 1.1076494, 1.4151568)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="DirectionalLight3D" unique_id=1608757609]
 

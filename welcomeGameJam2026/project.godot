@@ -14,7 +14,7 @@ config/name="WelcomeGameJam2026"
 config/version="0.0.1"
 run/main_scene="uid://b24pgln3wjuto"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://fmbcymk5r7k8"
 
 [audio]
 

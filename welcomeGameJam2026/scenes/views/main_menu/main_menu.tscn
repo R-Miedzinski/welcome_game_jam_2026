@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://8foc23h7fgnp" path="res://scenes/views/main_menu/main_menu.gd" id="1_g4x7w"]
 [ext_resource type="PackedScene" uid="uid://cyjn4g8y3bp53" path="res://scenes/components/menu button/menu_button.tscn" id="1_hbf6i"]
 [ext_resource type="AudioStream" uid="uid://g4reuya50ap2" path="res://resources/sound/soundtrack/menu_track.mp3" id="2_xmp5j"]
+[ext_resource type="Texture2D" uid="uid://d0fqhjd0m2qlp" path="res://scenes/views/main_menu/assets/title_banner.PNG" id="4_rg5v7"]
 [ext_resource type="PackedScene" uid="uid://w574ia2ddm5f" path="res://scenes/components/options/options.tscn" id="4_ua0fs"]
 [ext_resource type="Texture2D" uid="uid://drfmdmfr5sm5f" path="res://scenes/views/main_menu/assets/background_art.jpg" id="4_xmp5j"]
 
@@ -30,6 +31,23 @@ expand_mode = 5
 stretch_mode = 6
 metadata/_edit_use_anchors_ = true
 
+[node name="Title" type="TextureRect" parent="TextureRect" unique_id=974417831]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -462.75
+offset_top = -534.0
+offset_right = 462.75
+offset_bottom = -108.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_rg5v7")
+expand_mode = 2
+stretch_mode = 5
+
 [node name="ButtonBlockMainMenu" type="VBoxContainer" parent="TextureRect" unique_id=336725309]
 layout_mode = 1
 anchors_preset = 8
@@ -38,9 +56,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -191.25
-offset_top = -226.0
+offset_top = -94.0
 offset_right = 191.25
-offset_bottom = 226.0
+offset_bottom = 358.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 30

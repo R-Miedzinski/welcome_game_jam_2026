@@ -8,7 +8,9 @@
 [ext_resource type="AudioStream" uid="uid://camkduy0tyk65" path="res://resources/sound/soundtrack/fishing_track_loop.mp3" id="3_a42rt"]
 [ext_resource type="PackedScene" uid="uid://uno6ukidotr1" path="res://scenes/components/fishing_hook/fishing_hook.tscn" id="3_jnssj"]
 [ext_resource type="Script" uid="uid://cgpif7c60joiv" path="res://scripts/deck_manager/deck_manager.gd" id="4_dkctf"]
+[ext_resource type="AudioStream" uid="uid://c1u1ha4x1b5w2" path="res://resources/sound/sfx/Fishing zlapanie ryby.mp3" id="6_01pfv"]
 [ext_resource type="PackedScene" uid="uid://fm7ldayo1k4f" path="res://scenes/components/fishing_layer/fishing_layer.tscn" id="7_0u4uy"]
+[ext_resource type="AudioStream" uid="uid://dtgjj7it7pdjr" path="res://resources/sound/sfx/Fishing rybki plywajace.mp3" id="7_vktfy"]
 [ext_resource type="Texture2D" uid="uid://jxfypj0epw24" path="res://scenes/components/fishing_layer/assets/WALL1.png" id="8_xomej"]
 [ext_resource type="Texture2D" uid="uid://bgbf4dybhr41a" path="res://scenes/components/fishing_layer/assets/WALL2.png" id="9_qase4"]
 [ext_resource type="Texture2D" uid="uid://b4jjik4825nsx" path="res://scenes/components/fishing_layer/assets/WALL3.png" id="10_x3fyl"]
@@ -77,6 +79,11 @@ fishing_layers_parent = NodePath("../FishingLayers")
 fishing_layer_despawn = NodePath("../FishingLayerDespawn")
 fishing_layer_spawn = NodePath("../FishingLayerSpawn")
 speed_multiplier = 1.0
+sfx = Dictionary[String, AudioStream]({
+"catch_fish": ExtResource("6_01pfv"),
+"catch_junk": ExtResource("6_01pfv"),
+"fish_swim": ExtResource("7_vktfy")
+})
 
 [node name="HookController" type="Node" parent="." unique_id=846755875 node_paths=PackedStringArray("hook", "fishing_orchestrator")]
 unique_name_in_owner = true
