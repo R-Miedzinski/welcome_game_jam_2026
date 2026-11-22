@@ -22,8 +22,8 @@ buses/default_bus_layout="uid://dxf21y6xkdx6h"
 
 [autoload]
 
-SoundManager="*uid://57u1r0vj30jw"
 AutoloadScene="*uid://bm6s8tssx8l32"
+SoundManager="*uid://57u1r0vj30jw"
 
 [display]
 
@@ -73,3 +73,6 @@ locale/translations=PackedStringArray("res://resources/i18n/fish&chips_translati
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+anti_aliasing/quality/msaa_2d=1
+anti_aliasing/quality/msaa_3d=1
+anti_aliasing/quality/screen_space_aa=1

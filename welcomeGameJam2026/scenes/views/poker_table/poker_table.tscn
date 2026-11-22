@@ -13,7 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://bnj5qev7ojsxe" path="res://scenes/components/npc_models/mors.tscn" id="7_swb63"]
 [ext_resource type="PackedScene" uid="uid://dho64dgkhbmfk" path="res://scenes/components/npc_models/eustachy.tscn" id="9_exd02"]
 [ext_resource type="PackedScene" uid="uid://b2a0kutw3rg6y" path="res://scenes/components/npc_models/yeti.tscn" id="9_hcftp"]
-[ext_resource type="PackedScene" uid="uid://bukr46amqa44a" path="res://scenes/views/poker_table/assets/mapa_blockout.glb" id="14_hcftp"]
+[ext_resource type="PackedScene" uid="uid://b866aqyif4nrs" path="res://scenes/views/poker_table/assets/garbo_seal.glb" id="14_3j26o"]
+[ext_resource type="PackedScene" uid="uid://dsdgk0kf55h0d" path="res://scenes/views/poker_table/assets/bckg.glb" id="14_60vmi"]
+[ext_resource type="PackedScene" uid="uid://dinae8sp7jinr" path="res://scenes/views/poker_table/assets/fishinboat.glb" id="15_3j26o"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dkctf"]
 size = Vector2(128, 128)
@@ -24,6 +26,44 @@ size = Vector2(128, 128)
 gradient = SubResource("Gradient_f463q")
 width = 128
 height = 128
+
+[sub_resource type="Environment" id="Environment_3xd07"]
+background_mode = 1
+background_color = Color(0.59607846, 0.7490196, 0.84705883, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.58704203, 0.6049015, 0.79409665, 1)
+ambient_light_energy = 0.29
+ssao_enabled = true
+ssao_radius = 0.6
+ssao_intensity = 2.43
+glow_enabled = true
+glow_intensity = 2.12
+glow_bloom = 0.11
+fog_enabled = true
+fog_light_color = Color(0.620403, 0.8453967, 0.9307485, 1)
+fog_light_energy = 1.55
+fog_density = 0.004
+fog_height = 0.1
+fog_height_density = 0.08
+volumetric_fog_density = 0.53
+volumetric_fog_albedo = Color(0.6568937, 0.73609686, 0.634565, 1)
+volumetric_fog_emission = Color(0.76602733, 0.8494055, 0.8162302, 1)
+volumetric_fog_emission_energy = 440.88
+volumetric_fog_gi_inject = 3.03
+volumetric_fog_anisotropy = 0.29
+volumetric_fog_length = 275.38
+volumetric_fog_detail_spread = 1.4489048
+volumetric_fog_ambient_inject = 2.29
+adjustment_enabled = true
+adjustment_brightness = 1.04
+adjustment_contrast = 1.17
+adjustment_saturation = 1.33
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_hcftp"]
+exposure_multiplier = 1.041
+dof_blur_far_enabled = true
+dof_blur_far_distance = 45.4
+dof_blur_amount = 0.54
 
 [node name="PokerTable" type="Node3D" unique_id=690689141]
 
@@ -55,7 +95,8 @@ unique_name_in_owner = true
 visible = false
 
 [node name="PlayerCamera" type="Camera3D" parent="." unique_id=6409917]
-transform = Transform3D(-4.3690914e-08, -0.28825974, 0.95755225, -1.3377766e-09, 0.9575523, 0.28825974, -1, 1.13133405e-08, -4.222196e-08, 2.7702587, 2.4618275, 0)
+transform = Transform3D(-4.3659753e-08, -0.24138899, 0.9704285, 2.124064e-09, 0.9704285, 0.24138899, -1, 1.2600236e-08, -4.1855944e-08, 2.9416199, 1.3197157, -0.029430851)
+fov = 33.0
 
 [node name="CPU1Controller" type="Node" parent="." unique_id=1856201156 node_paths=PackedStringArray("deck", "npc_model")]
 unique_name_in_owner = true
@@ -67,7 +108,7 @@ avatar = SubResource("PlaceholderTexture2D_dkctf")
 npc_model = NodePath("Mors")
 
 [node name="Mors" parent="CPU1Controller" unique_id=105059117 instance=ExtResource("7_swb63")]
-transform = Transform3D(-0.10331062, 0, 0.9946491, 0, 1, 0, -0.9946491, 0, -0.10331062, 0.75187945, 0.48583806, 2.0867617)
+transform = Transform3D(-0.12294994, 0, 0.9924129, 0, 1, 0, -0.9924129, 0, -0.12294994, -2.358967, -0.055934094, 0.20931834)
 
 [node name="CPU2Controller" type="Node" parent="." unique_id=499779583 node_paths=PackedStringArray("deck", "npc_model")]
 unique_name_in_owner = true
@@ -94,13 +135,14 @@ npc_model = NodePath("Eustachy")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.540947, 0.48583806, -1.7776725)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1330912494]
-transform = Transform3D(0.86602545, -5.8562137e-09, 0.49999997, -0.49999997, -2.1855692e-08, 0.86602545, 5.856215e-09, -1, -2.1855694e-08, 2.2405267, 2.5583797, -2.3841858e-07)
-light_energy = 5.0
-
-[node name="Mapa Proto 2" parent="." unique_id=1434944584 instance=ExtResource("14_hcftp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.014114, -2.061152, -0.24062586)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2007170898]
+transform = Transform3D(0.91439956, -3.4925431e-09, 0.40481284, -0.40481284, -2.2355504e-08, 0.91439956, 5.8562146e-09, -1, -2.1855689e-08, 0.36167514, 2.2905242, -0.05985537)
+light_energy = 7.397
+light_indirect_energy = 10.866
+light_volumetric_fog_energy = 16.0
+light_specular = 12.225
+spot_range = 10.489
+spot_attenuation = 4.48
+spot_angle = 32.61
 
 [node name="PokerGameOrchestrator" type="Node" parent="." unique_id=410881516 node_paths=PackedStringArray("player_controller", "cpu1_controller", "cpu2_controller", "cpu3_controller", "game_state", "deck", "player_ui", "end_game_screen", "help_screen")]
 unique_name_in_owner = true
@@ -114,3 +156,38 @@ deck = NodePath("../DeckManager")
 player_ui = NodePath("../PlayerUi")
 end_game_screen = NodePath("../EndGameScreen")
 help_screen = NodePath("../HelpScreen")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1049355877]
+transform = Transform3D(0.5200694, 0.447361, 0.7275961, -0.698643, -0.26724094, 0.6636869, 0.49135104, -0.8534931, 0.17356175, 3.2212968, 5.1461906, -2.9273667)
+light_color = Color(0.8870991, 0.853004, 0.83682936, 1)
+light_energy = 1.317
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="DirectionalLight3D" unique_id=2007170898]
+environment = SubResource("Environment_3xd07")
+camera_attributes = SubResource("CameraAttributesPractical_hcftp")
+
+[node name="garbo_seal" parent="DirectionalLight3D" unique_id=931454245 instance=ExtResource("14_3j26o")]
+transform = Transform3D(0.044610128, -0.39024174, 0.30938923, 0.4251722, -0.1318948, -0.22766742, 0.25930417, 0.2834001, 0.3200722, 2.731586, -1.1890651, -5.7703304)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="DirectionalLight3D" unique_id=1608757609]
+
+[node name="Mapa Proto 3" parent="." unique_id=3931675 instance=ExtResource("14_60vmi")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.7740235, -0.8113295, -0.7544794)
+
+[node name="AreaLight3D" type="AreaLight3D" parent="Mapa Proto 3" unique_id=1096621568]
+transform = Transform3D(-5.7642588e-08, -0.5089289, 1.9341643, -1.5167263e-08, 1.9341643, 0.5089289, -2, 0, -5.9604645e-08, 3.3905892, 3.6530006, 0.30748963)
+light_color = Color(0.85828567, 0.9360939, 0.920599, 1)
+light_energy = 1.504
+light_bake_mode = 1
+area_range = 2.597
+area_attenuation = -0.575
+area_size = Vector2(2.447108, 1.3722258)
+
+[node name="garbo_seal" parent="Mapa Proto 3" unique_id=1839546615 instance=ExtResource("14_3j26o")]
+transform = Transform3D(-0.26071808, 0.014818459, 0.42638776, 0.0005365012, 0.4997093, -0.01703859, -0.4266448, -0.008427021, -0.2605824, -53.178955, -1.0106599, 16.402283)
+
+[node name="Mapa Proto 4" parent="." unique_id=1872312060 instance=ExtResource("15_3j26o")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.7740235, -0.8113295, -0.7544794)
+
+[node name="garbo_seal" parent="." unique_id=826945595 instance=ExtResource("14_3j26o")]
+transform = Transform3D(0.26341775, 0, 0.33352077, 0, 0.425, 0, -0.33352077, 0, 0.26341775, -28.838272, -1.2878159, 7.909914)
