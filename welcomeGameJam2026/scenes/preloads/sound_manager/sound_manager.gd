@@ -7,7 +7,6 @@ extends Node
 @onready var ui_bus_name: StringName = &"UI"
 @onready var voicelines_bus_name: StringName = &"VoiceLines"
 
-
 var min_volume_db: float = -72.0
 var max_volume_db: float = 6
 
@@ -22,6 +21,7 @@ func _ready() -> void:
 func play_soundtrack(stream: AudioStream) -> void:
 	soundtrack_player_node.stream = stream
 	soundtrack_player_node.play()
+
 
 func play_sfx(stream: AudioStream) -> void:
 	_play_sound(stream, sfx_bus_name, active_sfx_players)
@@ -73,7 +73,10 @@ func _scan_existing_buttons(node: Node) -> void:
 		_scan_existing_buttons(child)
 
 func _scale_volume_to_db(volume: float) -> float:
-	return volume/100.0 * (max_volume_db - min_volume_db) + min_volume_db
+	var linear_volume := clampf(volume / 100.0, 0.0, 1.0)
+	if linear_volume == 0.0:
+		return min_volume_db
+	return clampf(linear_to_db(linear_volume), min_volume_db, max_volume_db)
 
 func _on_button_entered(button: Button) -> void:
 	button.tree_exiting.connect(_on_button_exited.bind(button))

@@ -53,7 +53,7 @@ static var serialized_state: Dictionary = {}
 	"blind_bet": 10,
 	"raise_amount": 25,
 	"max_fishes": 1,
-	"seed": "0",
+	"seed": "",
 	"language": "eng"
 }:
 	set (value):
@@ -117,7 +117,10 @@ func get_junk_sprite() -> SpriteFrames:
 	return null
 
 func _set_seed() -> void:
-	game_seed = game_options.get("seed", "0").hash()
+	game_seed = game_options.get("seed", "").hash()
+
+	if game_seed == 0:
+		game_seed = Time.get_ticks_usec()
 
 func _set_language() -> void:
 	var language = game_options.get("language", "eng")

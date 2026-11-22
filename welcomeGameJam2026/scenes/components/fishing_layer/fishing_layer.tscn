@@ -19,6 +19,6 @@ shape = SubResource("RectangleShape2D_myhs1")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1250381183]
 unique_name_in_owner = true
-z_index = -1
+z_index = 1
 texture = SubResource("PlaceholderTexture2D_kcrox")
 centered = false

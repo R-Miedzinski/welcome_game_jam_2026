@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c0gm4k58dkqxt"]
 
 [ext_resource type="Texture2D" uid="uid://djbp6uopptupo" path="res://scenes/components/fishing_game_background/assets/fishing_background.JPG" id="1_1pi5i"]
+[ext_resource type="Texture2D" uid="uid://seiuqer3825f" path="res://scenes/components/fishing_game_background/assets/background_gradient.png" id="2_c37kt"]
 
 [node name="FishingGameBackground" type="Control" unique_id=672236312]
 layout_mode = 3
@@ -20,4 +21,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_1pi5i")
+expand_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1341997846]
+visible = false
+modulate = Color(1, 1, 1, 0.5411765)
+z_index = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_c37kt")
 expand_mode = 2

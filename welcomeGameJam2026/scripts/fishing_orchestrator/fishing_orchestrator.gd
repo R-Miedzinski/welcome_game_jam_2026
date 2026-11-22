@@ -12,11 +12,16 @@ signal exit_from_fishing_request()
 @export var starting_speed: float = 100.0
 @export var speed_increment: float = 10.0
 @export var speed_multiplier: float = 1.5
+
+var player_controller_modifier: float = 1.0
+var is_sped_up: bool = false
 var current_speed: float = 0.0:
 	set(value):
 		current_speed = value
 		for layer in fishing_layers:
 			layer.speed = current_speed
+	get:
+		return current_speed * player_controller_modifier
 
 var fishing_layers: Array[FishingLayer] = []
 var layer_wrap_counts: Array[int] = []
@@ -93,5 +98,5 @@ func _setup_fishing_layers() -> void:
 		layer.layer_moved_to_bottom.connect(_on_layer_moved_to_bottom)
 
 func _on_layer_moved_to_bottom() -> void:
-	current_speed += speed_increment
+	current_speed = current_speed/player_controller_modifier + speed_increment
 	speed_increment *= speed_multiplier
