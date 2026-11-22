@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Decision" format=3 uid="uid://by6iyo71yktvk"]
+
+[ext_resource type="Script" uid="uid://cwuk1q6384a8y" path="res://resources/decision_schema/decision.gd" id="1_435xj"]
+
+[resource]
+script = ExtResource("1_435xj")
+decision_cannot_fish = 3
+metadata/_custom_type_script = "uid://cwuk1q6384a8y"

@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bcwlki5583jfc"]
+
+[ext_resource type="Texture2D" uid="uid://qhr6qi5g6t2r" path="res://resources/junk_sprites/assets/Junk2.PNG" id="1_dyl6w"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dyl6w")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://dcoffq5fhtbi8"]
+
+[ext_resource type="Script" uid="uid://dq4dbsfk3sr0b" path="res://scenes/components/form/form.gd" id="1_vbm8i"]
+
+[node name="Form" type="Control" unique_id=2142431171]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vbm8i")
+metadata/_tab_index = 0
+
+[node name="FlowContainer" type="VBoxContainer" parent="." unique_id=1455633592]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="FlowContainer" unique_id=1800218654]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 8.0
+metadata/_edit_use_anchors_ = true
+
+[node name="InputContainer" type="BoxContainer" parent="FlowContainer/ScrollContainer" unique_id=1559265420]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+vertical = true
+metadata/_edit_use_anchors_ = true
