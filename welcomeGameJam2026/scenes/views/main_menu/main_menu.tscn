@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://8foc23h7fgnp" path="res://scenes/views/main_menu/main_menu.gd" id="1_g4x7w"]
 [ext_resource type="PackedScene" uid="uid://cyjn4g8y3bp53" path="res://scenes/components/menu button/menu_button.tscn" id="1_hbf6i"]
+[ext_resource type="AudioStream" uid="uid://g4reuya50ap2" path="res://resources/sound/soundtrack/menu_track.mp3" id="2_xmp5j"]
+[ext_resource type="PackedScene" uid="uid://w574ia2ddm5f" path="res://scenes/components/options/options.tscn" id="4_ua0fs"]
+[ext_resource type="Texture2D" uid="uid://drfmdmfr5sm5f" path="res://scenes/views/main_menu/assets/background_art.jpg" id="4_xmp5j"]
 
 [node name="MainMenu" type="Control" unique_id=1885164395]
 process_mode = 3
@@ -12,27 +15,59 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_g4x7w")
+menu_soundtrack = ExtResource("2_xmp5j")
 
-[node name="ButtonBlockMainMenu" type="VBoxContainer" parent="." unique_id=336725309]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=252751211]
+z_index = -1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("4_xmp5j")
+expand_mode = 5
+stretch_mode = 6
+metadata/_edit_use_anchors_ = true
+
+[node name="ButtonBlockMainMenu" type="VBoxContainer" parent="TextureRect" unique_id=336725309]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -191.25
+offset_top = -226.0
+offset_right = 191.25
+offset_bottom = 226.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
 alignment = 1
 
-[node name="MenuButtonStartGame" parent="ButtonBlockMainMenu" unique_id=186663661 instance=ExtResource("1_hbf6i")]
+[node name="MenuButtonStartGame" parent="TextureRect/ButtonBlockMainMenu" unique_id=186663661 instance=ExtResource("1_hbf6i")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Play"
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
+text = "PLAY_BTN"
 
-[node name="MenuButtonOptions" parent="ButtonBlockMainMenu" unique_id=1350746887 instance=ExtResource("1_hbf6i")]
+[node name="MenuButtonOptions" parent="TextureRect/ButtonBlockMainMenu" unique_id=1350746887 instance=ExtResource("1_hbf6i")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Options"
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
+text = "OPTIONS_BTN"
 
-[node name="MenuButtonQuitGame" parent="ButtonBlockMainMenu" unique_id=805454331 instance=ExtResource("1_hbf6i")]
+[node name="MenuButtonQuitGame" parent="TextureRect/ButtonBlockMainMenu" unique_id=805454331 instance=ExtResource("1_hbf6i")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Quit Game"
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
+text = "QUIT_GAME_BTN"
+
+[node name="Options" parent="." unique_id=2147413792 instance=ExtResource("4_ua0fs")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1

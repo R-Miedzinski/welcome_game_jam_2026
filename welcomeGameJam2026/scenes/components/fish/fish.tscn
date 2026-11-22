@@ -1,35 +1,28 @@
 [gd_scene format=3 uid="uid://ddtfre13trud7"]
 
-[ext_resource type="Texture2D" uid="uid://bp1psdopekysk" path="res://icon.svg" id="1_a8g7x"]
 [ext_resource type="Script" uid="uid://ccoolt6vjbf8o" path="res://scenes/components/fish/fish.gd" id="1_nm77g"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_myhs1"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_a8g7x")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": 1,
-"name": &"static",
-"speed": 5.0
-}]
+[sub_resource type="SystemFont" id="SystemFont_ljhvc"]
+font_names = PackedStringArray("Sitka Text")
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_nm77g"]
+font = SubResource("SystemFont_ljhvc")
+font_size = 32
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
 shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_myhs1"]
+radius = 8.5
 
 [node name="Fish" type="Node2D" unique_id=1012391387]
 script = ExtResource("1_nm77g")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1934431804]
 unique_name_in_owner = true
-sprite_frames = SubResource("SpriteFrames_myhs1")
+scale = Vector2(0.1, 0.1)
 
 [node name="CardLabel" type="Label" parent="." unique_id=992515596]
 unique_name_in_owner = true

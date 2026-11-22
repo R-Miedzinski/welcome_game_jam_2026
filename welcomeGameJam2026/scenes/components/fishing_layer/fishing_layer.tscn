@@ -5,6 +5,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_myhs1"]
 size = Vector2(1, 1)
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_kcrox"]
+resource_local_to_scene = true
+
 [node name="FishingLayer" type="Area2D" unique_id=1212338432]
 collision_mask = 8
 script = ExtResource("1_3yyv6")
@@ -13,3 +16,9 @@ script = ExtResource("1_3yyv6")
 unique_name_in_owner = true
 position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_myhs1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1250381183]
+unique_name_in_owner = true
+z_index = 1
+texture = SubResource("PlaceholderTexture2D_kcrox")
+centered = false

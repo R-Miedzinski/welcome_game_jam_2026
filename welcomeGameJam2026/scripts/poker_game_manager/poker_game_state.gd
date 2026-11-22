@@ -78,6 +78,7 @@ signal player_state_changed(player_id: String, old_state: PlayerState, new_state
 signal pot_value_changed(old_pot: int, new_pot: int)
 signal community_cards_changed(new_cards: PackedStringArray)
 
+signal round_started(dealer_id: String)
 signal request_player_action(player_id: String)
 signal request_card_draw(player_ids: PackedStringArray)
 
@@ -95,6 +96,7 @@ var player_phase_bets: Dictionary = {}
 var player_blind_posted: Dictionary = {}
 var player_order: Array = []
 
+var round_number: int = 0
 var dealer_index: int = -1
 var blind_bet: int = 0
 var current_bet: int = 0
@@ -108,6 +110,8 @@ var pot: int = 0:
 var community_cards: PackedStringArray = []
 var showdown_scores: Dictionary = {}
 var showdown_players: PackedStringArray = []
+
+var round_started_emitted: bool = false
 
 var state_change_stack: Array[Callable] = []
 
@@ -129,6 +133,7 @@ func new_play() -> void:
 	game_state = GameState.INIT
 	showdown_scores.clear()
 	showdown_players.clear()
+	round_started_emitted = false
 
 	for key in player_bets.keys():
 		player_bets[key] = 0
@@ -140,11 +145,12 @@ func new_play() -> void:
 	community_cards.clear()
 	community_cards_changed.emit(community_cards)
 	deck.shuffle()
+	round_number += 1
 	_advance_dealer()
 
 	for key in player_states.keys():
-		if player_states[key] != PlayerState.OUT:
-			player_states[key] = PlayerState.INIT
+		if player_states[key] != PlayerState.OUT and player_states[key] != PlayerState.INIT:
+			player_state_change(key, PlayerState.INIT)
 	
 	game_state_change(GameState.WAITING)
 
@@ -170,6 +176,9 @@ func get_player_phase_bet(player_id: String) -> int:
 func get_player_state(player_id: String) -> PlayerState:
 	return player_states.get(player_id, null)
 
+func get_dealer() -> String:
+	return player_order[dealer_index] if dealer_index >= 0 and dealer_index < player_order.size() else ""
+
 func serialize() -> Dictionary:
 	return {
 		"dealer_index": dealer_index,
@@ -185,7 +194,9 @@ func serialize() -> Dictionary:
 		"player_phase_bets": player_phase_bets,
 		"player_blind_posted": player_blind_posted,
 		"player_order": player_order,
-		"game_state": game_state
+		"game_state": game_state,
+		"round_started_emitted": round_started_emitted,
+		"round_number": round_number
 	}
 
 func load_state(state: Dictionary) -> void:
@@ -204,6 +215,9 @@ func load_state(state: Dictionary) -> void:
 	player_phase_bets = state.get("player_phase_bets", {})
 	player_blind_posted = state.get("player_blind_posted", {})
 	player_order = state.get("player_order", [])
+	
+	round_started_emitted = state.get("round_started_emitted", false)
+	round_number = state.get("round_number", 0)
 
 	game_state = GameState.LOADED
 	game_state_change(state.get("game_state", GameState.WAITING))
@@ -268,7 +282,8 @@ func submit_hand_evaluation(player_id: String, score: int) -> void:
 
 	for id in player_bets.keys():
 		winnings[id] = 0
-	# Split each contribution independently, returning capped shares to its bettor.
+	# Rotate remainder slots between contributions while returning capped shares to bettors.
+	var remainder_index: int = 0
 	for bettor in player_bets.keys():
 		var bet: int = get_player_bet(bettor)
 		var distributed: int = 0
@@ -277,14 +292,16 @@ func submit_hand_evaluation(player_id: String, score: int) -> void:
 			var eligible_bet: int = bet
 			if get_player_state(id) == PlayerState.ALL_IN:
 				eligible_bet = min(bet, get_player_bet(id))
-			var amount: int = eligible_bet / winner_ids.size()
-			if i < eligible_bet % winner_ids.size():
+			var amount: int = floor(float(eligible_bet) / float(winner_ids.size()))
+			var remainder_position: int = (i - remainder_index + winner_ids.size()) % winner_ids.size()
+			if remainder_position < eligible_bet % winner_ids.size():
 				amount += 1
 			winnings[id] += amount
 			distributed += amount
 		var refund: int = bet - distributed
 		if refund > 0:
 			winnings[bettor] = winnings.get(bettor, 0) + refund
+		remainder_index = (remainder_index + bet % winner_ids.size()) % winner_ids.size()
 
 	current_bet = 0
 	pot = 0
@@ -357,6 +374,10 @@ func _transition_game_state(old_state: GameState, new_state: GameState) -> void:
 				game_state_change(GameState.LAST_MAN_STANDING)
 				return
 
+			if not round_started_emitted:
+				round_started_emitted = true
+				round_started.emit(player_order[dealer_index])
+			
 			var first_player = _get_first_player_to_move()
 			if first_player == "":
 				game_state_change(GameState.DEALING)
@@ -370,6 +391,15 @@ func _transition_game_state(old_state: GameState, new_state: GameState) -> void:
 				if not _is_player_in_final_state(player_id):
 					last_player = player_id
 					break
+
+			if last_player == "":
+				push_error("Cannot award pot without an eligible player.")
+				return
+
+			var winnings: int = pot
+			current_bet = 0
+			pot = 0
+			send_winnings.emit(last_player, winnings)
 			var winners: PackedStringArray = [last_player]
 			showdown_winners.emit(winners)
 

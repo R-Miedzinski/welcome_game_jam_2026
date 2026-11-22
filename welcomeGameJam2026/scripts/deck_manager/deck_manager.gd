@@ -53,13 +53,17 @@ func take_out(card_string: String) -> void:
       deck.erase(card)
 
 func reshuffle(card_string: String) -> void:
-  deck.append(card_string)
+  if card_string not in deck:
+    deck.append(card_string)
+  else:
+    push_warning("Card %s already in deck, skipping reshuffle to prevent duplicate" % card_string)
   deck.shuffle()
 
-func serialize() -> String:
-  return ",".join(deck)
+func serialize() -> Dictionary:
+  return { "cards": ",".join(deck) }
 
-func load_state(deck_string: String) -> void:
+func load_state(state: Dictionary) -> void:
+  var deck_string = state.get("cards", "")
   if deck_string == "":
     _initialize_deck()
   else:

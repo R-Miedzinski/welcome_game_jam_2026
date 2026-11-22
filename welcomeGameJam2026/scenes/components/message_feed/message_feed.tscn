@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://sa2eaxphyrk1"]
+
+[ext_resource type="Texture2D" uid="uid://b2q5v78v8fwmn" path="res://scenes/components/message_feed/assets/QueQue.png" id="1_q6kpx"]
+[ext_resource type="Script" uid="uid://bj1jm48wnlygt" path="res://scenes/components/message_feed/message_feed.gd" id="1_tn2ec"]
+
+[node name="MessageFeed" type="TextureRect" unique_id=652891496]
+texture = ExtResource("1_q6kpx")
+expand_mode = 2
+stretch_mode = 5
+script = ExtResource("1_tn2ec")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=2115170674]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = -6.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="MessageContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=519278565]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2

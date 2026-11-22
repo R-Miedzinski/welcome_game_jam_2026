@@ -1,0 +1,208 @@
+[gd_scene format=3 uid="uid://w574ia2ddm5f"]
+
+[ext_resource type="Script" uid="uid://dofbwgbgkgdda" path="res://scenes/components/options/options.gd" id="1_0unp5"]
+[ext_resource type="PackedScene" uid="uid://yravtencv47t" path="res://scenes/components/modal_background/modal_background.tscn" id="1_hlf03"]
+[ext_resource type="PackedScene" uid="uid://dcoffq5fhtbi8" path="res://scenes/components/form/form.tscn" id="3_q237f"]
+[ext_resource type="Script" uid="uid://ds2vfcceo8sih" path="res://scenes/components/form/resources/form_input_data.gd" id="4_1ihu2"]
+[ext_resource type="PackedScene" uid="uid://c3o8ae6qt8fef" path="res://scenes/components/form/inputs/text_input/text_input.tscn" id="5_kk8pj"]
+[ext_resource type="PackedScene" uid="uid://bn85g26w7pa3" path="res://scenes/components/form/inputs/integer_input/integer_input.tscn" id="6_kk8pj"]
+[ext_resource type="PackedScene" uid="uid://c7chbdc7buy2f" path="res://scenes/components/form/inputs/slider_input/slider_input.tscn" id="7_27unh"]
+[ext_resource type="PackedScene" uid="uid://fnsqtennoqb2" path="res://scenes/components/form/inputs/dropdown_input/dropdown_input.tscn" id="8_27unh"]
+
+[sub_resource type="Resource" id="Resource_kk8pj"]
+script = ExtResource("4_1ihu2")
+name = "BLIND_BET_OPT"
+value_type = 2
+max_value = 50.0
+step = 5.0
+component = ExtResource("7_27unh")
+initial_value = 10
+metadata/_custom_type_script = "uid://ds2vfcceo8sih"
+
+[sub_resource type="Resource" id="Resource_qo1i5"]
+script = ExtResource("4_1ihu2")
+name = "LANG_OPT"
+value_type = 6
+component = ExtResource("8_27unh")
+initial_value = "eng"
+options = Dictionary[String, Variant]({
+"English": "eng",
+"Polish": "pl"
+})
+metadata/_custom_type_script = "uid://ds2vfcceo8sih"
+
+[sub_resource type="Resource" id="Resource_7catp"]
+script = ExtResource("4_1ihu2")
+name = "MAX_FISH_OPT"
+max_value = 5.0
+component = ExtResource("6_kk8pj")
+initial_value = 1
+metadata/_custom_type_script = "uid://ds2vfcceo8sih"
+
+[sub_resource type="Resource" id="Resource_27unh"]
+script = ExtResource("4_1ihu2")
+name = "RAISE_OPT"
+max_value = 100.0
+component = ExtResource("6_kk8pj")
+initial_value = 25
+metadata/_custom_type_script = "uid://ds2vfcceo8sih"
+
+[sub_resource type="Resource" id="Resource_myhs1"]
+script = ExtResource("4_1ihu2")
+name = "SEED_OPT"
+value_type = 4
+component = ExtResource("5_kk8pj")
+initial_value = "test"
+metadata/_custom_type_script = "uid://ds2vfcceo8sih"
+
+[sub_resource type="Resource" id="Resource_q237f"]
+script = ExtResource("4_1ihu2")
+name = "START_MONEY_OPT"
+max_value = 20000.0
+step = 50.0
+component = ExtResource("6_kk8pj")
+initial_value = 1000
+metadata/_custom_type_script = "uid://ds2vfcceo8sih"
+
+[sub_resource type="Resource" id="Resource_ho7dg"]
+script = ExtResource("4_1ihu2")
+name = "MASTER_SOUND_OPT"
+value_type = 3
+max_value = 100.0
+component = ExtResource("7_27unh")
+initial_value = 100.0
+metadata/_custom_type_script = "uid://ds2vfcceo8sih"
+
+[sub_resource type="Resource" id="Resource_m1nau"]
+script = ExtResource("4_1ihu2")
+name = "SFX_SOUND_OPT"
+value_type = 3
+max_value = 100.0
+component = ExtResource("7_27unh")
+initial_value = 100.0
+metadata/_custom_type_script = "uid://ds2vfcceo8sih"
+
+[sub_resource type="Resource" id="Resource_w8det"]
+script = ExtResource("4_1ihu2")
+name = "TRACK_SOUND_OPT"
+value_type = 3
+max_value = 100.0
+component = ExtResource("7_27unh")
+initial_value = 100.0
+metadata/_custom_type_script = "uid://ds2vfcceo8sih"
+
+[sub_resource type="Resource" id="Resource_pyimt"]
+script = ExtResource("4_1ihu2")
+name = "UI_SOUND_OPT"
+value_type = 3
+max_value = 100.0
+component = ExtResource("7_27unh")
+initial_value = 100.0
+metadata/_custom_type_script = "uid://ds2vfcceo8sih"
+
+[sub_resource type="Resource" id="Resource_d7nqd"]
+script = ExtResource("4_1ihu2")
+name = "VO_SOUND_OPT"
+value_type = 3
+max_value = 100.0
+component = ExtResource("7_27unh")
+initial_value = 100.0
+metadata/_custom_type_script = "uid://ds2vfcceo8sih"
+
+[node name="Options" type="Control" unique_id=2147413792]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0unp5")
+metadata/_edit_use_anchors_ = true
+
+[node name="ModalBackground" parent="." unique_id=334779783 instance=ExtResource("1_hlf03")]
+layout_mode = 1
+
+[node name="Panel" type="Panel" parent="." unique_id=352146696]
+custom_minimum_size = Vector2(600, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -739.25
+offset_top = -413.25
+offset_right = 739.25
+offset_bottom = 413.25
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FlowContainer" type="VBoxContainer" parent="Panel" unique_id=1123200449]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="OptionCategories" type="TabContainer" parent="Panel/FlowContainer" unique_id=932731704]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 15.0
+current_tab = 0
+tab_0/title = "GAME_OPT_TAB"
+tab_1/title = "AUDIO_OPT_TAB"
+
+[node name="GameForm" parent="Panel/FlowContainer/OptionCategories" unique_id=2142431171 instance=ExtResource("3_q237f")]
+unique_name_in_owner = true
+layout_mode = 2
+form_name = "GameOptions"
+form_schema = Dictionary[String, ExtResource("4_1ihu2")]({
+"blind_bet": SubResource("Resource_kk8pj"),
+"language": SubResource("Resource_qo1i5"),
+"max_fishes": SubResource("Resource_7catp"),
+"raise_amount": SubResource("Resource_27unh"),
+"seed": SubResource("Resource_myhs1"),
+"starting_cash": SubResource("Resource_q237f")
+})
+field_order = Array[String](["language", "seed", "max_fishes", "starting_cash", "blind_bet", "raise_amount"])
+metadata/_tab_name = "GAME_OPT_TAB"
+
+[node name="AudioForm" parent="Panel/FlowContainer/OptionCategories" unique_id=679325043 instance=ExtResource("3_q237f")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+form_name = "AudioOptions"
+form_schema = Dictionary[String, ExtResource("4_1ihu2")]({
+"master": SubResource("Resource_ho7dg"),
+"sfx": SubResource("Resource_m1nau"),
+"soundtrack": SubResource("Resource_w8det"),
+"ui": SubResource("Resource_pyimt"),
+"voicelines": SubResource("Resource_d7nqd")
+})
+field_order = Array[String](["master", "soundtrack", "sfx", "ui"])
+metadata/_tab_index = 1
+metadata/_tab_name = "AUDIO_OPT_TAB"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/FlowContainer" unique_id=1614029926]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="FlowContainer" parent="Panel/FlowContainer/MarginContainer" unique_id=1941650001]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 2
+
+[node name="ApplyChangesButton" type="Button" parent="Panel/FlowContainer/MarginContainer/HBoxContainer" unique_id=481148310]
+unique_name_in_owner = true
+layout_mode = 2
+text = "APPLY_CHANGES_BTN"
+
+[node name="CancelButton" type="Button" parent="Panel/FlowContainer/MarginContainer/HBoxContainer" unique_id=1383001206]
+unique_name_in_owner = true
+layout_mode = 2
+text = "CANCEL_BTN"

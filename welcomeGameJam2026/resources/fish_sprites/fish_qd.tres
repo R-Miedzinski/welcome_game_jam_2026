@@ -1,0 +1,22 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://br7s8jvvi7nsx"]
+
+[ext_resource type="Texture2D" uid="uid://dumowi7o5rgej" path="res://resources/fish_sprites/assets/QD.PNG" id="1_iahdy"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_iahdy")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_iahdy")
+}],
+"loop": 1,
+"name": &"static",
+"speed": 5.0
+}]

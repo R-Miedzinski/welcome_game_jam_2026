@@ -3,6 +3,80 @@
 [ext_resource type="PackedScene" uid="uid://cyjn4g8y3bp53" path="res://scenes/components/menu button/menu_button.tscn" id="1_0jaed"]
 [ext_resource type="Script" uid="uid://cp6oq1d71tn0q" path="res://scenes/components/player_ui/player_ui.gd" id="1_6j8jt"]
 [ext_resource type="PackedScene" uid="uid://ddtfre13trud7" path="res://scenes/components/fish/fish.tscn" id="1_507nr"]
+[ext_resource type="Texture2D" uid="uid://dy7irlr3abbw7" path="res://scenes/components/player_ui/assets/interface_top.png" id="2_msq8d"]
+[ext_resource type="Texture2D" uid="uid://b1ydmx85726e3" path="res://scenes/components/player_ui/assets/interface_bottom.png" id="3_6bfia"]
+[ext_resource type="Texture2D" uid="uid://bpgh5g6d5egbn" path="res://scenes/components/player_ui/assets/money_info.png" id="5_6bfia"]
+[ext_resource type="Texture2D" uid="uid://kd4d51vm1nl1" path="res://scenes/components/player_ui/assets/money_info_2.png" id="5_bhnel"]
+[ext_resource type="Texture2D" uid="uid://d11b4cmds0ehj" path="res://scenes/components/player_ui/assets/Fish_Used.png" id="7_5gvnc"]
+[ext_resource type="PackedScene" uid="uid://ue62o57ebqht" path="res://scenes/components/player_display/player_display.tscn" id="7_6bfia"]
+[ext_resource type="Texture2D" uid="uid://btn83b3ako5wh" path="res://scenes/components/player_ui/assets/Blue_Default.png" id="7_lxtlc"]
+[ext_resource type="Texture2D" uid="uid://basc5qbulwmqn" path="res://scenes/components/player_ui/assets/Fish_Ready.png" id="7_puotl"]
+[ext_resource type="Texture2D" uid="uid://b32h4qydqmsat" path="res://scenes/components/player_ui/assets/Fish_OnClick.png" id="8_5jys4"]
+[ext_resource type="Texture2D" uid="uid://bqc6766gk4e74" path="res://scenes/components/player_ui/assets/Blue_OnClick.png" id="8_6dme5"]
+[ext_resource type="Texture2D" uid="uid://cw8ddnif0s4c1" path="res://scenes/components/player_ui/assets/Red_Default.png" id="9_ks4xb"]
+[ext_resource type="Texture2D" uid="uid://20akyteu45j8" path="res://scenes/components/player_ui/assets/Red_Onclick.png" id="10_c4xxp"]
+[ext_resource type="Texture2D" uid="uid://b62c4gyularb6" path="res://scenes/components/player_ui/assets/Fish_Disabled.png" id="10_tyvj4"]
+[ext_resource type="Texture2D" uid="uid://ngc8gs7epf61" path="res://scenes/components/menu button/assets/chosen_folded.png" id="11_5jys4"]
+[ext_resource type="Texture2D" uid="uid://dol2yhkqspaev" path="res://scenes/components/player_ui/assets/Green_Default.png" id="11_rhq83"]
+[ext_resource type="Texture2D" uid="uid://c8nhyb1ns26ha" path="res://scenes/components/player_ui/assets/Green_OnClick.png" id="12_puotl"]
+[ext_resource type="Texture2D" uid="uid://cpd47arscstwe" path="res://scenes/components/menu button/assets/chosen_call.png" id="12_tyvj4"]
+[ext_resource type="PackedScene" uid="uid://sa2eaxphyrk1" path="res://scenes/components/message_feed/message_feed.tscn" id="21_eljtp"]
+[ext_resource type="Texture2D" uid="uid://ki1sqwsiqxpx" path="res://scenes/components/player_ui/assets/Play_Default.png" id="21_kcwtw"]
+[ext_resource type="Texture2D" uid="uid://qkhuy6dl8l3n" path="res://scenes/components/player_ui/assets/Play_OnClick.png" id="22_11p7a"]
+[ext_resource type="Texture2D" uid="uid://cboamppc1m63b" path="res://scenes/components/player_ui/assets/Play_OnSet.png" id="23_dlqpn"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rhq83"]
+texture = ExtResource("7_5gvnc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6ukgw"]
+texture = ExtResource("8_5jys4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6v1ci"]
+texture = ExtResource("7_puotl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5gvnc"]
+texture = ExtResource("10_tyvj4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ua0fs"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+texture = ExtResource("11_5jys4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tyvj4"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+texture = ExtResource("12_tyvj4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ks4xb"]
+texture = ExtResource("11_rhq83")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c4xxp"]
+texture = ExtResource("12_puotl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lxtlc"]
+texture = ExtResource("9_ks4xb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6dme5"]
+texture = ExtResource("10_c4xxp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_myhs1"]
+content_margin_left = 10.0
+content_margin_right = 5.0
+texture = ExtResource("7_lxtlc")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kcrox"]
+content_margin_left = 10.0
+content_margin_right = 5.0
+texture = ExtResource("8_6dme5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eljtp"]
+texture = ExtResource("21_kcwtw")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yvytb"]
+texture = ExtResource("22_11p7a")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mljms"]
+texture = ExtResource("23_dlqpn")
 
 [node name="PlayerUi" type="Control" unique_id=884965420]
 layout_mode = 3
@@ -16,20 +90,43 @@ size_flags_vertical = 3
 script = ExtResource("1_6j8jt")
 metadata/_edit_use_anchors_ = true
 
-[node name="PlayerHand" type="HBoxContainer" parent="." unique_id=1667763033]
-unique_name_in_owner = true
+[node name="BackgroundTop" type="TextureRect" parent="." unique_id=1621527147]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 197.96785
+grow_horizontal = 2
+texture = ExtResource("2_msq8d")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="BackgroundBottom" type="TextureRect" parent="." unique_id=459460312]
+layout_mode = 1
+anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -328.0
-offset_top = -68.0
-offset_right = -56.0
-offset_bottom = -1.0
-grow_horizontal = 0
+offset_left = -3.0
+offset_top = -261.61816
+offset_right = 1.0
+grow_horizontal = 2
 grow_vertical = 0
+texture = ExtResource("3_6bfia")
+expand_mode = 5
+stretch_mode = 6
+
+[node name="PlayerHand" type="HBoxContainer" parent="." unique_id=1667763033]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 1574.0001
+offset_top = -136.99994
+offset_right = 1830.2501
+offset_bottom = -70.0
+grow_vertical = 0
+scale = Vector2(1.3, 1.3)
 alignment = 1
 
 [node name="Control" type="Control" parent="PlayerHand" unique_id=1986391749]
@@ -56,14 +153,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -1085.0
-offset_top = -580.0
-offset_right = -381.0
-offset_bottom = -513.0
+offset_left = -1799.0
+offset_top = -114.0
+offset_right = -1272.3333
+offset_bottom = -47.0
 grow_horizontal = 0
 grow_vertical = 0
 alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="Control" type="Control" parent="TableCards" unique_id=524302486]
 layout_mode = 2
@@ -100,87 +196,230 @@ size_flags_horizontal = 3
 [node name="TableFish5" parent="TableCards/Control5" unique_id=1664080629 instance=ExtResource("1_507nr")]
 unique_name_in_owner = true
 
-[node name="PlayerMoney" type="Label" parent="." unique_id=272246422]
-unique_name_in_owner = true
+[node name="MoneyBackground" type="TextureRect" parent="." unique_id=2130244455]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = -169.0
-offset_right = 57.0
-offset_bottom = -146.0
-grow_vertical = 0
-text = "Money"
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -293.833
+offset_right = -6.166504
+offset_bottom = 94.03347
+grow_horizontal = 2
+texture = ExtResource("5_bhnel")
+expand_mode = 5
+stretch_mode = 5
 
-[node name="CurrentPot" type="Label" parent="." unique_id=749522527]
+[node name="PlayerMoney" type="Label" parent="MoneyBackground" unique_id=272246422]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = -196.0
-offset_right = 57.0
-offset_bottom = -173.0
-grow_vertical = 0
-text = "Pot"
+offset_left = 63.0
+offset_right = -22.666504
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "MONEY"
+vertical_alignment = 1
+
+[node name="PotBackground" type="TextureRect" parent="." unique_id=1994728369]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 6.166992
+offset_right = 293.8335
+offset_bottom = 94.03347
+grow_horizontal = 2
+texture = ExtResource("5_6bfia")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="CurrentPot" type="Label" parent="PotBackground" unique_id=749522527]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 63.0
+offset_right = -22.666504
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "POT"
+vertical_alignment = 1
 
 [node name="PlayerActions" type="HBoxContainer" parent="." unique_id=376983383]
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_top = -136.0
-offset_right = 556.0
+offset_left = -275.0
+offset_top = -149.0
+offset_right = 275.0
+offset_bottom = -87.0
+grow_horizontal = 2
 grow_vertical = 0
-
-[node name="MenuButtonRaise" parent="PlayerActions" unique_id=186663661 instance=ExtResource("1_0jaed")]
-unique_name_in_owner = true
-layout_mode = 2
-disabled = true
-text = "Raise
-"
-
-[node name="MenuButtonCall" parent="PlayerActions" unique_id=418877452 instance=ExtResource("1_0jaed")]
-unique_name_in_owner = true
-layout_mode = 2
-disabled = true
-text = "Call"
-
-[node name="MenuButtonFold" parent="PlayerActions" unique_id=2147097157 instance=ExtResource("1_0jaed")]
-unique_name_in_owner = true
-layout_mode = 2
-disabled = true
-text = "Fold"
+theme_override_constants/separation = 20
 
 [node name="MenuButtonGoFish" parent="PlayerActions" unique_id=496143731 instance=ExtResource("1_0jaed")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.7
+theme_override_styles/normal = SubResource("StyleBoxTexture_rhq83")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_6ukgw")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6v1ci")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_5gvnc")
 disabled = true
-text = "Fish Card"
+text = "FISH"
 
-[node name="MenuButtonQuit" parent="." unique_id=893405755 instance=ExtResource("1_0jaed")]
+[node name="MenuButtonFold" parent="PlayerActions" unique_id=2147097157 instance=ExtResource("1_0jaed")]
 unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/hover = SubResource("StyleBoxTexture_ua0fs")
+disabled = true
+text = "FOLD"
+
+[node name="MenuButtonRaise" parent="PlayerActions" unique_id=186663661 instance=ExtResource("1_0jaed")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "RAISE"
+
+[node name="MenuButtonCall" parent="PlayerActions" unique_id=418877452 instance=ExtResource("1_0jaed")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/hover = SubResource("StyleBoxTexture_tyvj4")
+disabled = true
+text = "CALL"
+
+[node name="MenuButtons" type="Control" parent="." unique_id=520314237]
+layout_mode = 1
+anchors_preset = 0
+offset_right = 210.0
+offset_bottom = 265.0
+
+[node name="MenuButtonQuit" type="Button" parent="MenuButtons" unique_id=2140820297]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 140)
+custom_maximum_size = Vector2(140, 140)
+layout_mode = 0
+offset_left = 39.0
+offset_top = 278.0
+offset_right = 179.0
+offset_bottom = 418.0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_ks4xb")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_c4xxp")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ks4xb")
+text = "QUIT_GAME_BTN"
+autowrap_trim_flags = 192
+icon_alignment = 1
+expand_icon = true
+
+[node name="MenuButtonMainMenu" type="Button" parent="MenuButtons" unique_id=1340606541]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 160)
+custom_maximum_size = Vector2(160, 160)
+layout_mode = 0
+offset_left = 100.0
+offset_top = 160.0
+offset_right = 260.0
+offset_bottom = 320.0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_styles/normal = SubResource("StyleBoxTexture_lxtlc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_6dme5")
+theme_override_styles/hover = SubResource("StyleBoxTexture_lxtlc")
+text = "MENU_BTN"
+autowrap_trim_flags = 192
+icon_alignment = 1
+expand_icon = true
+
+[node name="MenuButtonHelp" type="Button" parent="MenuButtons" unique_id=618773116]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 180)
+custom_maximum_size = Vector2(180, 180)
+layout_mode = 0
+offset_left = 26.0
+offset_top = 15.0
+offset_right = 206.0
+offset_bottom = 195.0
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_myhs1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_kcrox")
+theme_override_styles/hover = SubResource("StyleBoxTexture_myhs1")
+text = "HELP_BTN"
+autowrap_trim_flags = 192
+icon_alignment = 1
+expand_icon = true
+
+[node name="PlayersDisplays" type="HBoxContainer" parent="." unique_id=2014162188]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -136.0
-offset_right = 0.0
-offset_bottom = 136.0
+offset_left = -476.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 275.0
 grow_horizontal = 0
-text = "Quit"
+theme_override_constants/separation = 15
+alignment = 1
 
-[node name="MenuButtonHelp" parent="." unique_id=1755280537 instance=ExtResource("1_0jaed")]
+[node name="CPU1Display" parent="PlayersDisplays" unique_id=2035241845 instance=ExtResource("7_6bfia")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CPU2Display" parent="PlayersDisplays" unique_id=111045228 instance=ExtResource("7_6bfia")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CPU3Display" parent="PlayersDisplays" unique_id=123078472 instance=ExtResource("7_6bfia")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MenuButtonNextPlay" parent="." unique_id=1042725740 instance=ExtResource("1_0jaed")]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -273.0
-offset_right = -137.0
-offset_bottom = 136.0
-grow_horizontal = 0
-text = "Help
-"
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = 282.5
+offset_right = -103.0
+offset_bottom = 344.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_eljtp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_yvytb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_mljms")
+text = "NEXT_PLAY"
+
+[node name="MessageFeed" parent="." unique_id=2115170674 instance=ExtResource("21_eljtp")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 53.0
+offset_top = -397.0
+offset_right = 416.0
+offset_bottom = -205.0
+grow_vertical = 0
+stretch_mode = 0

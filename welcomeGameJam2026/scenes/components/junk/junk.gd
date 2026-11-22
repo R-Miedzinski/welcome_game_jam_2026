@@ -9,7 +9,7 @@ var direction: int = 1
 
 func _ready() -> void:
 	if is_moving:
-		direction = sign(Preloads.Instance.WINDOW_WIDTH_VPX / 2 - position.x)
+		direction = 1 if position.x < Preloads.Instance.WINDOW_WIDTH_VPX / 2.0 else -1
 
 	sprite.frames = Preloads.Instance.get_junk_sprite()
 
