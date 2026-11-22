@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Fish&Chips"
-config/version="0.1.0"
+config/version="1.1.0"
 run/main_scene="uid://b24pgln3wjuto"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="uid://fmbcymk5r7k8"
@@ -29,8 +29,7 @@ AutoloadScene="*uid://bm6s8tssx8l32"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/window_width_override=1600
-window/size/window_height_override=900
+window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [global_group]
@@ -61,6 +60,7 @@ HookMoveDown={
 
 [internationalization]
 
+locale/translation_remaps={}
 locale/translations=PackedStringArray("res://resources/i18n/fish&chips_translations.eng.translation", "res://resources/i18n/fish&chips_translations.pl.translation")
 
 [layer_names]
