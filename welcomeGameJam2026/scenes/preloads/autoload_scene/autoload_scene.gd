@@ -131,7 +131,6 @@ func _update_game_options() -> void:
 	_set_language()
 
 func _update_audio_options() -> void:
-	print("Updating audio options: %s" % audio_options)
 	SoundManager.set_master_volume(audio_options.get("master", 100.0))
 	SoundManager.set_sfx_volume(audio_options.get("sfx", 100.0))
 	SoundManager.set_soundtrack_volume(audio_options.get("soundtrack", 100.0))

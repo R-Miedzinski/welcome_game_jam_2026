@@ -22,8 +22,8 @@ buses/default_bus_layout="uid://dxf21y6xkdx6h"
 
 [autoload]
 
-AutoloadScene="*uid://bm6s8tssx8l32"
 SoundManager="*uid://57u1r0vj30jw"
+AutoloadScene="*uid://bm6s8tssx8l32"
 
 [display]
 

@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cbqh5msohi508" path="res://scenes/components/npc_models/assets/avatars/mors_avatar.PNG" id="9_60vmi"]
 [ext_resource type="PackedScene" uid="uid://dho64dgkhbmfk" path="res://scenes/components/npc_models/eustachy.tscn" id="9_exd02"]
 [ext_resource type="PackedScene" uid="uid://b2a0kutw3rg6y" path="res://scenes/components/npc_models/yeti.tscn" id="9_hcftp"]
+[ext_resource type="Texture2D" uid="uid://cj3c1yx66eyl2" path="res://scenes/components/npc_models/assets/avatars/eustachy_avatar.PNG" id="13_3j26o"]
 [ext_resource type="PackedScene" uid="uid://b866aqyif4nrs" path="res://scenes/views/poker_table/assets/garbo_seal.glb" id="14_3j26o"]
 [ext_resource type="PackedScene" uid="uid://dsdgk0kf55h0d" path="res://scenes/views/poker_table/assets/bckg.glb" id="14_60vmi"]
 [ext_resource type="PackedScene" uid="uid://dinae8sp7jinr" path="res://scenes/views/poker_table/assets/fishinboat.glb" id="15_3j26o"]
@@ -92,7 +93,7 @@ unique_name_in_owner = true
 visible = false
 
 [node name="PlayerCamera" type="Camera3D" parent="." unique_id=6409917]
-transform = Transform3D(-4.3659753e-08, -0.24138899, 0.9704285, 2.124064e-09, 0.9704285, 0.24138899, -1, 1.2600236e-08, -4.1855944e-08, 2.9416199, 1.3197157, -0.029430851)
+transform = Transform3D(-4.4239737e-08, -0.24138899, 0.97042847, 2.124064e-09, 0.97042847, 0.24138899, -1, 1.2740237e-08, -4.2418776e-08, 2.9416199, 1.3197157, -0.029430851)
 fov = 33.0
 
 [node name="CPU1Controller" type="Node" parent="." unique_id=1856201156 node_paths=PackedStringArray("deck", "npc_model")]
@@ -105,7 +106,7 @@ avatar = ExtResource("9_60vmi")
 npc_model = NodePath("Mors")
 
 [node name="Mors" parent="CPU1Controller" unique_id=105059117 instance=ExtResource("7_swb63")]
-transform = Transform3D(-0.12294994, 0, 0.9924129, 0, 1, 0, -0.9924129, 0, -0.12294994, -2.358967, -0.055934094, 0.20931834)
+transform = Transform3D(-0.12294996, 0, 0.99241287, 0, 1, 0, -0.99241287, 0, -0.12294996, -2.358967, -0.055934094, 0.20931834)
 
 [node name="CPU2Controller" type="Node" parent="." unique_id=499779583 node_paths=PackedStringArray("deck", "npc_model")]
 unique_name_in_owner = true
