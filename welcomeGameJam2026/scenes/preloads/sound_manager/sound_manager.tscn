@@ -4,6 +4,7 @@
 
 [node name="SoundManager" type="Node" unique_id=868041127]
 script = ExtResource("1_d7nqd")
+soundtrack_global_offset_db = -15.0
 
 [node name="SoundtrackPlayer" type="AudioStreamPlayer" parent="." unique_id=523676592]
 unique_name_in_owner = true

@@ -21,6 +21,17 @@ func add_message(message: String) -> void:
 
 	call_deferred("_scroll_to_bottom")
 
+func serialize_messages() -> Array[String]:
+	var messages: Array[String] = []
+	for child in message_container.get_children():
+		if child is Label:
+			messages.append(child.text)
+	return messages
+
+func deserialize_messages(messages: Array[String]) -> void:
+	for message in messages:
+		add_message(message)
+
 func _scroll_to_bottom() -> void:
 	var scroll_value = scroll_container.get_v_scroll_bar().max_value
 	if scroll_value != scroll_container.get_v_scroll_bar().value:

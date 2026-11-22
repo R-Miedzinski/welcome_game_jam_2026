@@ -111,7 +111,8 @@ func serialize_and_save_state() -> void:
 		"cpu2_controller": cpu2_controller.serialize(),
 		"cpu3_controller": cpu3_controller.serialize(),
 		"game_state": game_state.serialize(),
-		"deck": deck.serialize()
+		"deck": deck.serialize(),
+		"messages_feed": player_ui.message_feed.serialize_messages()
 	}
 
 	Preloads.serialized_state = state
@@ -128,6 +129,7 @@ func load_serialized_state() -> void:
 	cpu2_controller.load_state(state.get("cpu2_controller", {}))
 	cpu3_controller.load_state(state.get("cpu3_controller", {}))
 	game_state.load_state(state.get("game_state", {}))
+	player_ui.message_feed.deserialize_messages(state.get("messages_feed", []))
 
 func _setup_cpu_player(cpu_controller: CPUController) -> void:
 	cpu_controller.submit_player_decision.connect(_on_submit_player_decision)
@@ -211,6 +213,8 @@ func _on_submit_player_decision(player_id: String, action: PokerGameStateManager
 		_post_player_action_message(player_id, action, amount)
 	elif cpu_controllers.has(player_id):
 		_post_npc_action_message(player_id, action, amount)
+		if action == PokerGameStateManager.PlayerAction.FOLD:
+			cpu_controllers[player_id].current_idle_animation = "idle_out"
 
 func _on_showdown_winners(winner_ids: PackedStringArray) -> void:
 	print("Showdown winners: %s" % [winner_ids])
@@ -281,12 +285,25 @@ func _on_player_state_changed(player_id: String, _old_state: PokerGameStateManag
 	elif cpu_controllers.has(player_id):
 		_post_npc_state_change_message(player_id, new_state)
 
-func _on_game_state_changed(_old_state: int, _new_state: int) -> void:
+func _on_game_state_changed(old_state: int, new_state: int) -> void:
 	player_controller.already_raised = false
 	for cpu_controller in cpu_controllers.values():
 		cpu_controller.already_raised = false
 
-	_post_game_state_change_message(_new_state)
+	_post_game_state_change_message(new_state)
+
+	if old_state == PokerGameStateManager.GameState.INIT and new_state == PokerGameStateManager.GameState.WAITING:
+		var is_player_moving_from_out = false
+
+		for cpu_controller in cpu_controllers.values():
+			if game_state.get_player_state(cpu_controller.player_id) != PokerGameStateManager.PlayerState.OUT and \
+			 cpu_controller.current_idle_animation == "idle_out":
+				cpu_controller.npc_model.play_animation("fold_back")
+				cpu_controller.current_idle_animation = "idle"
+				is_player_moving_from_out = true
+			
+		if is_player_moving_from_out:
+			await get_tree().create_timer(2.0).timeout
 
 func _check_end_game() -> bool:
 	if player_controller.cash <= 0:
@@ -434,7 +451,7 @@ func _post_npc_action_message(player_id: String, action: PokerGameStateManager.P
 	var message_text = tr(message_key).format({
 		"player_name": cpu_name,
 		"amount": amount,
-		"current_bet": amount
+		"current_bet": game_state.get_player_bet(player_id)
 	})
 	player_ui.message_feed.add_message(message_text)
 
@@ -514,60 +531,104 @@ func _post_round_end_message(showdown_players: Array, winner_ids: PackedStringAr
 	
 	# Handle early fold (single winner, not a showdown)
 	if showdown_players.size() == 1:
-		var message_text = tr("ROUND_END_MSG").format({
+		var message = tr("ROUND_END_MSG").format({
 			"winner_name": showdown_players[0].player_id
 		})
-		player_ui.message_feed.add_message(message_text)
+		player_ui.message_feed.add_message(message)
 		return
 	
 	var message_key = ""
 	var message_format = {}
 	
-	match showdown_players.size():
-		2:
-			message_key = "ROUND_END_SHOWDOWN_2_MSG"
-			var p1 = showdown_players[0]
-			var p2 = showdown_players[1]
-			message_format = {
-				"player1": p1.player_id,
-				"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
-				"player2": p2.player_id,
-				"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
-				"winning_name": winner_ids[0] if winner_ids.size() > 0 else ""
-			}
-		3:
-			message_key = "ROUND_END_SHOWDOWN_3_MSG"
-			var p1 = showdown_players[0]
-			var p2 = showdown_players[1]
-			var p3 = showdown_players[2]
-			message_format = {
-				"player1": p1.player_id,
-				"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
-				"player2": p2.player_id,
-				"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
-				"player3": p3.player_id,
-				"combination_name3": _get_combination_name(p3.evaluate_hand(game_state.community_cards).get("combination", "")),
-				"winning_name": winner_ids[0] if winner_ids.size() > 0 else ""
-			}
-		4:
-			message_key = "ROUND_END_SHOWDOWN_4_MSG"
-			var p1 = showdown_players[0]
-			var p2 = showdown_players[1]
-			var p3 = showdown_players[2]
-			var p4 = showdown_players[3]
-			message_format = {
-				"player1": p1.player_id,
-				"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
-				"player2": p2.player_id,
-				"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
-				"player3": p3.player_id,
-				"combination_name3": _get_combination_name(p3.evaluate_hand(game_state.community_cards).get("combination", "")),
-				"player4": p4.player_id,
-				"combination_name4": _get_combination_name(p4.evaluate_hand(game_state.community_cards).get("combination", "")),
-				"winning_name": winner_ids[0] if winner_ids.size() > 0 else ""
-			}
-		_:
-			return
+	if winner_ids.size() < 2:
+		match showdown_players.size():
+			2:
+				message_key = "ROUND_END_SHOWDOWN_2_MSG"
+				var p1 = showdown_players[0]
+				var p2 = showdown_players[1]
+				message_format = {
+					"player1": p1.player_id,
+					"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"player2": p2.player_id,
+					"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"winning_name": winner_ids[0] if winner_ids.size() > 0 else ""
+				}
+			3:
+				message_key = "ROUND_END_SHOWDOWN_3_MSG"
+				var p1 = showdown_players[0]
+				var p2 = showdown_players[1]
+				var p3 = showdown_players[2]
+				message_format = {
+					"player1": p1.player_id,
+					"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"player2": p2.player_id,
+					"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"player3": p3.player_id,
+					"combination_name3": _get_combination_name(p3.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"winning_name": winner_ids[0] if winner_ids.size() > 0 else ""
+				}
+			4:
+				message_key = "ROUND_END_SHOWDOWN_4_MSG"
+				var p1 = showdown_players[0]
+				var p2 = showdown_players[1]
+				var p3 = showdown_players[2]
+				var p4 = showdown_players[3]
+				message_format = {
+					"player1": p1.player_id,
+					"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"player2": p2.player_id,
+					"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"player3": p3.player_id,
+					"combination_name3": _get_combination_name(p3.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"player4": p4.player_id,
+					"combination_name4": _get_combination_name(p4.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"winning_name": winner_ids[0] if winner_ids.size() > 0 else ""
+				}
+			_:
+				return
+	else:
+		match winner_ids.size():
+			2:
+				message_key = "ROUND_END_SPLIT_2_MSG"
+				var p1 = winner_ids[0]
+				var p2 = winner_ids[1]
+				message_format = {
+					"player1": p1,
+					"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"player2": p2,
+					"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", ""))
+				}
+			3:
+				message_key = "ROUND_END_SPLIT_3_MSG"
+				var p1 = winner_ids[0]
+				var p2 = winner_ids[1]
+				var p3 = winner_ids[2]
+				message_format = {
+					"player1": p1,
+					"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"player2": p2,
+					"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"player3": p3,
+					"combination_name3": _get_combination_name(p3.evaluate_hand(game_state.community_cards).get("combination", ""))
+				}
+			4:
+				message_key = "ROUND_END_SPLIT_4_MSG"
+				var p1 = winner_ids[0]
+				var p2 = winner_ids[1]
+				var p3 = winner_ids[2]
+				var p4 = winner_ids[3]
+				message_format = {
+					"player1": p1,
+					"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"player2": p2,
+					"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"player3": p3,
+					"combination_name3": _get_combination_name(p3.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"player4": p4,
+					"combination_name4": _get_combination_name(p4.evaluate_hand(game_state.community_cards).get("combination", ""))
+				}
+			_:
+				return
 	
 	var message_text = tr(message_key).format(message_format)
 	player_ui.message_feed.add_message(message_text)

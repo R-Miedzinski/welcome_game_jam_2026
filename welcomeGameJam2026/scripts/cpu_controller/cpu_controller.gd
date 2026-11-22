@@ -164,6 +164,8 @@ func load_state(state: Dictionary) -> void:
 	current_idle_animation = state.get("current_idle_animation", "idle")
 	rounds_played = state.get("rounds_played", 0)
 
+	npc_model.play_animation(current_idle_animation)
+
 func _can_fish() -> bool:
 	return remaining_fishes > 0
 
@@ -174,19 +176,19 @@ func _fish() -> void:
 		return
 	remaining_fishes -= 1
 
-	# remove lowest card from hand
-	var card1_rank = Preloads.Poker.Card.new(player_hand.get(0)).rank
-	var card2_rank = Preloads.Poker.Card.new(player_hand.get(1)).rank
-	if card1_rank <= card2_rank:
-		deck.reshuffle(player_hand.get(0))
-		player_hand.remove_at(0)
-	else:
-		deck.reshuffle(player_hand.get(1))
-		player_hand.remove_at(1)
+	# remove lowest card from hand, hand should always be sorted
+	deck.reshuffle(player_hand.get(0))
+	print("CPU player %s removed card: %s" % [player_id, player_hand.get(0)])
+	player_hand.remove_at(0)
+	print("CPU player %s current hand: %s" % [player_id, player_hand])
 
 	# draw new card
-	var drawn_card: String = deck.draw(1)
+	var drawn_card: String = ""
+	while drawn_card == "" or player_hand.has(drawn_card):
+		drawn_card = deck.draw(1)
+	print("CPU player %s drew card: %s" % [player_id, drawn_card])
 	add_card_to_hand(drawn_card)
+	print("CPU player %s current hand after drawing: %s" % [player_id, player_hand])
 
 func _sort_hand() -> void:
 	if player_hand.size() != 2:

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dfwv48ecjh8dx"
-path="res://.godot/imported/walro_animated.glb-05c36691c15cd291cb50e2631c45f532.scn"
+path="res://.godot/imported/walro_animated.glb-d2a04bc4d8e75c1440dfe0532a379d80.scn"
 
 [deps]
 
-source_file="res://scenes/components/npc_models/assets/mesh/walro_animated.glb"
-dest_files=["res://.godot/imported/walro_animated.glb-05c36691c15cd291cb50e2631c45f532.scn"]
+source_file="res://scenes/components/npc_models/assets/mesh/mors/walro_animated.glb"
+dest_files=["res://.godot/imported/walro_animated.glb-d2a04bc4d8e75c1440dfe0532a379d80.scn"]
 
 [params]
 

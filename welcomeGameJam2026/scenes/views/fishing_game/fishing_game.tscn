@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://c0gm4k58dkqxt" path="res://scenes/components/fishing_game_background/fishing_game_background.tscn" id="2_0u4uy"]
 [ext_resource type="Script" uid="uid://da5tckxffau4m" path="res://scripts/fishing_orchestrator/fishing_orchestrator.gd" id="2_jnssj"]
 [ext_resource type="Script" uid="uid://dx8628pcddoix" path="res://scripts/hook_controller/hook_controller.gd" id="2_qtwaw"]
+[ext_resource type="AudioStream" uid="uid://dkttkxwi40jaw" path="res://resources/sound/soundtrack/fishing_track_start.mp3" id="2_x3fyl"]
+[ext_resource type="AudioStream" uid="uid://camkduy0tyk65" path="res://resources/sound/soundtrack/fishing_track_loop.mp3" id="3_a42rt"]
 [ext_resource type="PackedScene" uid="uid://uno6ukidotr1" path="res://scenes/components/fishing_hook/fishing_hook.tscn" id="3_jnssj"]
 [ext_resource type="Script" uid="uid://cgpif7c60joiv" path="res://scripts/deck_manager/deck_manager.gd" id="4_dkctf"]
 [ext_resource type="PackedScene" uid="uid://fm7ldayo1k4f" path="res://scenes/components/fishing_layer/fishing_layer.tscn" id="7_0u4uy"]
@@ -59,6 +61,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vdhkj")
+soundtrack_start = ExtResource("2_x3fyl")
+soundtrack_loop = ExtResource("3_a42rt")
 
 [node name="Backgorund" parent="." unique_id=672236312 instance=ExtResource("2_0u4uy")]
 z_index = -2

@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1axgfs67qiva"
-path.s3tc="res://.godot/imported/walro_animated_walro_rough.png-411ef67e1e2dca9eb311e1e3e0fa310e.s3tc.ctex"
+uid="uid://ccbwmf3gdxjav"
+path.s3tc="res://.godot/imported/walro_animated_walro_diff.png-7c9560ed5b95536ab6b9adc7b3f949f2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "20971075baba9b64e6fe693358acd882"
+"md5": "478da25f05a309548a7715ffc0344a15"
 }
 
 [deps]
 
-source_file="res://scenes/components/npc_models/assets/mesh/walro_animated_walro_rough.png"
-dest_files=["res://.godot/imported/walro_animated_walro_rough.png-411ef67e1e2dca9eb311e1e3e0fa310e.s3tc.ctex"]
+source_file="res://scenes/components/npc_models/assets/mesh/mors/walro_animated_walro_diff.png"
+dest_files=["res://.godot/imported/walro_animated_walro_diff.png-7c9560ed5b95536ab6b9adc7b3f949f2.s3tc.ctex"]
 
 [params]
 

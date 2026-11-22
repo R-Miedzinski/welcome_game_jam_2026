@@ -59,10 +59,3 @@ fish_label_offsets = Dictionary[String, Vector2]({
 "QS": Vector2(0, -17),
 "S": Vector2(-15, 0)
 })
-audio_options = Dictionary[String, Variant]({
-"master": 80.0,
-"sfx": 100.0,
-"soundtrack": 40.0,
-"ui": 100.0,
-"voicelines": 100.0
-})

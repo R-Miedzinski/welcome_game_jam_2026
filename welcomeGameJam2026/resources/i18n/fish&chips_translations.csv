@@ -8,7 +8,7 @@ HELP_BTN,Help,Jak grać
 MENU_BTN,Main Menu,Menu Główne
 CLOSE_BTN,Close,Zamknij
 RAISE,Raise,Podbij
-CALL,Call,Call
+CALL,Call,Wejdź
 FOLD,Fold,Pass
 FISH,Fish,Łów
 POT,Current Pot,Aktualne Pula
@@ -34,12 +34,12 @@ $,$,zł
 NEXT_PLAY,Next Round,Następne Rozdanie
 ,,
 PLAYER_RAISE_MSG,Player raises the stakes by {amount}.,Graczc podnosi stawkę o {amount}.
-PLAYER_CALL_MSG,Player calls {amount}.,Gracz sprawdza {amount}.
+PLAYER_CALL_MSG,Player calls {amount}.,Gracz wchodzi za {amount}.
 PLAYER_FOLD_MSG,"Player folds, leaving {current_bet} in the pool.","Gracz spasowuje, zostawiając {current_bet} w puli."
 PLAYER_ALL_IN_MSG,"Player goes all in, they have {current_bet} in the pool.","Gracz idzie va banque, ma w puli {current_bet}."
 PLAYER_OUT_MSG,"Player is eliminated, they lasted {current_round} rounds.","Gracz jest bankrutem, uprzednio wytrzymując {current_round} rund."
 NPC_RAISE_MSG,{player_name} raises the stakes by {amount}.,{player_name} podnosi stawkę o {amount}.
-NPC_CALL_MSG,{player_name} calls {amount}.,{player_name} sprawdza {amount}.
+NPC_CALL_MSG,{player_name} calls {amount}.,{player_name} wchodzi za {amount}.
 NPC_FOLD_MSG,"{player_name} folds, leaving {current_bet} in the pool.","{player_name} spasowuje, zostawiając {current_bet} w puli."
 NPC_ALL_IN_MSG,"{player_name} goes all in, they have {current_bet} in the pool.","{player_name} idzie va banque, ma w puli {current_bet}."
 NPC_OUT_MSG,"{player_name} is eliminated, they lasted {current_round}.","{player_name} jest bankrutem, uprzednio wytrzymując {current_round} rund."
@@ -49,6 +49,9 @@ ROUND_END_MSG,"Round has ended, {winner_name} is the winner, all other players h
 ROUND_END_SHOWDOWN_2_MSG,"Round has ended, {player1} has {combination_name1}, {player2} has {combination_name2}. {winning_name} wins.","Runda zakończona, {player1} ma {combination_name1}, {player2} ma {combination_name2}. {winning_name} wygrywa."
 ROUND_END_SHOWDOWN_3_MSG,"Round has ended, {player1} has {combination_name1}, {player2} has {combination_name2}, {player3} has {combination_name3}. {winning_name} wins.","Runda zakończona, {player1} ma {combination_name1}, {player2} ma {combination_name2}, {player3} ma {combination_name3}. {winning_name} wygrywa."
 ROUND_END_SHOWDOWN_4_MSG,"Round has ended, {player1} has {combination_name1}, {player2} has {combination_name2}, {player3} has {combination_name3}, {player4} has {combination_name4}. {winning_name} wins.","Runda zakończona, {player1} ma {combination_name1}, {player2} ma {combination_name2}, {player3} ma {combination_name3}, {player4} ma {combination_name4}. {winning_name} wygrywa."
+ROUND_END_SPLIT_2_MSG,Round has ended. A tie between {player1} and {player2}.,Runda zakończona. {player1} oraz {player2} remisują.
+ROUND_END_SPLIT_3_MSG,"Round has ended. A three way tie between {player1}, {player2} and {player3}.","Runda zakończona. Potrójny remis graczy {player1}, {player2} oraz {player3}."
+ROUND_END_SPLIT_4_MSG,"Round has ended. A four way tie between {player1}, {player2}, {player3} and {player4}.","Runda zakończona. Poczwórny remis graczy {player1}, {player2}, {player3} oraz {player4}."
 GAME_WINNERS_MSG,"Game has ended, {final_winner_name} is the ultimate winner!","Gra zakończona, {final_winner_name} jest ostatecznym zwycięzcą!"
 GAME_FIRST_CARDS,"The first cards are revealed: {card1}, {card2}, {card3}.","Pierwsze karty zostają odsłonięte: {card1}, {card2}, {card3}"
 GAME_FOURTH_CARD,The fourth card is revealed: {card4}.,Czwarta karta zostaje odsłonięta: {card4}.

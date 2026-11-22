@@ -16,6 +16,9 @@ signal animation_finished(anim_name: String)
 @export var lose_voicelines: Array[AudioStream] = []
 @export var split_voicelines: Array[AudioStream] = []
 
+@export_category("Voiceline Settings")
+@export var voiceline_volume_offset_db: float = 0.0
+
 var local_random: RandomNumberGenerator = RandomNumberGenerator.new()
 @onready var anim_to_vo_map: Dictionary[String, Array] = {
 	"fish": fish_voicelines,
@@ -49,7 +52,7 @@ func play_voiceline_for_animation(anim_name: String) -> void:
 	var voicelines = anim_to_vo_map.get(anim_name, [])
 	if voicelines.size() > 0:
 		var voiceline = voicelines[local_random.randi_range(0, voicelines.size() - 1)]
-		SoundManager.play_voiceline(voiceline)
+		SoundManager.play_voiceline(voiceline, voiceline_volume_offset_db)
 
 func play_lose_voiceline() -> void:
 	play_voiceline_for_animation("lose")

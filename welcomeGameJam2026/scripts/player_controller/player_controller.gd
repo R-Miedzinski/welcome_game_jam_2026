@@ -10,6 +10,7 @@ signal player_cash_changed(new_cash: int)
 
 @export var deck: DeckManager
 @export var poker_game_manager: PokerGameStateManager
+@export var seal: SealProp
 
 var player_hand: PackedStringArray = []
 var cash: int:
@@ -151,6 +152,18 @@ func _on_go_fish_button_pressed() -> void:
 		var discarded_card = player_hand.get(selected_fish_index)
 		player_hand.remove_at(selected_fish_index)
 
-		remaining_fishes -= 1
-		selected_fish_index = -1
-		going_fishing.emit(discarded_card)
+
+		if is_instance_valid(seal):
+			seal.ate_fish.connect(_on_seal_ate_fish.bind(discarded_card))
+			seal.eat_fish()
+		else:
+			_dispatch_go_fish(discarded_card)
+
+func _dispatch_go_fish(discarded_card) -> void:
+	remaining_fishes -= 1
+	selected_fish_index = -1
+	going_fishing.emit(discarded_card)
+
+func _on_seal_ate_fish(discarded_card) -> void:
+	_dispatch_go_fish(discarded_card)
+	seal.ate_fish.disconnect(_on_seal_ate_fish)

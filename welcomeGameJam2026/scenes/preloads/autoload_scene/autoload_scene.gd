@@ -117,10 +117,12 @@ func get_junk_sprite() -> SpriteFrames:
 	return null
 
 func _set_seed() -> void:
-	game_seed = game_options.get("seed", "").hash()
+	var string_seed = game_options.get("seed", "")
 
-	if game_seed == 0:
+	if string_seed == "":
 		game_seed = Time.get_ticks_usec()
+	else:
+		game_seed = string_seed.hash()
 
 func _set_language() -> void:
 	var language = game_options.get("language", "eng")
