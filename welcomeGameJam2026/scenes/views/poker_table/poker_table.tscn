@@ -1,31 +1,29 @@
 [gd_scene format=3 uid="uid://go37pnmvk1rb"]
 
+[ext_resource type="Script" uid="uid://cvmx3pxhbb72g" path="res://scenes/views/poker_table/poker_table.gd" id="1_3j26o"]
 [ext_resource type="PackedScene" uid="uid://ca4hyef2ak6ld" path="res://scenes/components/player_ui/player_ui.tscn" id="1_c6r7b"]
 [ext_resource type="Script" uid="uid://d1t5rut00cju8" path="res://scripts/player_controller/player_controller.gd" id="1_pcbri"]
 [ext_resource type="Script" uid="uid://cgpif7c60joiv" path="res://scripts/deck_manager/deck_manager.gd" id="2_7jrhj"]
+[ext_resource type="AudioStream" uid="uid://djamht5nwkcr1" path="res://resources/sound/soundtrack/poker_track.mp3" id="2_wep6m"]
 [ext_resource type="Script" uid="uid://dd1elubgcium7" path="res://scripts/poker_game_manager/poker_game_state.gd" id="3_7jrhj"]
 [ext_resource type="Script" uid="uid://bpfcw3wr1ibug" path="res://scripts/cpu_controller/cpu_controller.gd" id="5_tj53p"]
 [ext_resource type="Resource" uid="uid://bfbrb1xgulmb8" path="res://resources/decision_schema/default_decision_schema.tres" id="6_6dssf"]
 [ext_resource type="Script" uid="uid://dvlnw751kbvvs" path="res://scripts/poker_game_orchestrator/poker_game_orchestrator.gd" id="6_iodx1"]
 [ext_resource type="PackedScene" uid="uid://drgp3i6dvjfaq" path="res://scenes/components/help_screen/help_screen.tscn" id="7_341c8"]
 [ext_resource type="PackedScene" uid="uid://bwkw1y3h6kgnn" path="res://scenes/components/end_game_screen/end_game_screen.tscn" id="7_cd4ow"]
-[ext_resource type="Texture2D" uid="uid://bp1psdopekysk" path="res://icon.svg" id="7_f463q"]
 [ext_resource type="PackedScene" uid="uid://bnj5qev7ojsxe" path="res://scenes/components/npc_models/mors.tscn" id="7_swb63"]
+[ext_resource type="Texture2D" uid="uid://cbqh5msohi508" path="res://scenes/components/npc_models/assets/avatars/mors_avatar.PNG" id="9_60vmi"]
 [ext_resource type="PackedScene" uid="uid://dho64dgkhbmfk" path="res://scenes/components/npc_models/eustachy.tscn" id="9_exd02"]
 [ext_resource type="PackedScene" uid="uid://b2a0kutw3rg6y" path="res://scenes/components/npc_models/yeti.tscn" id="9_hcftp"]
+[ext_resource type="Texture2D" uid="uid://cj3c1yx66eyl2" path="res://scenes/components/npc_models/assets/avatars/eustachy_avatar.PNG" id="13_3j26o"]
 [ext_resource type="PackedScene" uid="uid://bukr46amqa44a" path="res://scenes/views/poker_table/assets/mapa_blockout.glb" id="14_hcftp"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dkctf"]
-size = Vector2(128, 128)
-
-[sub_resource type="Gradient" id="Gradient_f463q"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_cvekp"]
-gradient = SubResource("Gradient_f463q")
-width = 128
-height = 128
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_60vmi"]
+load_path = "res://.godot/imported/yeti_avatar.PNG-f992a388cca7b43c8c3301dd3b65dbd7.ctex"
 
 [node name="PokerTable" type="Node3D" unique_id=690689141]
+script = ExtResource("1_3j26o")
+soundtrack = ExtResource("2_wep6m")
 
 [node name="PlayerUi" parent="." unique_id=884965420 instance=ExtResource("1_c6r7b")]
 unique_name_in_owner = true
@@ -55,15 +53,15 @@ unique_name_in_owner = true
 visible = false
 
 [node name="PlayerCamera" type="Camera3D" parent="." unique_id=6409917]
-transform = Transform3D(-4.3690914e-08, -0.28825974, 0.95755225, -1.3377766e-09, 0.9575523, 0.28825974, -1, 1.13133405e-08, -4.222196e-08, 2.7702587, 2.4618275, 0)
+transform = Transform3D(-4.371139e-08, -0.30479446, 0.95241815, 0, 0.95241815, 0.30479446, -1, 1.3322989e-08, -4.163152e-08, 3.485076, 1.8027999, 1.8814149)
 
 [node name="CPU1Controller" type="Node" parent="." unique_id=1856201156 node_paths=PackedStringArray("deck", "npc_model")]
 unique_name_in_owner = true
 script = ExtResource("5_tj53p")
-player_id = "Mors"
+player_id = "Walro"
 decision_schema = ExtResource("6_6dssf")
 deck = NodePath("../DeckManager")
-avatar = SubResource("PlaceholderTexture2D_dkctf")
+avatar = ExtResource("9_60vmi")
 npc_model = NodePath("Mors")
 
 [node name="Mors" parent="CPU1Controller" unique_id=105059117 instance=ExtResource("7_swb63")]
@@ -75,7 +73,7 @@ script = ExtResource("5_tj53p")
 player_id = "Yeti"
 decision_schema = ExtResource("6_6dssf")
 deck = NodePath("../DeckManager")
-avatar = ExtResource("7_f463q")
+avatar = SubResource("CompressedTexture2D_60vmi")
 npc_model = NodePath("Yeti")
 
 [node name="Yeti" parent="CPU2Controller" unique_id=67668679 instance=ExtResource("9_hcftp")]
@@ -87,14 +85,14 @@ script = ExtResource("5_tj53p")
 player_id = "Eustachy"
 decision_schema = ExtResource("6_6dssf")
 deck = NodePath("../DeckManager")
-avatar = SubResource("GradientTexture2D_cvekp")
+avatar = ExtResource("13_3j26o")
 npc_model = NodePath("Eustachy")
 
 [node name="Eustachy" parent="CPU3Controller" unique_id=1707714365 instance=ExtResource("9_exd02")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.540947, 0.48583806, -1.7776725)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1330912494]
-transform = Transform3D(0.86602545, -5.8562137e-09, 0.49999997, -0.49999997, -2.1855692e-08, 0.86602545, 5.856215e-09, -1, -2.1855694e-08, 2.2405267, 2.5583797, -2.3841858e-07)
+transform = Transform3D(0.86602545, -5.8562137e-09, 0.49999997, -0.49999997, -2.1855692e-08, 0.86602545, 5.856215e-09, -1, -2.1855694e-08, 1.9530473, 2.5583797, 2.256817)
 light_energy = 5.0
 
 [node name="Mapa Proto 2" parent="." unique_id=1434944584 instance=ExtResource("14_hcftp")]

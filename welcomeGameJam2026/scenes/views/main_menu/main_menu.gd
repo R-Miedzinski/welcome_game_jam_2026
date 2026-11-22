@@ -1,6 +1,8 @@
 class_name MainMenu 
 extends Control
 
+@export var menu_soundtrack: AudioStream
+
 @onready var play_button: Button = %MenuButtonStartGame
 @onready var options_button: Button = %MenuButtonOptions
 @onready var quit_button: Button = %MenuButtonQuitGame
@@ -13,6 +15,9 @@ func _ready() -> void:
 	quit_button.pressed.connect(_on_quit_pressed)
 
 	options.visible = false
+
+	if menu_soundtrack:
+		SoundManager.play_soundtrack(menu_soundtrack)
 
 func _on_play_pressed() -> void:
 	Preloads.Instance.reset_game_data()

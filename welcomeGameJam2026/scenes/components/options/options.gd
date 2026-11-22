@@ -29,7 +29,6 @@ func _on_apply_changes_pressed() -> void:
 		return
 	game_form.submit()
 	audio_form.submit()
-	visible = false
 
 func _on_cancel_pressed() -> void:
 	_reset_forms()
