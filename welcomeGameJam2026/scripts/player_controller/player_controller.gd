@@ -152,7 +152,6 @@ func _on_go_fish_button_pressed() -> void:
 		var discarded_card = player_hand.get(selected_fish_index)
 		player_hand.remove_at(selected_fish_index)
 
-
 		if is_instance_valid(seal):
 			seal.ate_fish.connect(_on_seal_ate_fish.bind(discarded_card))
 			seal.eat_fish()

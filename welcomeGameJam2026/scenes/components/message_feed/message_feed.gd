@@ -17,7 +17,7 @@ func add_message(message: String) -> void:
 	while message_container.get_child_count() > max_messages:
 		var excess_label = message_container.get_child(0)
 		if is_instance_valid(excess_label):
-			excess_label.queue_free()
+			excess_label.free()
 
 	call_deferred("_scroll_to_bottom")
 

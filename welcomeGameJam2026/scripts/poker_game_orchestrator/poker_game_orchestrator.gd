@@ -269,6 +269,12 @@ func _on_showdown_winners(winner_ids: PackedStringArray) -> void:
 		cpu_controller.clear_hand()
 		player_ui.update_cpu_display(cpu_controller.player_id, cpu_controller.cash, game_state.get_player_state(cpu_controller.player_id))
 
+	for cpu_controller in cpu_controllers.values():
+		if cpu_controller.cash <= 0 and game_state.get_player_state(cpu_controller.player_id) != PokerGameStateManager.PlayerState.OUT:
+			game_state.player_state_change(cpu_controller.player_id, PokerGameStateManager.PlayerState.OUT)
+			cpu_controller.current_idle_animation = "idle_out"
+			cpu_controller.npc_model.play_animation("out")
+
 	if _check_end_game():
 		get_tree().paused = true
 		return
@@ -294,11 +300,6 @@ func _on_send_winnings(winner_id: String, amount: int) -> void:
 		cpu_controller.cash += amount
 		cpu_controller.already_raised = false
 		_play_sfx_if_valid(sfx.get("chips_out"))
-
-		if cpu_controller.cash <= 0 and game_state.get_player_state(cpu_controller.player_id) != PokerGameStateManager.PlayerState.OUT:
-			game_state.player_state_change(cpu_controller.player_id, PokerGameStateManager.PlayerState.OUT)
-			cpu_controller.current_idle_animation = "idle_out"
-			cpu_controller.npc_model.play_animation("out")
 
 func _on_player_state_changed(player_id: String, _old_state: PokerGameStateManager.PlayerState, new_state: PokerGameStateManager.PlayerState) -> void:
 	if is_instance_valid(player_ui) and player_id != player_controller.player_id:
@@ -344,6 +345,7 @@ func _start_next_play() -> void:
 	player_controller.clear_hand()
 	_update_player_cards_display()
 	for cpu_controller in cpu_controllers.values():
+		cpu_controller.clear_hand()
 		player_ui.hide_cpu_cards(cpu_controller.player_id)
 
 	game_state.new_play()
@@ -424,6 +426,7 @@ func _end_player_turn_ui() -> void:
 	player_ui.disable_fold_button()
 	player_ui.disable_raise_button()
 	player_ui.disable_go_fish_button()
+	player_controller._on_fish_selected(0, false)
 
 func _update_go_fish_button_state() -> void:
 	if not is_instance_valid(player_ui):
@@ -468,7 +471,7 @@ func _post_player_action_message(player_id: String, action: PokerGameStateManage
 	var message_text = tr(message_key).format({
 		"player_name": player_id,
 		"amount": amount,
-		"current_bet": amount
+		"current_bet": game_state.get_player_bet(player_id)
 	})
 	player_ui.message_feed.add_message(message_text)
 
@@ -622,24 +625,29 @@ func _post_round_end_message(showdown_players: Array, winner_ids: PackedStringAr
 				message_key = "ROUND_END_SPLIT_2_MSG"
 				var p1 = winner_ids[0]
 				var p2 = winner_ids[1]
+				var combination1 = (player_controller if player_controller.player_id == p1 else cpu_controllers[p1]).evaluate_hand(game_state.community_cards).get("combination", "")
+				var combination2 = (player_controller if player_controller.player_id == p2 else cpu_controllers[p2]).evaluate_hand(game_state.community_cards).get("combination", "")
 				message_format = {
 					"player1": p1,
-					"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"combination_name1": _get_combination_name(combination1),
 					"player2": p2,
-					"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", ""))
+					"combination_name2": _get_combination_name(combination2)
 				}
 			3:
 				message_key = "ROUND_END_SPLIT_3_MSG"
 				var p1 = winner_ids[0]
 				var p2 = winner_ids[1]
 				var p3 = winner_ids[2]
+				var combination1 = (player_controller if player_controller.player_id == p1 else cpu_controllers[p1]).evaluate_hand(game_state.community_cards).get("combination", "")
+				var combination2 = (player_controller if player_controller.player_id == p2 else cpu_controllers[p2]).evaluate_hand(game_state.community_cards).get("combination", "")
+				var combination3 = (player_controller if player_controller.player_id == p3 else cpu_controllers[p3]).evaluate_hand(game_state.community_cards).get("combination", "")
 				message_format = {
 					"player1": p1,
-					"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"combination_name1": _get_combination_name(combination1),
 					"player2": p2,
-					"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"combination_name2": _get_combination_name(combination2),
 					"player3": p3,
-					"combination_name3": _get_combination_name(p3.evaluate_hand(game_state.community_cards).get("combination", ""))
+					"combination_name3": _get_combination_name(combination3)
 				}
 			4:
 				message_key = "ROUND_END_SPLIT_4_MSG"
@@ -647,15 +655,19 @@ func _post_round_end_message(showdown_players: Array, winner_ids: PackedStringAr
 				var p2 = winner_ids[1]
 				var p3 = winner_ids[2]
 				var p4 = winner_ids[3]
+				var combination1 = (player_controller if player_controller.player_id == p1 else cpu_controllers[p1]).evaluate_hand(game_state.community_cards).get("combination", "")
+				var combination2 = (player_controller if player_controller.player_id == p2 else cpu_controllers[p2]).evaluate_hand(game_state.community_cards).get("combination", "")
+				var combination3 = (player_controller if player_controller.player_id == p3 else cpu_controllers[p3]).evaluate_hand(game_state.community_cards).get("combination", "")
+				var combination4 = (player_controller if player_controller.player_id == p4 else cpu_controllers[p4]).evaluate_hand(game_state.community_cards).get("combination", "")
 				message_format = {
 					"player1": p1,
-					"combination_name1": _get_combination_name(p1.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"combination_name1": _get_combination_name(combination1),
 					"player2": p2,
-					"combination_name2": _get_combination_name(p2.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"combination_name2": _get_combination_name(combination2),
 					"player3": p3,
-					"combination_name3": _get_combination_name(p3.evaluate_hand(game_state.community_cards).get("combination", "")),
+					"combination_name3": _get_combination_name(combination3),
 					"player4": p4,
-					"combination_name4": _get_combination_name(p4.evaluate_hand(game_state.community_cards).get("combination", ""))
+					"combination_name4": _get_combination_name(combination4)
 				}
 			_:
 				return
@@ -733,3 +745,64 @@ func _get_card_name(card_string: String) -> String:
 			suit_string = tr("SPADES")
 
 	return "%s %s" % [rank_string, suit_string]
+
+func _exit_tree() -> void:
+	# Disconnect all game_state signals
+	if game_state:
+		if game_state.game_state_changed.is_connected(_on_game_state_changed):
+			game_state.game_state_changed.disconnect(_on_game_state_changed)
+		if game_state.player_state_changed.is_connected(_on_player_state_changed):
+			game_state.player_state_changed.disconnect(_on_player_state_changed)
+		if game_state.request_card_draw.is_connected(_on_request_card_draw):
+			game_state.request_card_draw.disconnect(_on_request_card_draw)
+		if game_state.request_player_action.is_connected(_on_request_player_action):
+			game_state.request_player_action.disconnect(_on_request_player_action)
+		if game_state.request_hand_evaluation.is_connected(_on_hand_evaluation_request):
+			game_state.request_hand_evaluation.disconnect(_on_hand_evaluation_request)
+		if game_state.showdown_winners.is_connected(_on_showdown_winners):
+			game_state.showdown_winners.disconnect(_on_showdown_winners)
+		if game_state.send_winnings.is_connected(_on_send_winnings):
+			game_state.send_winnings.disconnect(_on_send_winnings)
+		if game_state.round_started.is_connected(_on_round_started):
+			game_state.round_started.disconnect(_on_round_started)
+		
+		if is_instance_valid(player_ui):
+			if game_state.community_cards_changed.is_connected(_on_community_cards_changed):
+				game_state.community_cards_changed.disconnect(_on_community_cards_changed)
+			if game_state.pot_value_changed.is_connected(_on_pot_value_changed):
+				game_state.pot_value_changed.disconnect(_on_pot_value_changed)
+	
+	# Disconnect all player_ui signals
+	if is_instance_valid(player_ui):
+		if player_ui.help_button.pressed.is_connected(_on_help_button_pressed):
+			player_ui.help_button.pressed.disconnect(_on_help_button_pressed)
+		if player_ui.quit_game_button.pressed.is_connected(_on_quit_game_button_pressed):
+			player_ui.quit_game_button.pressed.disconnect(_on_quit_game_button_pressed)
+		if player_ui.main_menu_button.pressed.is_connected(_on_main_menu_button_pressed):
+			player_ui.main_menu_button.pressed.disconnect(_on_main_menu_button_pressed)
+		if player_ui.next_play_button.pressed.is_connected(_on_next_play_button_pressed):
+			player_ui.next_play_button.pressed.disconnect(_on_next_play_button_pressed)
+		if player_ui.call_button.pressed.is_connected(_on_call_button_pressed):
+			player_ui.call_button.pressed.disconnect(_on_call_button_pressed)
+		if player_ui.fold_button.pressed.is_connected(_on_fold_button_pressed):
+			player_ui.fold_button.pressed.disconnect(_on_fold_button_pressed)
+		if player_ui.raise_button.pressed.is_connected(_on_raise_button_pressed):
+			player_ui.raise_button.pressed.disconnect(_on_raise_button_pressed)
+		if player_ui.go_fish_button.pressed.is_connected(_on_go_fish_button_pressed):
+			player_ui.go_fish_button.pressed.disconnect(_on_go_fish_button_pressed)
+		if player_ui.fish_selected.is_connected(_on_fish_selected):
+			player_ui.fish_selected.disconnect(_on_fish_selected)
+	
+	# Disconnect player_controller signals
+	if player_controller:
+		if player_controller.submit_player_decision.is_connected(_on_submit_player_decision):
+			player_controller.submit_player_decision.disconnect(_on_submit_player_decision)
+		if player_controller.going_fishing.is_connected(_on_player_going_fishing):
+			player_controller.going_fishing.disconnect(_on_player_going_fishing)
+		if player_controller.player_cash_changed.is_connected(_update_player_cash):
+			player_controller.player_cash_changed.disconnect(_update_player_cash)
+	
+	# Disconnect CPU controller signals
+	for cpu_controller in cpu_controllers.values():
+		if cpu_controller.submit_player_decision.is_connected(_on_submit_player_decision):
+			cpu_controller.submit_player_decision.disconnect(_on_submit_player_decision)
