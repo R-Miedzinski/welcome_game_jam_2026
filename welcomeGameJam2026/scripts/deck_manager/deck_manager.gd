@@ -60,6 +60,7 @@ func reshuffle(card_string: String) -> void:
   deck.shuffle()
 
 func serialize() -> Dictionary:
+  _check_for_duplicates()
   return { "cards": ",".join(deck) }
 
 func load_state(state: Dictionary) -> void:
@@ -68,3 +69,18 @@ func load_state(state: Dictionary) -> void:
     _initialize_deck()
   else:
     deck = deck_string.split(",")
+    _check_for_duplicates()
+
+func _check_for_duplicates() -> void:
+  var card_counts = {}
+  for card in deck:
+    card_counts[card] = card_counts.get(card, 0) + 1
+  var duplicates = {}
+  for card in card_counts.keys():
+    if card_counts[card] > 1:
+      duplicates[card] = card_counts[card]
+  if duplicates.size() > 0:
+    push_warning("Deck has duplicates: %s" % [duplicates])
+    for card in duplicates.keys():
+      while deck.count(card) > 1:
+        deck.erase(card)

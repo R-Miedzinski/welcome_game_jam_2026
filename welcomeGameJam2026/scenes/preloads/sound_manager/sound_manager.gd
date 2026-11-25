@@ -69,10 +69,11 @@ func _play_sound(stream: AudioStream, bus_name: StringName, players_array: Array
 	elif voicelines_global_offset_db != 0.0 and bus_name == voicelines_bus_name:
 		player.volume_db += voicelines_global_offset_db
 	add_child(player)
-	player.play()
 	
 	players_array.append(player)
 	player.finished.connect(func(): _on_player_finished(player, players_array))
+	
+	player.play()
 
 func _on_player_finished(player: AudioStreamPlayer, players_array: Array[AudioStreamPlayer]) -> void:
 	players_array.erase(player)

@@ -181,14 +181,21 @@ func _can_fish() -> bool:
 
 func _fish() -> void:
 	print("CPU player %s attempting to fish. Remaining fishes: %d" % [player_id, remaining_fishes])
+	print("  Current hand: %s" % [player_hand])
+	print("  Deck has %d cards" % [deck.deck.size()])
 	if not _can_fish():
 		push_error("CPU player %s cannot fish." % player_id)
 		return
 	remaining_fishes -= 1
 
 	# remove lowest card from hand, hand should always be sorted
-	deck.reshuffle(player_hand.get(0))
-	print("CPU player %s removed card: %s" % [player_id, player_hand.get(0)])
+	var card_to_remove = player_hand.get(0)
+	print("  Attempting to reshuffle card: %s" % [card_to_remove])
+	if card_to_remove in deck.deck:
+		push_warning("  ALERT: Card %s is ALREADY in deck before reshuffle!" % [card_to_remove])
+		print("    Deck contains: %s" % [deck.deck])
+	deck.reshuffle(card_to_remove)
+	print("CPU player %s removed card: %s" % [player_id, card_to_remove])
 	player_hand.remove_at(0)
 	print("CPU player %s current hand: %s" % [player_id, player_hand])
 

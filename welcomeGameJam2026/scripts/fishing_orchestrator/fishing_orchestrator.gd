@@ -116,3 +116,16 @@ func _on_layer_moved_to_bottom() -> void:
 func _play_sfx_if_valid(stream: AudioStream) -> void:
 	if stream != null:
 		SoundManager.play_sfx(stream)
+
+func _exit_tree() -> void:
+	# Disconnect fishing hook signals
+	if fishing_hook:
+		if fishing_hook.caught_fish.is_connected(_on_caught_fish):
+			fishing_hook.caught_fish.disconnect(_on_caught_fish)
+		if fishing_hook.caught_junk.is_connected(_on_caught_junk):
+			fishing_hook.caught_junk.disconnect(_on_caught_junk)
+	
+	# Disconnect fishing layer signals
+	for layer in fishing_layers:
+		if layer and layer.layer_moved_to_bottom.is_connected(_on_layer_moved_to_bottom):
+			layer.layer_moved_to_bottom.disconnect(_on_layer_moved_to_bottom)

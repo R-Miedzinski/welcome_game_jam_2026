@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ln5khw01ls8d" path="res://scenes/components/help_screen/help_screen.gd" id="1_2ufnt"]
 [ext_resource type="PackedScene" uid="uid://yravtencv47t" path="res://scenes/components/modal_background/modal_background.tscn" id="2_0uuy3"]
+[ext_resource type="Texture2D" uid="uid://cyh3h8xpkx8ui" path="res://scenes/components/help_screen/assets/Rulebook2.png" id="5_3441t"]
 [ext_resource type="Texture2D" uid="uid://btn83b3ako5wh" path="res://scenes/components/player_ui/assets/Blue_Default.png" id="6_v0kj3"]
 [ext_resource type="Texture2D" uid="uid://bqc6766gk4e74" path="res://scenes/components/player_ui/assets/Blue_OnClick.png" id="7_f60oj"]
 
@@ -14,6 +15,13 @@ texture = ExtResource("6_v0kj3")
 content_margin_left = 10.0
 content_margin_right = 5.0
 texture = ExtResource("7_f60oj")
+
+[sub_resource type="LabelSettings" id="LabelSettings_myhs1"]
+font_size = 32
+font_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3441t"]
+font_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
 
 [node name="HelpScreen" type="Control" unique_id=1292824030]
 layout_mode = 3
@@ -28,42 +36,316 @@ metadata/_edit_use_anchors_ = true
 [node name="ModalBackground" parent="." unique_id=334779783 instance=ExtResource("2_0uuy3")]
 layout_mode = 1
 
-[node name="Panel" type="Panel" parent="." unique_id=1942590418]
-custom_minimum_size = Vector2(600, 400)
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1636982138]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -571.0
-offset_top = -407.0
-offset_right = 571.0
-offset_bottom = 407.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("5_3441t")
+expand_mode = 5
+stretch_mode = 5
 
-[node name="MenuButtonCloseHelp" type="Button" parent="Panel" unique_id=49340933]
+[node name="MenuButtonCloseHelp" type="Button" parent="TextureRect" unique_id=49340933]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 150)
 custom_maximum_size = Vector2(150, 150)
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -190.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 190.0
-grow_horizontal = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 170.0
+offset_bottom = 170.0
 size_flags_vertical = 3
 theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxTexture_5fgao")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_4o5r2")
 theme_override_styles/hover = SubResource("StyleBoxTexture_5fgao")
-text = "CLOSE_BTN
-"
+text = "CLOSE_BTN"
 autowrap_trim_flags = 192
 icon_alignment = 1
 expand_icon = true
+
+[node name="Control" type="HBoxContainer" parent="TextureRect" unique_id=1650063462]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.2203125
+offset_left = 255.0
+offset_top = 192.0
+offset_right = 585.0
+offset_bottom = 237.0
+theme_override_constants/separation = 15
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureRect/Control" unique_id=790658916]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ROYAL_FLUSH"
+label_settings = SubResource("LabelSettings_myhs1")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="TextureRect/Control" unique_id=641687726]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+text = "ROYAL_FLUSH_DESC"
+label_settings = SubResource("LabelSettings_3441t")
+vertical_alignment = 1
+
+[node name="Control2" type="HBoxContainer" parent="TextureRect" unique_id=609213295]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.19629629
+anchor_right = 0.2203125
+anchor_bottom = 0.19629629
+offset_left = 255.0
+offset_top = 192.0
+offset_right = 585.0
+offset_bottom = 237.0
+theme_override_constants/separation = 15
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureRect/Control2" unique_id=85075118]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "STRAIGHT_FLUSH"
+label_settings = SubResource("LabelSettings_myhs1")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="TextureRect/Control2" unique_id=1322272240]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+text = "STRAIGHT_FLUSH_DESC"
+label_settings = SubResource("LabelSettings_3441t")
+vertical_alignment = 1
+
+[node name="Control3" type="HBoxContainer" parent="TextureRect" unique_id=747021285]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.38148147
+anchor_right = 0.2203125
+anchor_bottom = 0.38148147
+offset_left = 255.0
+offset_top = 192.0
+offset_right = 585.0
+offset_bottom = 237.0
+theme_override_constants/separation = 15
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureRect/Control3" unique_id=202968536]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "FOUR_OF_A_KIND"
+label_settings = SubResource("LabelSettings_myhs1")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="TextureRect/Control3" unique_id=155994668]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+text = "FOUR_OF_A_KIND_DESC"
+label_settings = SubResource("LabelSettings_3441t")
+vertical_alignment = 1
+
+[node name="Control4" type="HBoxContainer" parent="TextureRect" unique_id=1738017019]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5648148
+anchor_right = 0.2203125
+anchor_bottom = 0.5648148
+offset_left = 255.0
+offset_top = 192.0
+offset_right = 585.0
+offset_bottom = 237.0
+theme_override_constants/separation = 15
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureRect/Control4" unique_id=1936512136]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "FULL_HOUSE"
+label_settings = SubResource("LabelSettings_myhs1")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="TextureRect/Control4" unique_id=857741678]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+text = "FULL_HOUSE_DESC"
+label_settings = SubResource("LabelSettings_3441t")
+vertical_alignment = 1
+
+[node name="Control5" type="HBoxContainer" parent="TextureRect" unique_id=823082214]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.73703706
+anchor_right = 0.2203125
+anchor_bottom = 0.73703706
+offset_left = 255.0
+offset_top = 192.0
+offset_right = 585.0
+offset_bottom = 237.0
+theme_override_constants/separation = 15
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureRect/Control5" unique_id=785495282]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "FLUSH"
+label_settings = SubResource("LabelSettings_myhs1")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="TextureRect/Control5" unique_id=1604886510]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+text = "FLUSH_DESC"
+label_settings = SubResource("LabelSettings_3441t")
+vertical_alignment = 1
+
+[node name="Control6" type="HBoxContainer" parent="TextureRect" unique_id=81927040]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41979167
+anchor_top = 0.73703706
+anchor_right = 0.6401042
+anchor_bottom = 0.73703706
+offset_left = 255.0
+offset_top = 192.0
+offset_right = 585.0
+offset_bottom = 237.0
+theme_override_constants/separation = 15
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureRect/Control6" unique_id=748426518]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "HIGH_CARD"
+label_settings = SubResource("LabelSettings_myhs1")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="TextureRect/Control6" unique_id=1227977348]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+text = "HIGH_CARD_DESC"
+label_settings = SubResource("LabelSettings_3441t")
+vertical_alignment = 1
+
+[node name="Control7" type="HBoxContainer" parent="TextureRect" unique_id=911802918]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41979167
+anchor_top = 0.5648148
+anchor_right = 0.6401042
+anchor_bottom = 0.5648148
+offset_left = 255.0
+offset_top = 192.0
+offset_right = 585.0
+offset_bottom = 237.0
+theme_override_constants/separation = 15
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureRect/Control7" unique_id=134689773]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ONE_PAIR"
+label_settings = SubResource("LabelSettings_myhs1")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="TextureRect/Control7" unique_id=46636324]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+text = "ONE_PAIR_DESC"
+label_settings = SubResource("LabelSettings_3441t")
+vertical_alignment = 1
+
+[node name="Control8" type="HBoxContainer" parent="TextureRect" unique_id=1471210691]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41979167
+anchor_top = 0.38425925
+anchor_right = 0.6401042
+anchor_bottom = 0.38425925
+offset_left = 255.0
+offset_top = 192.0
+offset_right = 585.0
+offset_bottom = 237.0
+theme_override_constants/separation = 15
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureRect/Control8" unique_id=971505154]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TWO_PAIR"
+label_settings = SubResource("LabelSettings_myhs1")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="TextureRect/Control8" unique_id=1086646245]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+text = "TWO_PAIR_DESC"
+label_settings = SubResource("LabelSettings_3441t")
+vertical_alignment = 1
+
+[node name="Control9" type="HBoxContainer" parent="TextureRect" unique_id=533894665]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41979167
+anchor_top = 0.20555556
+anchor_right = 0.6401042
+anchor_bottom = 0.20555556
+offset_left = 255.0
+offset_top = 192.0
+offset_right = 585.0
+offset_bottom = 237.0
+theme_override_constants/separation = 15
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureRect/Control9" unique_id=683428939]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "THREE_OF_A_KIND"
+label_settings = SubResource("LabelSettings_myhs1")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="TextureRect/Control9" unique_id=651046422]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+text = "THREE_OF_A_KIND_DESC"
+label_settings = SubResource("LabelSettings_3441t")
+vertical_alignment = 1
+
+[node name="Control10" type="HBoxContainer" parent="TextureRect" unique_id=1565357097]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41979167
+anchor_top = -0.0009259259
+anchor_right = 0.6401042
+anchor_bottom = -0.0009259259
+offset_left = 255.0
+offset_top = 192.0
+offset_right = 585.0
+offset_bottom = 237.0
+theme_override_constants/separation = 15
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureRect/Control10" unique_id=1098125977]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "STRAIGHT"
+label_settings = SubResource("LabelSettings_myhs1")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="TextureRect/Control10" unique_id=1176878520]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 9.0
+text = "STRAIGHT_DESC"
+label_settings = SubResource("LabelSettings_3441t")
+vertical_alignment = 1

@@ -83,3 +83,13 @@ HEARTS,of Hearts,Kier
 DIAMONDS,of Diamonds,Karo
 CLUBS,of Clubs,Trefl
 SPADES,of Spades,Pik
+ROYAL_FLUSH_DESC,A straight flush 10 through Ace.,Strit Królewski od 10 po Asa.
+STRAIGHT_FLUSH_DESC,A straight all in the same suit.,Strit tego samego koloru (symbol).
+FOUR_OF_A_KIND_DESC,Four cards of equal value.,Cztery karty o tej samej wartości.
+FULL_HOUSE_DESC,Three of a kind and a pair.,Trzy pary i osobna para.
+FLUSH_DESC,Five of the same suit.,Pięć kart tego samego koloru (symbol).
+STRAIGHT_DESC,"Five sequential cards, any suit.","Pięć kart w sekwencji, każdy kolor (symbol)."
+THREE_OF_A_KIND_DESC,Three cards of equal value.,Trzy karty o tej samej wartości.
+TWO_PAIR_DESC,Two pairs.,Dwie pary.
+ONE_PAIR_DESC,Two cards of equal value.,Cztery karty o tej samej wartości.
+HIGH_CARD_DESC,The highest card in your hand.,Najwyższa karta w Twojej ręce.
